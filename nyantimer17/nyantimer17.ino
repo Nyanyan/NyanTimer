@@ -1,0 +1,492 @@
+#include <MsTimer2.h>
+#include <TimerOne.h>
+#include <Wire.h>
+#include <ST7032.h>
+//#include <CapacitiveSensor.h>
+
+ST7032 lcd;
+
+//CapacitiveSensor touchPad1 = CapacitiveSensor(15, 2);
+//CapacitiveSensor touchPad2 = CapacitiveSensor(5, 17);
+//dame 3 9 10 11
+
+#define BUTTON1 6 //reset
+#define BUTTON2 8 //inspection mode
+#define BUTTON3 7 //lap up
+#define BUTTON4 4 //lap down
+#define BUZZER 14 //buzzer
+#define LEDR 13 //red led
+#define LEDG 12 //green led
+#define PAD1OUT 15
+#define PAD1IN 2
+#define PAD2OUT 5
+#define PAD2IN 17
+
+int minute, second, msecond = 0;
+int output[7] = {0, 0, 0, 0, 0, 0, 0};
+char stat = 'I'; //status
+
+bool power = 0; // power on / off
+bool ledr = 0; //red led status
+bool ledg = 0; //green led status
+int inspmode = 0; //0:off 1:sndOFF 2:sndON
+int lapmode = 1;
+int lapcount = 0;
+const int maxlap = 99;
+int lap[maxlap + 1][3];
+int inspstat = 0; //1=during inspstatection time
+int inspstatcount = 16; //inspstatection time count
+bool buz = 0;
+
+void setup() {
+  Serial.begin(1200);
+  pinMode(BUTTON1, INPUT);
+  pinMode(BUTTON2, INPUT);
+  pinMode(BUTTON3, INPUT);
+  pinMode(BUTTON4, INPUT);
+  pinMode(BUZZER, OUTPUT);
+  pinMode(LEDR, OUTPUT);
+  pinMode(LEDG, OUTPUT);
+  pinMode(PAD1OUT, OUTPUT);
+  pinMode(PAD2OUT, OUTPUT);
+  pinMode(PAD1IN, INPUT);
+  pinMode(PAD2IN, INPUT);
+  lcd.begin(16, 2);
+  lcd.setContrast(13);
+
+  resettime();
+
+  lcd.setCursor(0, 0); //when power is off: print "Nyan Timer"
+  lcd.print("NyanTimer       ");
+  lcd.setCursor(0, 1);
+  lcd.print("      by Nyanyan");
+  delay(1000);
+  setLCDclear(2);
+  MsTimer2::set(125, out);
+  MsTimer2::start();
+  lap[0][0] = 0;
+  lap[0][1] = 0;
+  lap[0][2] = 0;
+  /*
+    touchPad1.set_CS_AutocaL_Millis(0xFFFFFFFF);
+    touchPad2.set_CS_AutocaL_Millis(0xFFFFFFFF);
+    touchPad1.set_CS_Timeout_Millis(1000);
+    touchPad2.set_CS_Timeout_Millis(1000);
+  */
+}
+
+
+void out() { //serial output, every 125msec
+  String serout = String(stat);
+  for (int i = 1; i < 7; i++)
+    serout += output[i];
+  int tmp = 0;
+  for (int i = 1; i < 7; i++) {
+    tmp += output[i];
+  }
+  char checksum = 64 + tmp;
+  serout += String(checksum);
+  Serial.print(serout);
+  Serial.print(char(13));
+  Serial.print(char(10));
+}
+
+
+void inspstatection() {
+  inspstatcount--;
+}
+
+
+
+
+void count() { //every 1 msec
+  msecond++;
+  if (msecond == 1000) {
+    msecond = 0;
+    second++;
+  }
+  if (second == 60) {
+    second = 0;
+    minute++;
+  }
+  if (stat == ' ' && msecond % 100 == 0) {
+    ledg = ledr;
+    ledr = !ledr;
+  }
+  if (minute >= 100)
+    Timer1.stop();
+  output[0] = int(minute / 10);
+  output[1] = minute - output[0] * 10;
+  output[2] = int(second / 10);
+  output[3] = second - output[2] * 10;
+  output[4] = int(msecond / 100);
+  output[5] = int(msecond / 10) - output[4] * 10;
+  output[6] = msecond - output[4] * 100 - output[5] * 10;
+}
+
+
+
+
+void convertLCD() {
+  lcd.setCursor(7, 0); //print time
+  String lcdouta = String(output[0]) + String(output[1]) + ':' + String(output[2]) + String(output[3]) + '.' + String(output[4]) + String(output[5]) + String(output[6]);
+  lcd.print(lcdouta);
+
+  lcd.setCursor(7, 1); //print lap time
+  String lcdoutb;
+  if (lapcount >= 1) {
+    int a[7];
+    int t;
+    if (stat == 'I')
+      t = lapcount + 1;
+    else
+      t = lapcount;
+    a[0] = lap[t][0] / 10;
+    a[1] = lap[t][0] - a[0] * 10;
+    a[2] = lap[t][1] / 10;
+    a[3] = lap[t][1] - a[2] * 10;
+    a[4] = lap[t][2] / 100;
+    a[5] = lap[t][2] / 10 - a[4] * 10;
+    a[6] = lap[t][2] - a[4] * 100 - a[5] * 10;
+    lcdoutb = String(a[0]) + String(a[1]) + ':' + String(a[2]) + String(a[3]) + '.' + String(a[4]) + String(a[5]) + String(a[6]);
+  } else
+    lcdoutb = "         ";
+  lcd.print(lcdoutb);
+
+  if (inspstat == 0) {
+    lcd.setCursor(0, 0); //print mode & status
+    if (inspmode == 1)
+      lcd.print("I     ");
+    else if (inspmode == 2)
+      lcd.print("Is    ");
+    else if (inspmode == 0)
+      lcd.print("      ");
+  }
+  lcd.setCursor(0, 1);
+  lcd.print("L");
+  lcd.setCursor(1, 1);
+  lcd.print(int(lapcount / 10));
+  lcd.setCursor(2, 1);
+  lcd.print(lapcount - int(lapcount / 10) * 10);
+  lcd.setCursor(3, 1);
+  lcd.print("/");
+  lcd.setCursor(4, 1);
+  lcd.print(int(lapmode / 10));
+  lcd.setCursor(5, 1);
+  lcd.print(lapmode - int(lapmode / 10) * 10);
+}
+
+
+
+void convertLED() {
+  digitalWrite(LEDR, ledr);
+  digitalWrite(LEDG, ledg);
+}
+
+
+
+
+bool touch() {
+
+  /*
+    int threshold = 150;
+    long VAL1 = touchPad1.capacitiveSensor(30);
+    long VAL2 = touchPad2.capacitiveSensor(30);
+  */
+  /*
+    if (val1 == -2)
+    val1 = 200;
+    if (val2 == -2)
+    val2 = 200;
+  */
+
+
+  int threshold = 70;
+  int VAL1 = 0;
+  int VAL2 = 0;
+  for (int i = 0; i < 100; i++) {
+    int val1 = 0;
+    int val2 = 0;
+    digitalWrite(PAD1OUT, HIGH);
+    while (digitalRead(PAD1IN) == LOW) {
+      val1++;
+      if (val1 > threshold)
+        break;
+      delayMicroseconds(1);
+    }
+    digitalWrite(PAD1OUT, LOW);
+
+    digitalWrite(PAD2OUT, HIGH);
+    while (digitalRead(PAD2IN) == LOW) {
+      val2++;
+      if (val2 > threshold)
+        break;
+      delayMicroseconds(1);
+    }
+    digitalWrite(PAD2OUT, LOW);
+    /*
+      lcd.setCursor(7, 0);
+      lcd.print(val1);
+      lcd.setCursor(7, 1);
+      lcd.print(val2);
+    */
+    VAL1 = max(VAL1, val1);
+    VAL2 = max(VAL2, val2);
+  }
+  //setLCDclear(2);
+  //Serial.println(val1);
+
+  /*
+    lcd.setCursor(0, 0);
+    lcd.print(VAL1);
+    lcd.setCursor(0, 1);
+    lcd.print(VAL2);
+  */
+  //delay(10);
+  /*
+    Serial.print(VAL1);
+    Serial.print("\t");
+    Serial.println(VAL2);
+  */
+  if (VAL1 > threshold && VAL2 > threshold)
+    return true;
+  else
+    return false;
+}
+
+void resettime() {
+  minute = 0;
+  second = 0;
+  msecond = 0;
+  for (int i = 0; i < 7; i++)
+    output[i] = 0;
+  for (int i = 0; i < maxlap; i++) {
+    for (int j = 0; j < 3; j++)
+      lap[i][j] = 0;
+  }
+  lapcount = 0;
+  //inspstatcount = 16;
+  //inspstat = 0;
+}
+
+
+void lapUP() {
+  if (stat == 'I') {
+    lapmode++;
+    if (lapmode > maxlap)
+      lapmode = 1;
+  } else if (stat == 'S') {
+    lapcount++;
+    if (lapcount > lapmode) {
+      lapcount = 1;
+    }
+  }
+}
+
+void lapDOWN() {
+  if (stat == 'I') {
+    lapmode--;
+    if (lapmode < 1)
+      lapmode = maxlap;
+  } else if (stat == 'S') {
+    lapcount--;
+    if (lapcount < 1)
+      lapcount = lapmode;
+  }
+}
+
+void setLCDclear(int m) {
+  if (m == 0 || m == 2) {
+    lcd.setCursor(0, 0);
+    lcd.print("                ");
+  }
+  if (m == 1 || m == 2) {
+    lcd.setCursor(0, 1);
+    lcd.print("                ");
+  }
+}
+
+void button() {
+  if (digitalRead(BUTTON1) == HIGH) {//reset
+    stat = 'I';
+    Timer1.stop();
+    //resettime();
+  } else if (digitalRead(BUTTON2) == HIGH) { //inspstatection mode
+    inspmode += 1;
+    if (inspmode > 2)
+      inspmode = 0;
+    while (digitalRead(BUTTON2) == HIGH);
+  } else if (digitalRead(BUTTON3) == HIGH) { //lap mode up
+    lapUP();
+    convertLCD();
+    bool flag = false;
+    for (int i = 0; i < 1000; i++) {
+      if (digitalRead(BUTTON3) == LOW)
+        break;
+      delay(1);
+    }
+    while (digitalRead(BUTTON3) == HIGH) {
+      lapUP();
+      delay(100);
+      convertLCD();
+    }
+  } else if (digitalRead(BUTTON4) == HIGH) { //lap mode down
+    lapDOWN();
+    convertLCD();
+    bool flag = false;
+    for (int i = 0; i < 1000; i++) {
+      if (digitalRead(BUTTON4) == LOW)
+        break;
+      delay(1);
+    }
+    while (digitalRead(BUTTON4) == HIGH) {
+      lapDOWN();
+      delay(100);
+      convertLCD();
+    }
+  }
+}
+
+
+
+void timer() {
+  if (touch() == true) {
+
+    if (stat == ' ') { //when timer stops
+      if (lapcount == lapmode - 1) {
+        stat = 'S';
+        Timer1.stop();
+        ledr = 0;
+        ledg = 0;
+      }
+      lapcount++;
+      lap[lapcount][0] = minute;
+      lap[lapcount][1] = second;
+      lap[lapcount][2] = msecond;
+      for (int i = lapcount - 1; i >= 0; i--) {
+        lap[lapcount][0] -= lap[i][0];
+        lap[lapcount][1] -= lap[i][1];
+        lap[lapcount][2] -= lap[i][2];
+        if (lap[lapcount][1] < 0) {
+          lap[lapcount][1] += 60;
+          lap[lapcount][0]--;
+        }
+        if (lap[lapcount][2] < 0) {
+          if (lap[lapcount][1] == 0) {
+            lap[lapcount][1] += 60;
+            lap[lapcount][0]--;
+          }
+          lap[lapcount][2] += 1000;
+          lap[lapcount][1]--;
+        }
+      }
+      while (touch() == true);
+
+
+    } else if (stat == 'I') { //timer ready to start
+      if (inspmode == 0 || (inspmode == 1 && inspstat == 2) || (inspmode == 2 && inspstat == 2)) { //not inspstatection mode
+        int i = 0;
+        ledr = 1;
+        ledg = 0;
+        convertLED();
+        while (touch() == true && i < 20) { //wait about 0.55sec
+          i++;
+          delay(1);
+        }
+        if (i >= 20)  //timer is able to start
+          stat = 'A';
+      } else if ((inspmode == 1 && inspstat == 0) || (inspmode == 2 && inspstat == 0)) { //inspstatection mode
+        inspstat = 1;
+        while (touch() == true);
+      }
+    }
+  }
+
+
+
+
+  else { //when pads are open
+
+
+    if (stat == 'A') { //start solving
+      stat = ' ';
+      inspstat = 0;
+      Timer1.stop();
+      Timer1.initialize(1000);
+      Timer1.attachInterrupt(count);
+      Timer1.start();
+      setLCDclear(1);
+      while (touch() == true);
+    }
+
+
+    else if (stat == 'I' && inspstat == 1) { //inspection time starts
+      inspstatcount = 16;
+      Timer1.stop();
+      Timer1.initialize(1000000);
+      Timer1.attachInterrupt(inspstatection);
+      while (touch() == true);
+      Timer1.start();
+      inspstat = 2;
+    }
+  }
+
+
+
+
+
+  if (stat == 'I' && inspstat == 2) {
+
+    if (inspstatcount > 0) {
+      String inspstatcountstr = String(int(inspstatcount / 10)) + String(inspstatcount - 10 * int(inspstatcount / 10));
+      lcd.setCursor(3, 0);
+      lcd.print(inspstatcountstr);
+    } else if (inspstatcount > -2) {
+      lcd.setCursor(3, 0);
+      lcd.print("+2");
+    } else {
+      lcd.setCursor(3, 0);
+      lcd.print("DNF");
+      Timer1.stop();
+    }
+
+    if (inspmode == 2) {
+      if (inspstatcount == 7 || inspstatcount == 3)
+        buz = 1;
+      else
+        buz = 0;
+    } else
+      buz = 0;
+
+  } else
+    buz = 0;
+  digitalWrite(BUZZER, buz);
+}
+
+
+
+void loop() {
+  //touch();
+
+  button();
+  if (stat == 'I' || stat == 'A') {
+    resettime();
+  }
+
+  timer();
+
+  if (stat == 'S') {
+    ledr = 0;
+    ledg = 1;
+  } else if (stat == 'A') {
+    ledr = 1;
+    ledg = 1;
+  } else if (stat == 'I') {
+    ledr = 0;
+    ledg = 0;
+  }
+
+  convertLCD();
+  convertLED();
+
+}
