@@ -1,15 +1,9 @@
-//ohehehehe
 #include <MsTimer2.h>
 #include <TimerOne.h>
 #include <Wire.h>
 #include <ST7032.h>
-//#include <CapacitiveSensor.h>
 
 ST7032 lcd;
-
-//CapacitiveSensor touchPad1 = CapacitiveSensor(15, 2);
-//CapacitiveSensor touchPad2 = CapacitiveSensor(5, 17);
-//dame 3 9 10 11
 
 #define BUTTON1 6 //reset
 #define BUTTON2 8 //inspection mode
@@ -68,12 +62,6 @@ void setup() {
   lap[0][0] = 0;
   lap[0][1] = 0;
   lap[0][2] = 0;
-  /*
-    touchPad1.set_CS_AutocaL_Millis(0xFFFFFFFF);
-    touchPad2.set_CS_AutocaL_Millis(0xFFFFFFFF);
-    touchPad1.set_CS_Timeout_Millis(1000);
-    touchPad2.set_CS_Timeout_Millis(1000);
-  */
 }
 
 
@@ -188,20 +176,6 @@ void convertLED() {
 
 
 bool touch() {
-
-  /*
-    int threshold = 150;
-    long VAL1 = touchPad1.capacitiveSensor(30);
-    long VAL2 = touchPad2.capacitiveSensor(30);
-  */
-  /*
-    if (val1 == -2)
-    val1 = 200;
-    if (val2 == -2)
-    val2 = 200;
-  */
-
-
   int threshold = 70;
   int VAL1 = 0;
   int VAL2 = 0;
@@ -225,30 +199,9 @@ bool touch() {
       delayMicroseconds(1);
     }
     digitalWrite(PAD2OUT, LOW);
-    /*
-      lcd.setCursor(7, 0);
-      lcd.print(val1);
-      lcd.setCursor(7, 1);
-      lcd.print(val2);
-    */
     VAL1 = max(VAL1, val1);
     VAL2 = max(VAL2, val2);
   }
-  //setLCDclear(2);
-  //Serial.println(val1);
-
-  /*
-    lcd.setCursor(0, 0);
-    lcd.print(VAL1);
-    lcd.setCursor(0, 1);
-    lcd.print(VAL2);
-  */
-  //delay(10);
-  /*
-    Serial.print(VAL1);
-    Serial.print("\t");
-    Serial.println(VAL2);
-  */
   if (VAL1 > threshold && VAL2 > threshold)
     return true;
   else
@@ -266,8 +219,6 @@ void resettime() {
       lap[i][j] = 0;
   }
   lapcount = 0;
-  //inspstatcount = 16;
-  //inspstat = 0;
 }
 
 
@@ -467,8 +418,6 @@ void timer() {
 
 
 void loop() {
-  //touch();
-
   button();
   if (stat == 'I' || stat == 'A') {
     resettime();
