@@ -116,6 +116,7 @@ void count() { //every 1 msec
 
 
 
+
 void convertLCD() {
   lcd.setCursor(7, 0); //print time
   String lcdouta = String(output[0]) + String(output[1]) + ':' + String(output[2]) + String(output[3]) + '.' + String(output[4]) + String(output[5]) + String(output[6]);
