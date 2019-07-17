@@ -21,6 +21,40 @@ Visual Studio Code
 
 Arduino IDE
 
-Eagle
+Autodesk Eagle
 
-Fusion 360
+Autodesk Fusion 360
+
+## ファイル
+
+### board-v4
+
+旧ボード
+
+Eagleのファイルとガーバーデータ
+
+### board-v5
+
+最新版(2019/07/17現在)のボード
+
+Eagleのファイルとガーバーデータ
+
+### body
+
+外装
+
+Fusion360のファイルとobjとstlファイル
+
+### nyantimer-program
+
+プログラム
+
+inoファイル
+
+### README
+
+これ
+
+## 参考資料
+
+信号関係: https://github.com/fw42/atmel/tree/master/stackmat
