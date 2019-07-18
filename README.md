@@ -1,7 +1,3 @@
----
-typora-root-url: image
----
-
 # NyanTimer
 DIY Stackmat Timer for cubing
 
