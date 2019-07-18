@@ -342,11 +342,11 @@ void timer() {
         ledr = 1;
         ledg = 0;
         convertLED();
-        while (touch() == true && i < 20) { //wait about 0.55sec
+        while (touch() == true && i < 10) { //wait about 0.55sec
           i++;
           delay(1);
         }
-        if (i >= 20)  //timer is able to start
+        if (i >= 10)  //timer is able to start
           stat = 'A';
       } else if ((inspmode == 1 && inspstat == 0) || (inspmode == 2 && inspstat == 0)) { //inspstatection mode
         inspstat = 1;
