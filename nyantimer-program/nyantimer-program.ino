@@ -47,7 +47,7 @@ void setup() {
   pinMode(PAD1IN, INPUT);
   pinMode(PAD2IN, INPUT);
   lcd.begin(16, 2);
-  lcd.setContrast(13);
+  lcd.setContrast(40);
 
   resettime();
 
