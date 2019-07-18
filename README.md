@@ -55,7 +55,7 @@ Autodesk Fusion 360
 
 ##### 回路
 
-![touchpad](/touchpad.PNG)
+![touchpad](https://github.com/Nyanyan/NyanTimer/blob/images/touchsensor.PNG)
 
 少々図が汚いですが勘弁してください。
 
