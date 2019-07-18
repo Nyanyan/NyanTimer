@@ -12035,8 +12035,8 @@ Reichelt
 <attribute name="NAME" x="170.434" y="51.181" size="1.778" layer="95"/>
 <attribute name="VALUE" x="170.434" y="46.101" size="1.778" layer="96"/>
 </instance>
-<instance part="GND15" gate="1" x="176.53" y="53.34" smashed="yes" rot="R90">
-<attribute name="VALUE" x="179.07" y="50.8" size="1.778" layer="96" rot="R90"/>
+<instance part="GND15" gate="1" x="175.768" y="50.8" smashed="yes">
+<attribute name="VALUE" x="173.228" y="48.26" size="1.778" layer="96"/>
 </instance>
 <instance part="R7" gate="G$1" x="181.61" y="50.8" smashed="yes" rot="R90">
 <attribute name="NAME" x="180.1114" y="46.99" size="1.778" layer="95" rot="R90"/>
@@ -12123,20 +12123,20 @@ Reichelt
 <attribute name="NAME" x="99.06" y="47.2186" size="1.778" layer="95"/>
 <attribute name="VALUE" x="99.06" y="42.418" size="1.778" layer="96"/>
 </instance>
-<instance part="PIN1" gate="G$1" x="88.9" y="45.72" smashed="yes"/>
-<instance part="PIN2" gate="G$1" x="88.9" y="58.42" smashed="yes"/>
+<instance part="PIN1" gate="G$1" x="88.9" y="40.64" smashed="yes" rot="R180"/>
+<instance part="PIN2" gate="G$1" x="88.9" y="53.34" smashed="yes" rot="R180"/>
 <instance part="P+7" gate="1" x="57.15" y="170.18" smashed="yes" rot="R270">
 <attribute name="VALUE" x="52.07" y="172.72" size="1.778" layer="96"/>
 </instance>
-<instance part="P+5" gate="1" x="-13.97" y="99.06" smashed="yes" rot="R90">
-<attribute name="VALUE" x="-8.89" y="96.52" size="1.778" layer="96" rot="R180"/>
+<instance part="P+5" gate="1" x="-5.08" y="110.49" smashed="yes">
+<attribute name="VALUE" x="-7.62" y="105.41" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="GND13" gate="1" x="3.81" y="99.06" smashed="yes" rot="R90">
-<attribute name="VALUE" x="6.35" y="96.52" size="1.778" layer="96" rot="R90"/>
+<instance part="GND13" gate="1" x="-5.08" y="92.71" smashed="yes">
+<attribute name="VALUE" x="-7.62" y="90.17" size="1.778" layer="96"/>
 </instance>
-<instance part="C10" gate="G$1" x="-5.08" y="100.33" smashed="yes" rot="R90">
-<attribute name="NAME" x="-5.461" y="101.854" size="1.778" layer="95" rot="R90"/>
-<attribute name="VALUE" x="-0.381" y="101.854" size="1.778" layer="96" rot="R90"/>
+<instance part="C10" gate="G$1" x="-5.08" y="101.6" smashed="yes">
+<attribute name="NAME" x="-3.556" y="101.981" size="1.778" layer="95"/>
+<attribute name="VALUE" x="-3.556" y="96.901" size="1.778" layer="96"/>
 </instance>
 </instances>
 <busses>
@@ -12215,7 +12215,7 @@ Reichelt
 <wire x1="151.13" y1="53.34" x2="151.13" y2="50.8" width="0.1524" layer="91"/>
 <pinref part="SV4" gate="1" pin="6"/>
 <wire x1="151.13" y1="50.8" x2="140.97" y2="50.8" width="0.1524" layer="91"/>
-<wire x1="168.91" y1="53.34" x2="173.99" y2="53.34" width="0.1524" layer="91"/>
+<wire x1="168.91" y1="53.34" x2="175.768" y2="53.34" width="0.1524" layer="91"/>
 <junction x="168.91" y="53.34"/>
 <pinref part="GND15" gate="1" pin="GND"/>
 </segment>
@@ -12250,8 +12250,7 @@ Reichelt
 <segment>
 <pinref part="C10" gate="G$1" pin="2"/>
 <pinref part="GND13" gate="1" pin="GND"/>
-<wire x1="0" y1="100.33" x2="1.27" y2="100.33" width="0.1524" layer="91"/>
-<wire x1="1.27" y1="100.33" x2="1.27" y2="99.06" width="0.1524" layer="91"/>
+<wire x1="-5.08" y1="96.52" x2="-5.08" y2="95.25" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="+5V" class="0">
@@ -12311,8 +12310,7 @@ Reichelt
 <segment>
 <pinref part="P+5" gate="1" pin="+5V"/>
 <pinref part="C10" gate="G$1" pin="1"/>
-<wire x1="-11.43" y1="99.06" x2="-11.43" y2="100.33" width="0.1524" layer="91"/>
-<wire x1="-11.43" y1="100.33" x2="-7.62" y2="100.33" width="0.1524" layer="91"/>
+<wire x1="-5.08" y1="107.95" x2="-5.08" y2="104.14" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="BUZ+" class="0">
@@ -12443,7 +12441,6 @@ Reichelt
 <pinref part="PIN2" gate="G$1" pin="P$1"/>
 <wire x1="88.9" y1="53.34" x2="97.79" y2="53.34" width="0.1524" layer="91"/>
 <wire x1="99.06" y1="53.34" x2="114.3" y2="53.34" width="0.1524" layer="91"/>
-<wire x1="88.9" y1="53.34" x2="88.9" y2="58.42" width="0.1524" layer="91"/>
 <pinref part="R10" gate="G$1" pin="1"/>
 <wire x1="97.79" y1="58.42" x2="97.79" y2="53.34" width="0.1524" layer="91"/>
 <wire x1="97.79" y1="53.34" x2="99.06" y2="53.34" width="0.1524" layer="91"/>
@@ -12463,7 +12460,6 @@ Reichelt
 <wire x1="97.79" y1="40.64" x2="114.3" y2="40.64" width="0.1524" layer="91"/>
 <wire x1="97.79" y1="40.64" x2="88.9" y2="40.64" width="0.1524" layer="91"/>
 <pinref part="PIN1" gate="G$1" pin="P$1"/>
-<wire x1="88.9" y1="40.64" x2="88.9" y2="45.72" width="0.1524" layer="91"/>
 <junction x="97.79" y="40.64"/>
 </segment>
 </net>
@@ -12649,7 +12645,7 @@ Reichelt
 </segment>
 <segment>
 <pinref part="C14" gate="G$1" pin="1"/>
-<wire x1="-16.51" y1="139.7" x2="-17.78" y2="139.7" width="0.1524" layer="91"/>
+<wire x1="-16.51" y1="139.7" x2="-16.51" y2="139.954" width="0.1524" layer="91"/>
 <label x="-20.32" y="139.7" size="1.778" layer="95"/>
 </segment>
 <segment>
