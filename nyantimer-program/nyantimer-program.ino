@@ -177,7 +177,7 @@ void convertLED() {
 
 
 bool touch() {
-  int threshold = 70;
+  int threshold = 80;
   int VAL1 = 0;
   int VAL2 = 0;
   for (int i = 0; i < 100; i++) {
