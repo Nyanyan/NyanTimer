@@ -49,8 +49,6 @@ Autodesk Fusion 360
 
 スタックタイマーのタッチセンサは静電容量方式のセンサです。これについて、今回は自作しました。
 
-##### 回路
-
 ![touchpad](https://github.com/Nyanyan/NyanTimer/blob/images/touchsensor.PNG)
 
 少々図が汚いですが勘弁してください。

@@ -81,7 +81,7 @@ void out() { //serial output, every 125msec
 }
 
 
-void inspstatection() {
+void inspection() {
   inspstatcount--;
 }
 
@@ -202,6 +202,7 @@ bool touch() {
     digitalWrite(PAD2OUT, LOW);
     VAL1 = max(VAL1, val1);
     VAL2 = max(VAL2, val2);
+    delayMicroseconds(100);
   }
   if (VAL1 > threshold && VAL2 > threshold)
     return true;
@@ -374,12 +375,14 @@ void timer() {
 
 
     else if (stat == 'I' && inspstat == 1) { //inspection time starts
-      inspstatcount = 16;
       Timer1.stop();
-      Timer1.initialize(1000000);
-      Timer1.attachInterrupt(inspstatection);
       while (touch() == true);
+      Timer1.initialize(1000000);
+      Timer1.attachInterrupt(inspection);
       Timer1.start();
+      inspstatcount = 16;
+      lcd.setCursor(3, 0);
+      lcd.print(String(15));
       inspstat = 2;
     }
   }
