@@ -177,16 +177,16 @@ void convertLED() {
 
 
 bool touch() {
-  float threshold = 35;
+  float threshold = 20;
   float VAL1 = 0;
   float VAL2 = 0;
   float t = 50;
-  float s = 5;
-  float k = 0.7;
-  float fval1[5] = {0, 0, 0, 0, 0};
-  float fval2[5] = {0, 0, 0, 0, 0};
-  float val1avg = 0;
-  float val2avg = 0;
+  //float s = 5;
+  float k = 0.9;
+  //float fval1[5] = {0, 0, 0, 0, 0};
+  //float fval2[5] = {0, 0, 0, 0, 0};
+  //float val1avg = 0;
+  //float val2avg = 0;
   for (int i = 0; i < t; i++) {
     float val1 = 0;
     float val2 = 0;
@@ -207,10 +207,10 @@ bool touch() {
       delayMicroseconds(1);
     }
     digitalWrite(PAD2OUT, LOW);
-
+/*
     VAL1 = max(VAL1, val1);
     VAL2 = max(VAL2, val2);
-
+*/
     /*
       if (i == 4) {
       for (int j = 0; j < 5; j++) {
@@ -235,37 +235,37 @@ bool touch() {
       lcd.setCursor(6, 1);
       lcd.print(String(dif1));
     */
-    /*
-      if (val1 != 0 && val2 != 0) {
+
+    if (val1 != 0 && val2 != 0) {
       VAL1 += val1;
       VAL2 += val2;
-      } else
+    } else
       i--;
+
+    delayMicroseconds(10);
+    /*
+        lcd.setCursor(0, 0);
+        lcd.print(String(val1));
+        lcd.setCursor(9, 0);
+        lcd.print(String(val2));
     */
-    delayMicroseconds(100);
-
-    lcd.setCursor(0, 0);
-    lcd.print(String(val1));
-    lcd.setCursor(9, 0);
-    lcd.print(String(val2));
-
   }
-
+/*
   lcd.setCursor(0, 0);
-  lcd.print(String(VAL1));
+  lcd.print(String(VAL1 / t));
   lcd.setCursor(9, 0);
-  lcd.print(String(VAL2));
+  lcd.print(String(VAL2 / t));
 
   lcd.setCursor(0, 1);
-  lcd.print(String(threshold));
+  lcd.print(String(threshold * k));
+*/
 
 
-
-  if (VAL1 > threshold && VAL2 > threshold){
-    digitalWrite(LEDR,HIGH);
+  if (VAL1 > threshold * t * k && VAL2 > threshold * t * k) {
+    //digitalWrite(LEDR, HIGH);
     return true;
-  }else{
-    digitalWrite(LEDR,LOW);
+  } else {
+    //digitalWrite(LEDR, LOW);
     return false;
   }
 }
@@ -482,8 +482,6 @@ void timer() {
 
 
 void loop() {
-  touch();
-  /*
     button();
     if (stat == 'I' || stat == 'A') {
     resettime();
@@ -504,5 +502,4 @@ void loop() {
 
     convertLCD();
     convertLED();
-  */
 }
