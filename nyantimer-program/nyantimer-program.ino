@@ -180,13 +180,8 @@ bool touch() {
   float threshold = 20;
   float VAL1 = 0;
   float VAL2 = 0;
-  float t = 50;
-  //float s = 5;
-  float k = 0.9;
-  //float fval1[5] = {0, 0, 0, 0, 0};
-  //float fval2[5] = {0, 0, 0, 0, 0};
-  //float val1avg = 0;
-  //float val2avg = 0;
+  float t = 20;
+  float k = 0.85;
   for (int i = 0; i < t; i++) {
     float val1 = 0;
     float val2 = 0;
@@ -195,7 +190,6 @@ bool touch() {
       val1++;
       if (val1 > threshold)
         break;
-      delayMicroseconds(1);
     }
     digitalWrite(PAD1OUT, LOW);
 
@@ -204,70 +198,22 @@ bool touch() {
       val2++;
       if (val2 > threshold)
         break;
-      delayMicroseconds(1);
     }
     digitalWrite(PAD2OUT, LOW);
-/*
-    VAL1 = max(VAL1, val1);
-    VAL2 = max(VAL2, val2);
-*/
-    /*
-      if (i == 4) {
-      for (int j = 0; j < 5; j++) {
-        val1avg += fval1[j];
-        val2avg += fval2[j];
-      }
-      val1avg /= 5;
-      val2avg /= 5;
-      }
-      float dif1 = abs(val1avg - val1);
-      float dif2 = abs(val2avg - val2);
-      float difthreshold = 5;
-      if (i < 5 || (i >= 5 && dif1 < difthreshold && dif2 < difthreshold)) {
-      VAL1 += val1;
-      VAL2 += val2;
-      s++;
-      }
-      if (i < 5){
-      fval1[i] = val1;
-      fval2[i] = val2;
-      }
-      lcd.setCursor(6, 1);
-      lcd.print(String(dif1));
-    */
 
-    if (val1 != 0 && val2 != 0) {
+    if (val1 > 0 && val2 > 0) {
       VAL1 += val1;
       VAL2 += val2;
     } else
       i--;
 
-    delayMicroseconds(10);
-    /*
-        lcd.setCursor(0, 0);
-        lcd.print(String(val1));
-        lcd.setCursor(9, 0);
-        lcd.print(String(val2));
-    */
+    delayMicroseconds(400);
   }
-/*
-  lcd.setCursor(0, 0);
-  lcd.print(String(VAL1 / t));
-  lcd.setCursor(9, 0);
-  lcd.print(String(VAL2 / t));
-
-  lcd.setCursor(0, 1);
-  lcd.print(String(threshold * k));
-*/
-
-
-  if (VAL1 > threshold * t * k && VAL2 > threshold * t * k) {
-    //digitalWrite(LEDR, HIGH);
+  if (VAL1 > threshold * t * k && VAL2 > threshold * t * k)
     return true;
-  } else {
-    //digitalWrite(LEDR, LOW);
+  else
     return false;
-  }
+
 }
 
 void resettime() {
@@ -410,8 +356,20 @@ void timer() {
         if (i >= 20)  //timer is able to start
           stat = 'A';
       } else if ((inspmode == 1 && inspstat == 0) || (inspmode == 2 && inspstat == 0)) { //inspstatection mode
-        inspstat = 1;
+        int i = 0;
+        while (touch() == true && i < 20) { //wait about 0.55sec
+          i++;
+          delay(1);
+        }
+        ledr = 1;
+        ledg = 0;
+        convertLED();
+        if (i >= 20)  //timer is able to start
+          inspstat = 1;
         while (touch() == true);
+        ledr = 0;
+        ledg = 0;
+        convertLED();
       }
     }
   }
@@ -482,24 +440,24 @@ void timer() {
 
 
 void loop() {
-    button();
-    if (stat == 'I' || stat == 'A') {
+  button();
+  if (stat == 'I' || stat == 'A') {
     resettime();
-    }
+  }
 
-    timer();
+  timer();
 
-    if (stat == 'S') {
+  if (stat == 'S') {
     ledr = 0;
     ledg = 1;
-    } else if (stat == 'A') {
+  } else if (stat == 'A') {
     ledr = 1;
     ledg = 1;
-    } else if (stat == 'I') {
+  } else if (stat == 'I') {
     ledr = 0;
     ledg = 0;
-    }
+  }
 
-    convertLCD();
-    convertLED();
+  convertLCD();
+  convertLED();
 }
