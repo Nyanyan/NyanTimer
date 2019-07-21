@@ -11450,10 +11450,10 @@ Source: AVX .. aphvc.pdf</description>
 <packages>
 <package name="PHONE">
 <description>Akizuki phone jack</description>
-<pad name="PIN2" x="0" y="0" drill="1.016"/>
-<pad name="PIN3" x="5.08" y="0" drill="1.016"/>
-<pad name="PIN1" x="5.08" y="-5.08" drill="1.016"/>
-<pad name="GND" x="0" y="-5.08" drill="1.016"/>
+<pad name="PIN2" x="0" y="0" drill="1.143"/>
+<pad name="PIN3" x="5.08" y="0" drill="1.143"/>
+<pad name="PIN1" x="5.08" y="-5.08" drill="1.143"/>
+<pad name="GND" x="0" y="-5.08" drill="1.143"/>
 <wire x1="-1.27" y1="1.27" x2="-1.27" y2="-7.62" width="0.127" layer="21"/>
 <wire x1="-1.27" y1="-7.62" x2="6.35" y2="-7.62" width="0.127" layer="21"/>
 <wire x1="6.35" y1="-7.62" x2="6.35" y2="1.27" width="0.127" layer="21"/>
@@ -11590,11 +11590,11 @@ Reichelt
 <library name="akizuki_switch">
 <packages>
 <package name="AKIZUKI_SWITCH">
-<pad name="SIDE1" x="0" y="0" drill="1.016"/>
+<pad name="SIDE1" x="0" y="0" drill="1.27"/>
 <pad name="PIN1" x="2" y="0" drill="0.65"/>
 <pad name="PIN2" x="4" y="0" drill="0.65"/>
 <pad name="PIN3" x="6" y="0" drill="0.65"/>
-<pad name="SIDE2" x="8" y="0" drill="1.016"/>
+<pad name="SIDE2" x="8" y="0" drill="1.27"/>
 <wire x1="-1" y1="1" x2="-1" y2="-1" width="0.1524" layer="21"/>
 <wire x1="-1" y1="-1" x2="9" y2="-1" width="0.1524" layer="21"/>
 <wire x1="9" y1="-1" x2="9" y2="1" width="0.1524" layer="21"/>
@@ -11632,8 +11632,8 @@ Reichelt
 <library name="akizuki_cr2032">
 <packages>
 <package name="AKIZUKI_CR2032">
-<pad name="PLUS" x="0" y="0" drill="0.8"/>
-<pad name="MINUS" x="0" y="20.32" drill="0.8"/>
+<pad name="PLUS" x="0" y="0" drill="1.143"/>
+<pad name="MINUS" x="0" y="20.32" drill="1.143"/>
 <wire x1="-3" y1="-2" x2="3" y2="-2" width="0.1524" layer="21"/>
 <wire x1="3" y1="-2" x2="3" y2="2" width="0.1524" layer="21"/>
 <wire x1="-3" y1="-2" x2="-3" y2="2" width="0.1524" layer="21"/>
