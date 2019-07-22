@@ -181,7 +181,7 @@ bool touch() {
   float VAL1 = 0;
   float VAL2 = 0;
   float t = 20;
-  float k = 0.85;
+  float k = 0.9;
   for (int i = 0; i < t; i++) {
     float val1 = 0;
     float val2 = 0;
@@ -209,6 +209,10 @@ bool touch() {
 
     delayMicroseconds(400);
   }
+  /*
+  lcd.setCursor(0, 0);
+  lcd.print(VAL1 / t);
+  */
   if (VAL1 > threshold * t * k && VAL2 > threshold * t * k)
     return true;
   else
