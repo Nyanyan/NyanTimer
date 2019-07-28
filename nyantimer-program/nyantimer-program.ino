@@ -32,6 +32,8 @@ int lap[maxlap + 1][3];
 int inspstat = 0; //1=during inspstatection time
 int inspstatcount = 16; //inspstatection time count
 bool buz = 0;
+int batterycount = 0;
+int batterythreshold = 1000000;
 
 void setup() {
   Serial.begin(1200);
@@ -210,8 +212,8 @@ bool touch() {
     delayMicroseconds(400);
   }
   /*
-  lcd.setCursor(0, 0);
-  lcd.print(VAL1 / t);
+    lcd.setCursor(0, 0);
+    lcd.print(VAL1 / t);
   */
   if (VAL1 > threshold * t * k && VAL2 > threshold * t * k)
     return true;
@@ -272,15 +274,18 @@ void setLCDclear(int m) {
 
 void button() {
   if (digitalRead(BUTTON1) == HIGH) {//reset
+    batterycount = 0;
     stat = 'I';
     Timer1.stop();
     //resettime();
   } else if (digitalRead(BUTTON2) == HIGH) { //inspstatection mode
+    batterycount = 0;
     inspmode += 1;
     if (inspmode > 2)
       inspmode = 0;
     while (digitalRead(BUTTON2) == HIGH);
   } else if (digitalRead(BUTTON3) == HIGH) { //lap mode up
+    batterycount = 0;
     lapUP();
     convertLCD();
     bool flag = false;
@@ -295,6 +300,7 @@ void button() {
       convertLCD();
     }
   } else if (digitalRead(BUTTON4) == HIGH) { //lap mode down
+    batterycount = 0;
     lapDOWN();
     convertLCD();
     bool flag = false;
@@ -308,7 +314,8 @@ void button() {
       delay(100);
       convertLCD();
     }
-  }
+  } else if (stat == 'I')
+    batterycount++;
 }
 
 
@@ -450,6 +457,13 @@ void loop() {
   }
 
   timer();
+
+  if (stat != 'I')
+    batterycount = 0;
+  if (batterycount >= batterythreshold) {
+    lcd.clear();
+    for (;;);
+  }
 
   if (stat == 'S') {
     ledr = 0;
