@@ -21,7 +21,6 @@ int minute, second, msecond = 0;
 int output[7] = {0, 0, 0, 0, 0, 0, 0};
 char stat = 'I'; //status
 
-bool power = 0; // power on / off
 bool ledr = 0; //red led status
 bool ledg = 0; //green led status
 int inspmode = 0; //0:off 1:sndOFF 2:sndON
@@ -32,8 +31,8 @@ int lap[maxlap + 1][3];
 int inspstat = 0; //1=during inspstatection time
 int inspstatcount = 16; //inspstatection time count
 bool buz = 0;
-int batterycount = 0;
-int batterythreshold = 1000000;
+long batterycount = 0;
+const long batterythreshold = 120000; //1000 per 30s
 
 void setup() {
   Serial.begin(1200);
