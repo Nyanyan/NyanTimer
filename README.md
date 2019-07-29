@@ -145,7 +145,13 @@ http://nn-hokuson.hatenablog.com/entry/2017/03/22/200454
 
 #### 全体的な処理
 
-フローチャートをそのうち書きます。
+<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/flow.png" width="500">
+
+なぜか繰り返し記号が使えなかったので適当に六角形で代用です。
+
+プログラム中では左側がbutton()で、右側がtimer()です。
+
+これ以外にも色々複雑に処理はしていますが、まあ大体はこんな感じです。
 
 #### 信号
 
