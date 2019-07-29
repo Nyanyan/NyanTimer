@@ -27,6 +27,32 @@ https://www.youtube.com/watch?v=Nj-br9DjQB4&t=30s
 
 
 
+## 使い方
+
+### 基本的な使い方
+
+#### 電池
+
+左右にある写真の蓋を取って、CR2540を入れます。
+
+![battery](https://github.com/Nyanyan/NyanTimer/blob/images/image/battery.jpeg)
+
+ちょっと蓋が取りにくいです。裏側に出ているネジを押しつつ表側でネジの上を押さえると取りやすいです。
+
+### 電源
+
+タイマーにあるスライドスイッチで電源が入ります。これも少し扱いにくいです(ごめんなさい)
+
+![power](https://github.com/Nyanyan/NyanTimer/blob/images/image/power.jpeg)
+
+秋月にいい感じのスイッチが見当たらなくて…
+
+### インスペクションタイム計測
+
+### ラップタイム計測
+
+
+
 ## 開発環境
 
 Visual Studio Code
@@ -49,7 +75,7 @@ Autodesk Fusion 360
 
 スタックタイマーのタッチセンサは静電容量方式のセンサです。これについて、今回は自作しました。
 
-![touchpad](https://github.com/Nyanyan/NyanTimer/blob/images/touchsensor.PNG)
+![touchpad](https://github.com/Nyanyan/NyanTimer/blob/images/image/touchsensor.PNG)
 
 少々図が汚いですが勘弁してください。
 
@@ -69,7 +95,9 @@ http://nn-hokuson.hatenablog.com/entry/2017/03/22/200454
 
 タクトスイッチ
 
-液晶(16x2)
+液晶(16文字x2行)
+
+
 
 
 
