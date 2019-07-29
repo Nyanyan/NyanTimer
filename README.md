@@ -35,7 +35,7 @@ https://www.youtube.com/watch?v=Nj-br9DjQB4&t=30s
 
 左右にある写真の蓋を取って、CR2540を入れます。
 
-<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/battery.jpeg" width="7cm">
+<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/battery.jpeg" width="150">
 
 ちょっと蓋が取りにくいです。裏側に出ているネジを押しつつ表側でネジの上を押さえると取りやすいです。
 
