@@ -35,7 +35,7 @@ https://www.youtube.com/watch?v=Nj-br9DjQB4&t=30s
 
 左右にある写真の蓋を取って、CR2540を入れます。
 
-<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/battery.jpeg" width="150">
+<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/battery.jpeg" width="500">
 
 ちょっと蓋が取りにくいです。裏側に出ているネジを押しつつ表側でネジの上を押さえると取りやすいです。
 
@@ -43,13 +43,13 @@ https://www.youtube.com/watch?v=Nj-br9DjQB4&t=30s
 
 タイマーにあるスライドスイッチで電源が入ります。これも少し扱いにくいです(ごめんなさい)
 
-![power](https://github.com/Nyanyan/NyanTimer/blob/images/image/power.jpeg)
+<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/power.jpeg" width="500">
 
 秋月にいい感じのスイッチが見当たらなくて…
 
 #### ボタン
 
-![power](https://github.com/Nyanyan/NyanTimer/blob/images/image/switch.jpeg)
+<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/switch.jpeg" width="500">
 
 * 左上: インスペクションタイム計測モード切り替え
 
@@ -95,7 +95,7 @@ Autodesk Fusion 360
 
 スタックタイマーのタッチセンサは静電容量方式のセンサです。これについて、今回は自作しました。
 
-![touchpad](https://github.com/Nyanyan/NyanTimer/blob/images/image/touchsensor.PNG)
+<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/touchsensor.PNG" width="500">
 
 少々図が汚いですが勘弁してください。
 
