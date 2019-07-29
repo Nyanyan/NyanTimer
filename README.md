@@ -145,7 +145,7 @@ http://nn-hokuson.hatenablog.com/entry/2017/03/22/200454
 
 #### 全体的な処理
 
-<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/flow.png" width="500">
+<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/flow.png" width="1000">
 
 なぜか繰り返し記号が使えなかったので適当に六角形で代用です。
 
@@ -159,7 +159,7 @@ http://nn-hokuson.hatenablog.com/entry/2017/03/22/200454
 
 https://github.com/fw42/atmel/tree/master/stackmat
 
-かんたんに日本語で書きます。私は通信には詳しくないので、正確には上を参照してください。
+簡単に日本語で書きます。私は通信には詳しくないので、正確には上を参照してください。
 
 * 信号はRS232
 * 1200bps
