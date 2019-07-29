@@ -31,7 +31,7 @@ int inspstat = 0; //1=during inspstatection time
 int inspstatcount = 16; //inspstatection time count
 bool buz = 0;
 long batterycount = 0;
-const long batterythreshold = 120000; //1000 per 30s
+const long batterythreshold = 60000; //1000 per 30s
 
 void setup() {
   Serial.begin(1200);

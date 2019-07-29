@@ -143,10 +143,6 @@ http://nn-hokuson.hatenablog.com/entry/2017/03/22/200454
 
 液晶(16文字x2行)
 
-
-
-
-
 ### ソフトウェア
 
 #### 全体的な処理
@@ -159,7 +155,7 @@ http://nn-hokuson.hatenablog.com/entry/2017/03/22/200454
 
 https://github.com/fw42/atmel/tree/master/stackmat
 
-かんたんに日本語で書きます。私は信号に詳しくないので、正確には上を参照してください。
+かんたんに日本語で書きます。私は通信には詳しくないので、正確には上を参照してください。
 
 * 信号はRS232
 * 1200bps
