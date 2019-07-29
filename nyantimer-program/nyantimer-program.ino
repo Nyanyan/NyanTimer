@@ -20,7 +20,6 @@ ST7032 lcd;
 int minute, second, msecond = 0;
 int output[7] = {0, 0, 0, 0, 0, 0, 0};
 char stat = 'I'; //status
-
 bool ledr = 0; //red led status
 bool ledg = 0; //green led status
 int inspmode = 0; //0:off 1:sndOFF 2:sndON
