@@ -13,9 +13,17 @@ DIY Stackmat Timer for cubing
 
 https://twitter.com/nyanyan_cube
 
-最後に、NyanTimerの紹介動画のURLを載せておきます。
+NyanTimerの紹介動画のURLを載せておきます。
 
 https://www.youtube.com/watch?v=Nj-br9DjQB4&t=30s
+
+画像
+
+<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/nyantimer-real.jpeg" width="500">
+
+<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/nyantimer-fusion.PNG" width="500">
+
+<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/nyantimer-board.PNG" width="500">
 
 ## 機能
 
@@ -95,13 +103,19 @@ Autodesk Eagle
 
 Autodesk Fusion 360
 
-## 解説
+## 技術的な解説
 
 ### ハードウェア
 
 詳しいことはboard-vXの中のEagleのデータをご覧ください。簡単に説明すると、Arduinoから各部品に接続しているだけです。
 
-タッチセンサについてのみ、少し細く説明をします。その後、その他の部品の概要を少し書きます。
+ボディとタッチセンサについてのみ、少し細かく説明をします。その後、その他の部品の概要を少し書きます。
+
+####  ボディ
+
+ボディはAutodesk Fusion 360で設計し、CNCフライス盤で切り出しました(今後レーザーカッターでの出力に方針転換する予定)
+
+<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/touchsensor.PNG" width="500">
 
 #### タッチセンサ
 
