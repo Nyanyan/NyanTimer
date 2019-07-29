@@ -35,7 +35,7 @@ https://www.youtube.com/watch?v=Nj-br9DjQB4&t=30s
 
 左右にある写真の蓋を取って、CR2540を入れます。
 
-![battery](https://github.com/Nyanyan/NyanTimer/blob/images/image/battery.jpeg)
+<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/battery.jpeg" width="7cm">
 
 ちょっと蓋が取りにくいです。裏側に出ているネジを押しつつ表側でネジの上を押さえると取りやすいです。
 
@@ -47,7 +47,7 @@ https://www.youtube.com/watch?v=Nj-br9DjQB4&t=30s
 
 秋月にいい感じのスイッチが見当たらなくて…
 
-#### スイッチ
+#### ボタン
 
 ![power](https://github.com/Nyanyan/NyanTimer/blob/images/image/switch.jpeg)
 
@@ -60,6 +60,14 @@ https://www.youtube.com/watch?v=Nj-br9DjQB4&t=30s
 * 右下: ラップ計測回数調整(ダウン)
 
 ### インスペクションタイム計測
+
+インスペクションタイム計測モード切り替えボタンを押すと、画面左上に‘I’や‘Is’が表示されたり消えたりします。これらの表示について、示す機能は以下です。
+
+* ‘ ’: インスペクションタイムを計測しない
+* ‘I’: インスペクションタイム計測(8秒、12秒のコールなし)
+* ‘Is’: インスペクションタイム計測(8秒、12秒で音が鳴る)
+
+
 
 ### ラップタイム計測
 
