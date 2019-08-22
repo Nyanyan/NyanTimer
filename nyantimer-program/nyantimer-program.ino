@@ -349,7 +349,17 @@ void timer() {
           lap[lapcount][1]--;
         }
       }
-      while (touch() == true);
+      bool touchflag = true;
+      while (touchflag == true) {
+        int cnt = 0;
+        int touchthreshold = 20;
+        for (cnt = 0; cnt <= touchthreshold; cnt++) {
+          if (touch() == true)
+            break;
+        }
+        if (cnt >= touchthreshold)
+          touchflag = false;
+      }
 
 
     } else if (stat == 'I') { //timer ready to start
