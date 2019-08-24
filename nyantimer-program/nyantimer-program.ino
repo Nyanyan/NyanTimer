@@ -32,6 +32,7 @@ int inspstatcount = 16; //inspstatection time count
 bool buz = 0;
 long batterycount = 0;
 const long batterythreshold = 60000; //1000 per 30s
+String statout;
 
 void setup() {
   Serial.begin(1200);
@@ -66,7 +67,8 @@ void setup() {
 
 
 void out() { //serial output, every 125msec
-  String serout = String(stat);
+  String serout = statout;
+
   for (int i = 1; i < 7; i++)
     serout += output[i];
   int tmp = 0;
@@ -176,7 +178,7 @@ void convertLED() {
 
 
 
-bool touch() {
+int touch(int mode) {
   float threshold = 20;
   float VAL1 = 0;
   float VAL2 = 0;
@@ -213,10 +215,21 @@ bool touch() {
     lcd.setCursor(0, 0);
     lcd.print(VAL1 / t);
   */
-  if (VAL1 > threshold * t * k && VAL2 > threshold * t * k)
-    return true;
-  else
-    return false;
+  if (mode == 0) {
+    if (VAL1 > threshold * t * k && VAL2 > threshold * t * k)
+      return 1;
+    else
+      return 0;
+  } else {
+    if (VAL1 > threshold * t * k && VAL2 > threshold * t * k)
+      return 1;
+    else if (VAL1 > threshold * t * k && VAL2 <= threshold * t * k)
+      return 2;
+    else if (VAL1 <= threshold * t * k && VAL2 > threshold * t * k)
+      return 3;
+    else
+      return 0;
+  }
 
 }
 
@@ -319,7 +332,7 @@ void button() {
 
 
 void timer() {
-  if (touch() == true) {
+  if (touch(0) == 1) {
 
     if (stat == ' ') { //when timer stops
       if (lapcount == lapmode - 1) {
@@ -354,7 +367,7 @@ void timer() {
         int cnt = 0;
         int touchthreshold = 20;
         for (cnt = 0; cnt <= touchthreshold; cnt++) {
-          if (touch() == true)
+          if (touch(0) == 1)
             break;
         }
         if (cnt >= touchthreshold)
@@ -368,7 +381,7 @@ void timer() {
         ledr = 1;
         ledg = 0;
         convertLED();
-        while (touch() == true && i < 20) { //wait about 0.55sec
+        while (touch(0) == 1 && i < 20) { //wait about 0.55sec
           i++;
           delay(1);
         }
@@ -376,7 +389,7 @@ void timer() {
           stat = 'A';
       } else if ((inspmode == 1 && inspstat == 0) || (inspmode == 2 && inspstat == 0)) { //inspstatection mode
         int i = 0;
-        while (touch() == true && i < 20) { //wait about 0.55sec
+        while (touch(0) == 1 && i < 20) { //wait about 0.55sec
           i++;
           delay(1);
         }
@@ -385,7 +398,7 @@ void timer() {
         convertLED();
         if (i >= 20)  //timer is able to start
           inspstat = 1;
-        while (touch() == true);
+        while (touch(0) == 1);
         ledr = 0;
         ledg = 0;
         convertLED();
@@ -407,13 +420,13 @@ void timer() {
       Timer1.attachInterrupt(count);
       Timer1.start();
       setLCDclear(1);
-      while (touch() == true);
+      while (touch(0) == 1);
     }
 
 
     else if (stat == 'I' && inspstat == 1) { //inspection time starts
       Timer1.stop();
-      while (touch() == true);
+      while (touch(0) == 1);
       Timer1.initialize(1000000);
       Timer1.attachInterrupt(inspection);
       Timer1.start();
@@ -483,6 +496,14 @@ void loop() {
     ledr = 0;
     ledg = 0;
   }
+
+  if (stat == 'I') {
+    if (touch(1) == 2)
+      statout = 'R';
+    else if (touch(1) == 3)
+      statout = 'L';
+  } else
+    statout = String(stat);
 
   convertLCD();
   convertLED();
