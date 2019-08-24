@@ -182,7 +182,7 @@ int touch(int mode) {
   float threshold = 20;
   float VAL1 = 0;
   float VAL2 = 0;
-  float t = 20;
+  float t = 40;
   float k = 0.9;
   for (int i = 0; i < t; i++) {
     float val1 = 0;
