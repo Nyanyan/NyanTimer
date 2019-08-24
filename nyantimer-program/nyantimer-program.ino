@@ -497,12 +497,11 @@ void loop() {
     ledg = 0;
   }
 
-  if (stat == 'I') {
-    if (touch(1) == 2)
-      statout = 'R';
-    else if (touch(1) == 3)
-      statout = 'L';
-  } else
+  if (stat == 'I' && touch(1) == 2)
+    statout = 'R';
+  else if (stat == 'I' && touch(1) == 3)
+    statout = 'L';
+  else
     statout = String(stat);
 
   convertLCD();
