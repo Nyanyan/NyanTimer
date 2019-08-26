@@ -212,10 +212,6 @@ int touch(int mode) {
 
     delayMicroseconds(400);
   }
-  /*
-    lcd.setCursor(0, 0);
-    lcd.print(VAL1 / t);
-  */
   if (mode == 0) {
     if (VAL1 > threshold * t * k && VAL2 > threshold * t * k)
       return 1;
@@ -231,7 +227,6 @@ int touch(int mode) {
     else
       return 0;
   }
-
 }
 
 void resettime() {
@@ -366,7 +361,7 @@ void timer() {
       bool touchflag = true;
       while (touchflag == true) {
         int cnt = 0;
-        int touchthreshold = 20;
+        int touchthreshold = 10;
         for (cnt = 0; cnt <= touchthreshold; cnt++) {
           if (touch(0) == 1)
             break;
@@ -382,22 +377,24 @@ void timer() {
         ledr = 1;
         ledg = 0;
         convertLED();
-        while (touch(0) == 1 && i < 20) { //wait about 0.55sec
+        int waitingthreshold = 15;
+        while (touch(0) == 1 && i < waitingthreshold) { //wait about 0.55sec
           i++;
           delay(1);
         }
-        if (i >= 20)  //timer is able to start
+        if (i >= waitingthreshold)  //timer is able to start
           stat = 'A';
       } else if ((inspmode == 1 && inspstat == 0) || (inspmode == 2 && inspstat == 0)) { //inspstatection mode
         int i = 0;
-        while (touch(0) == 1 && i < 20) { //wait about 0.55sec
+        int waitingthreshold = 15;
+        while (touch(0) == 1 && i < waitingthreshold) { //wait about 0.55sec
           i++;
           delay(1);
         }
         ledr = 1;
         ledg = 0;
         convertLED();
-        if (i >= 20)  //timer is able to start
+        if (i >= waitingthreshold)  //timer is able to start
           inspstat = 1;
         while (touch(0) == 1);
         ledr = 0;
