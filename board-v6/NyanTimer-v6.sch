@@ -11876,8 +11876,8 @@ Reichelt
 <library name="akizuki_cr2032">
 <packages>
 <package name="AKIZUKI_CR2032">
-<pad name="PLUS" x="0" y="0" drill="1.27"/>
-<pad name="MINUS" x="0" y="20.32" drill="1.27"/>
+<pad name="PLUS" x="0" y="0" drill="1.143"/>
+<pad name="MINUS" x="0" y="20.32" drill="1.143"/>
 <wire x1="-3" y1="-2" x2="3" y2="-2" width="0.1524" layer="21"/>
 <wire x1="3" y1="-2" x2="3" y2="2" width="0.1524" layer="21"/>
 <wire x1="-3" y1="-2" x2="-3" y2="2" width="0.1524" layer="21"/>
