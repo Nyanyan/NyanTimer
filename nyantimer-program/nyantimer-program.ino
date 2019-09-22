@@ -283,7 +283,7 @@ void setLCDclear(int m) {
 void button() {
   if (digitalRead(BUTTON1) == HIGH) {//reset
     int a = 0;
-    int t = 1000;
+    int t = 500;
     while (digitalRead(BUTTON1) == HIGH) {
       a++;
       delay(1);
@@ -393,7 +393,7 @@ void timer() {
         ledr = 1;
         ledg = 0;
         convertLED();
-        int waitingthreshold = 15;
+        int waitingthreshold = 30;
         while (touch(0) == 1 && i < waitingthreshold) { //wait about 0.55sec
           i++;
           delay(1);
