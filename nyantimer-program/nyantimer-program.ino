@@ -180,11 +180,11 @@ void convertLED() {
 
 
 int touch(int mode) {
-  float threshold = 20;
+  float threshold = 25;
   float VAL1 = 0;
   float VAL2 = 0;
-  float t = 50;
-  float k = 0.75;
+  float t = 30;
+  float k = 0.5;
 
   for (int i = 0; i < t; i++) {
     float val1 = 0;
@@ -211,7 +211,7 @@ int touch(int mode) {
     } else
       i--;
 
-    delayMicroseconds(400);
+    delayMicroseconds(100);
   }
   if (mode == 0) {
     if (VAL1 > threshold * t * k && VAL2 > threshold * t * k)
@@ -387,7 +387,7 @@ void timer() {
       }
 
 
-    } else if (stat == 'I') { //timer ready to start
+    } else if (stat == 'I' && touch(0) == 1) { //timer ready to start
       if (inspmode == 0 || (inspmode == 1 && inspstat == 2) || (inspmode == 2 && inspstat == 2)) { //not inspstatection mode
         int i = 0;
         ledr = 1;
