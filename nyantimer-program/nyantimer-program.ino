@@ -86,11 +86,6 @@ void out() { //serial output, every 125msec
 
 void inspection() {
   inspstatcount--;
-  if (inspstatcount > 0) {
-    String inspstatcountstr = String(int(inspstatcount / 10)) + String(inspstatcount - 10 * int(inspstatcount / 10));
-    lcd.setCursor(3, 0);
-    lcd.print(inspstatcountstr);
-  }
 }
 
 
@@ -457,7 +452,11 @@ void timer() {
 
 
   if (stat == 'I' && inspstat == 2) {
-    if (inspstatcount > -2 && inspstatcount <= 0)
+    if (inspstatcount > 0 && inspstatcount < 16) {
+      String inspstatcountstr = String(int(inspstatcount / 10)) + String(inspstatcount - 10 * int(inspstatcount / 10));
+      lcd.setCursor(3, 0);
+      lcd.print(inspstatcountstr);
+    } else if (inspstatcount > -2 && inspstatcount <= 0)
       inspresult = "+2";
     else if  (inspstatcount <= -2) {
       inspresult = "DNF";
