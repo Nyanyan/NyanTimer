@@ -344,13 +344,17 @@ void button() {
 void timer() {
   if (touch(1) != 0) {
     if (stat == ' ') { //when timer stops
-      if (lapcount <= lapmode - 1) {
-        if (lapcount == lapmode - 1 && touch(0) == 1) {
-          stat = 'S';
-          Timer1.stop();
-          ledr = 0;
-          ledg = 0;
-        }
+
+      bool tmp = false;
+      if (lapcount == lapmode - 1 && touch(0) == 1) {
+        stat = 'S';
+        Timer1.stop();
+        ledr = 0;
+        ledg = 0;
+        tmp = true;
+      }
+
+      if (lapcount < lapmode - 1 || tmp) {
         lapcount++;
         lap[lapcount][0] = minute;
         lap[lapcount][1] = second;
