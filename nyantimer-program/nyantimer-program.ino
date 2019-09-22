@@ -489,7 +489,7 @@ void loop() {
   if (stat != 'I') //autopower off unit
     batterycount = 0;
   if (batterycount >= batterythreshold) {
-    lcd.clear();
+    setLCDclear(2);
     for (;;);
   }
 
