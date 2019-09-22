@@ -419,6 +419,7 @@ void timer() {
           ledg = 0;
         }
         convertLED();
+        while(touch(0)==1);
       }
     }
   }
@@ -458,7 +459,7 @@ void timer() {
       //lcd.setCursor(3, 0);
       //lcd.print("+2");
       inspresult = "+2";
-    } else {
+    } else if  (inspstatcount <= -2){
       //lcd.setCursor(3, 0);
       //lcd.print("DNF");
       inspresult = "DNF";
