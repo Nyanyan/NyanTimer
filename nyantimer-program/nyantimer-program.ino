@@ -33,6 +33,7 @@ bool buz = 0;
 long batterycount = 0;
 const long batterythreshold = 60000; //1000 per 30s
 String statout;
+String inspresult = "";
 
 void setup() {
   Serial.begin(1200);
@@ -290,9 +291,10 @@ void button() {
         break;
     }
     if (a >= t) {
+      Timer1.stop();
       batterycount = 0;
       stat = 'I';
-      Timer1.stop();
+      inspresult = "";
     }
   } else if (digitalRead(BUTTON2) == HIGH) { //inspstatection mode
     batterycount = 0;
@@ -455,11 +457,13 @@ void timer() {
       lcd.setCursor(3, 0);
       lcd.print(inspstatcountstr);
     } else if (inspstatcount > -2) {
-      lcd.setCursor(3, 0);
-      lcd.print("+2");
+      //lcd.setCursor(3, 0);
+      //lcd.print("+2");
+      inspresult = "+2";
     } else {
-      lcd.setCursor(3, 0);
-      lcd.print("DNF");
+      //lcd.setCursor(3, 0);
+      //lcd.print("DNF");
+      inspresult = "DNF";
       Timer1.stop();
     }
 
@@ -513,4 +517,6 @@ void loop() {
 
   convertLCD();
   convertLED();
+  lcd.setCursor(3, 0);
+  lcd.print(inspresult);
 }
