@@ -452,7 +452,7 @@ void timer() {
 
 
   if (stat == 'I' && inspstat == 2) {
-    if (inspstatcount > 0) {
+    if (inspstatcount > 0 && inspstatcount < 16) {
       String inspstatcountstr = String(int(inspstatcount / 10)) + String(inspstatcount - 10 * int(inspstatcount / 10));
       lcd.setCursor(3, 0);
       lcd.print(inspstatcountstr);
