@@ -179,7 +179,7 @@ void convertLED() {
 
 
 int touch(int mode) {
-  float threshold = 30;
+  float threshold = 20;
   float VAL1 = 0;
   float VAL2 = 0;
   float t = 30;
