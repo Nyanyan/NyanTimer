@@ -442,22 +442,16 @@ void timer() {
 
     else if (stat == 'I' && inspstat == 1) { //inspection time starts
       Timer1.stop();
-      while (touch(0) == 1);
+      inspstatcount = 16;
       Timer1.initialize(1000000);
       Timer1.attachInterrupt(inspection);
       Timer1.start();
-      inspstatcount = 16;
-      lcd.setCursor(3, 0);
-      lcd.print(String(15));
       inspstat = 2;
     }
   }
 
 
   if (stat == 'I' && inspstat == 2) {
-    String inspstatcountstr = String(int(inspstatcount / 10)) + String(inspstatcount - 10 * int(inspstatcount / 10));
-    lcd.setCursor(3, 0);
-    lcd.print(inspstatcountstr);
     if (inspstatcount > -2) {
       //lcd.setCursor(3, 0);
       //lcd.print("+2");
