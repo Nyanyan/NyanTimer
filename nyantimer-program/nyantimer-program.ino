@@ -184,7 +184,7 @@ int touch(int mode) {
   float VAL2 = 0;
   float t = 30;
   float k = 0.75;
-  
+
   for (int i = 0; i < t; i++) {
     float val1 = 0;
     float val2 = 0;
@@ -281,10 +281,19 @@ void setLCDclear(int m) {
 
 void button() {
   if (digitalRead(BUTTON1) == HIGH) {//reset
-    batterycount = 0;
-    stat = 'I';
-    Timer1.stop();
-    //resettime();
+    int a = 0;
+    int t = 1000;
+    while (digitalRead(BUTTON1) == HIGH) {
+      a++;
+      delay(1);
+      if (a >= t)
+        break;
+    }
+    if (a >= t) {
+      batterycount = 0;
+      stat = 'I';
+      Timer1.stop();
+    }
   } else if (digitalRead(BUTTON2) == HIGH) { //inspstatection mode
     batterycount = 0;
     inspmode += 1;
