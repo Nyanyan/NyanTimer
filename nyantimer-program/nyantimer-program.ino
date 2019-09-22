@@ -401,16 +401,24 @@ void timer() {
             String inspstatcountstr = String(int(inspstatcount / 10)) + String(inspstatcount - 10 * int(inspstatcount / 10));
             lcd.setCursor(3, 0);
             lcd.print(inspstatcountstr);
-          } else if (inspstatcount > -2 && inspstatcount <= 0)
+          } else if (inspstatcount > -2 && inspstatcount <= 0) {
             inspresult = "+2";
             lcd.setCursor(3, 0);
             lcd.print("+2");
-          else if  (inspstatcount <= -2) {
+          } else if  (inspstatcount <= -2) {
             inspresult = "DNF";
             lcd.setCursor(3, 0);
             lcd.print("DNF");
             Timer1.stop();
           }
+          if (inspmode == 2) {
+            if (inspstatcount == 7 || inspstatcount == 3)
+              buz = 1;
+            else
+              buz = 0;
+          } else
+            buz = 0;
+          digitalWrite(BUZZER, buz);
         }
         if (i >= waitingthreshold)  //timer is able to start
           stat = 'A';
