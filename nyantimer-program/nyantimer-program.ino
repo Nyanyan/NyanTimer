@@ -342,9 +342,9 @@ void button() {
 
 
 void timer() {
-  if (touch(0) == 1) {
+  if (touch(1) != 0) {
 
-    if (stat == ' ') { //when timer stops
+    if (stat == ' ' && touch(0) == 1) { //when timer stops
       if (lapcount == lapmode - 1) {
         stat = 'S';
         Timer1.stop();
