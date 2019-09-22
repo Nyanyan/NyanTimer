@@ -350,38 +350,40 @@ void timer() {
         ledr = 0;
         ledg = 0;
       }
-      
-      lapcount++;
-      lap[lapcount][0] = minute;
-      lap[lapcount][1] = second;
-      lap[lapcount][2] = msecond;
-      for (int i = lapcount - 1; i >= 0; i--) {
-        lap[lapcount][0] -= lap[i][0];
-        lap[lapcount][1] -= lap[i][1];
-        lap[lapcount][2] -= lap[i][2];
-        if (lap[lapcount][1] < 0) {
-          lap[lapcount][1] += 60;
-          lap[lapcount][0]--;
-        }
-        if (lap[lapcount][2] < 0) {
-          if (lap[lapcount][1] == 0) {
+
+      if (lapcount < lapmode - 1) {
+        lapcount++;
+        lap[lapcount][0] = minute;
+        lap[lapcount][1] = second;
+        lap[lapcount][2] = msecond;
+        for (int i = lapcount - 1; i >= 0; i--) {
+          lap[lapcount][0] -= lap[i][0];
+          lap[lapcount][1] -= lap[i][1];
+          lap[lapcount][2] -= lap[i][2];
+          if (lap[lapcount][1] < 0) {
             lap[lapcount][1] += 60;
             lap[lapcount][0]--;
           }
-          lap[lapcount][2] += 1000;
-          lap[lapcount][1]--;
+          if (lap[lapcount][2] < 0) {
+            if (lap[lapcount][1] == 0) {
+              lap[lapcount][1] += 60;
+              lap[lapcount][0]--;
+            }
+            lap[lapcount][2] += 1000;
+            lap[lapcount][1]--;
+          }
         }
-      }
-      bool touchflag = true;
-      while (touchflag == true) {
-        int cnt = 0;
-        int touchthreshold = 10;
-        for (cnt = 0; cnt <= touchthreshold; cnt++) {
-          if (touch(0) == 1)
-            break;
+        bool touchflag = true;
+        while (touchflag == true) {
+          int cnt = 0;
+          int touchthreshold = 10;
+          for (cnt = 0; cnt <= touchthreshold; cnt++) {
+            if (touch(0) == 1)
+              break;
+          }
+          if (cnt >= touchthreshold)
+            touchflag = false;
         }
-        if (cnt >= touchthreshold)
-          touchflag = false;
       }
 
 
