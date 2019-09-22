@@ -397,6 +397,20 @@ void timer() {
         while (touch(0) == 1 && i < waitingthreshold) { //wait about 0.55sec
           i++;
           delay(1);
+          if (inspstatcount > 0 && inspstatcount < 16) {
+            String inspstatcountstr = String(int(inspstatcount / 10)) + String(inspstatcount - 10 * int(inspstatcount / 10));
+            lcd.setCursor(3, 0);
+            lcd.print(inspstatcountstr);
+          } else if (inspstatcount > -2 && inspstatcount <= 0)
+            inspresult = "+2";
+            lcd.setCursor(3, 0);
+            lcd.print("+2");
+          else if  (inspstatcount <= -2) {
+            inspresult = "DNF";
+            lcd.setCursor(3, 0);
+            lcd.print("DNF");
+            Timer1.stop();
+          }
         }
         if (i >= waitingthreshold)  //timer is able to start
           stat = 'A';
@@ -434,7 +448,6 @@ void timer() {
       Timer1.attachInterrupt(count);
       Timer1.start();
       setLCDclear(1);
-      while (touch(0) == 1);
     }
 
     else if (stat == 'I' && inspstat == 1) { //inspection time starts
@@ -451,7 +464,7 @@ void timer() {
   }
 
 
-  if (stat == 'I' && inspstat == 2) {
+  if ((stat == 'I' && inspstat == 2) || (stat == 'A' && inspstat == 2)) {
     if (inspstatcount > 0 && inspstatcount < 16) {
       String inspstatcountstr = String(int(inspstatcount / 10)) + String(inspstatcount - 10 * int(inspstatcount / 10));
       lcd.setCursor(3, 0);
