@@ -419,10 +419,6 @@ void timer() {
           ledg = 0;
         }
         convertLED();
-        while (touch(0) == 1);
-        ledr = 0;
-        ledg = 0;
-        convertLED();
       }
     }
   }
@@ -443,8 +439,10 @@ void timer() {
       while (touch(0) == 1);
     }
 
-
     else if (stat == 'I' && inspstat == 1) { //inspection time starts
+      ledr = 0;
+      ledg = 0;
+      convertLED();
       Timer1.stop();
       inspstatcount = 16;
       Timer1.initialize(1000000);
@@ -518,5 +516,9 @@ void loop() {
   convertLCD();
   convertLED();
   lcd.setCursor(3, 0);
-  lcd.print(inspresult);
+  lcd.print(inspstat);
+  lcd.setCursor(4, 0);
+  lcd.print(touch(0));
+  lcd.setCursor(5, 0);
+  lcd.print(stat);
 }
