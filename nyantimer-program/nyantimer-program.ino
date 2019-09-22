@@ -410,11 +410,15 @@ void timer() {
           i++;
           delay(1);
         }
-        ledr = 1;
-        ledg = 0;
-        convertLED();
-        if (i >= waitingthreshold)  //timer is able to start
+        if (i >= waitingthreshold) { //timer is able to start
           inspstat = 1;
+          ledr = 1;
+          ledg = 0;
+        } else {
+          ledr = 0;
+          ledg = 0;
+        }
+        convertLED();
         while (touch(0) == 1);
         ledr = 0;
         ledg = 0;
