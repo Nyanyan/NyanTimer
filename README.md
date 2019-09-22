@@ -201,6 +201,8 @@ https://github.com/fw42/atmel/tree/master/stackmat
 
 Fusion360のファイルとobjとstlファイル
 
+ncファイルはPartsTogether内のが最新版です
+
 ### nyantimer-program
 
 プログラム
