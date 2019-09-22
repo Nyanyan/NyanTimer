@@ -421,8 +421,7 @@ void timer() {
 
 
 
-  else { //when pads are open
-
+  if (touch(0) == 0) { //when pads are open
 
     if (stat == 'A') { //start solving
       stat = ' ';
@@ -448,9 +447,6 @@ void timer() {
       inspstat = 2;
     }
   }
-
-
-
 
 
   if (stat == 'I' && inspstat == 2) {
