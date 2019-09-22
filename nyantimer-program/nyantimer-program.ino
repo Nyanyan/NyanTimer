@@ -517,9 +517,5 @@ void loop() {
   convertLCD();
   convertLED();
   lcd.setCursor(3, 0);
-  lcd.print(inspstat);
-  lcd.setCursor(4, 0);
-  lcd.print(touch(0));
-  lcd.setCursor(5, 0);
-  lcd.print(stat);
+  lcd.print(inspresult);
 }
