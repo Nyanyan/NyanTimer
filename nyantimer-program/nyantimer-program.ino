@@ -86,9 +86,6 @@ void out() { //serial output, every 125msec
 
 void inspection() {
   inspstatcount--;
-  String inspstatcountstr = String(int(inspstatcount / 10)) + String(inspstatcount - 10 * int(inspstatcount / 10));
-  lcd.setCursor(3, 0);
-  lcd.print(inspstatcountstr);
 }
 
 
@@ -419,7 +416,7 @@ void timer() {
           ledg = 0;
         }
         convertLED();
-        while(touch(0)==1);
+        while (touch(0) == 1);
       }
     }
   }
@@ -444,28 +441,27 @@ void timer() {
       ledr = 0;
       ledg = 0;
       convertLED();
+      inspstat = 2;
       Timer1.stop();
       inspstatcount = 16;
       Timer1.initialize(1000000);
       Timer1.attachInterrupt(inspection);
       Timer1.start();
-      inspstat = 2;
     }
   }
 
 
   if (stat == 'I' && inspstat == 2) {
-    if (inspstatcount > -2) {
-      //lcd.setCursor(3, 0);
-      //lcd.print("+2");
+    if (inspstatcount > 0) {
+      String inspstatcountstr = String(int(inspstatcount / 10)) + String(inspstatcount - 10 * int(inspstatcount / 10));
+      lcd.setCursor(3, 0);
+      lcd.print(inspstatcountstr);
+    } else if (inspstatcount > -2 && inspstatcount <= 0)
       inspresult = "+2";
-    } else if  (inspstatcount <= -2){
-      //lcd.setCursor(3, 0);
-      //lcd.print("DNF");
+    else if  (inspstatcount <= -2) {
       inspresult = "DNF";
       Timer1.stop();
     }
-
     if (inspmode == 2) {
       if (inspstatcount == 7 || inspstatcount == 3)
         buz = 1;
