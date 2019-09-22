@@ -183,7 +183,7 @@ void convertLED() {
 
 
 int touch(int mode) {
-  float threshold = 20;
+  float threshold = 25;
   float VAL1 = 0;
   float VAL2 = 0;
   float t = 30;
@@ -455,7 +455,9 @@ void timer() {
 
 
   if (stat == 'I' && inspstat == 2) {
-
+    String inspstatcountstr = String(int(inspstatcount / 10)) + String(inspstatcount - 10 * int(inspstatcount / 10));
+    lcd.setCursor(3, 0);
+    lcd.print(inspstatcountstr);
     if (inspstatcount > -2) {
       //lcd.setCursor(3, 0);
       //lcd.print("+2");
