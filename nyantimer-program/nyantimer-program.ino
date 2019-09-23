@@ -154,15 +154,13 @@ void convertLCD() {
     else if (inspmode == 0)
       lcd.print("  ");
   }
-  
+
   lcd.setCursor(2, 0);
   if (outmode)
     lcd.print("o");
   else
     lcd.print(" ");
-  lcd.setCursor(3, 0);
-  lcd.print("    ");
-  
+
   lcd.setCursor(0, 1);
   lcd.print("L");
   lcd.setCursor(1, 1);
@@ -223,7 +221,7 @@ int touch(int mode) {
     } else
       i--;
 
-    delayMicroseconds(50);
+    delayMicroseconds(10);
   }
   if (mode == 0) {
     if (VAL1 > threshold * t * k && VAL2 > threshold * t * k)
@@ -307,6 +305,8 @@ void button() {
       batterycount = 0;
       stat = 'I';
       inspresult = "";
+      lcd.setCursor(3, 0);
+      lcd.print("    ");
     }
   } else if (digitalRead(BUTTON2) == HIGH) { //inspstatection mode
     batterycount = 0;
