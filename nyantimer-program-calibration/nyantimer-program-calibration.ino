@@ -70,6 +70,8 @@ void setup() {
   pad2inthreshold = analogRead(PAD2IN) * 0.8;
   digitalWrite(PAD1OUT, LOW);
   digitalWrite(PAD2OUT, LOW);
+  MsTimer2::set(125, out);
+  MsTimer2::start();
 }
 
 
@@ -193,12 +195,16 @@ void convertLED() {
 
 
 int touch(int mode) {
-  float threshold = 15;
-  if (outmode)
+  /*
+    float threshold = 15;
+    if (outmode)
     threshold = 25;
-  float t = 5;
-  if (outmode)
+    float t = 5;
+    if (outmode)
     t = 3;
+  */
+  float threshold = 25;
+  float t = 3;
   float k = 0.5;
   float VAL1 = 0;
   float VAL2 = 0;
@@ -320,31 +326,34 @@ void button() {
     }
   } else if (digitalRead(BUTTON2) == HIGH) { //inspstatection mode
     batterycount = 0;
-    int i = 0;
-    int t = 500;
-    while (digitalRead(BUTTON2) == HIGH) {
+    /*
+      int i = 0;
+      int t = 500;
+      while (digitalRead(BUTTON2) == HIGH) {
       delay(1);
       i++;
       if (i >= t)
         break;
-    }
-    if (i < t) { //inspectiontime mode
-      inspmode += 1;
-      if (inspmode > 2)
-        inspmode = 0;
-    } else { //serial out mode
+      }
+      if (i < t) { //inspectiontime mode
+    */
+    inspmode += 1;
+    if (inspmode > 2)
+      inspmode = 0;
+    /*
+      } else { //serial out mode
       outmode = !outmode;
       if (outmode) {
-        MsTimer2::set(125, out);
-        MsTimer2::start();
-        lcd.setCursor(2, 0);
-        lcd.print("o");
+      MsTimer2::set(125, out);
+      MsTimer2::start();
+      lcd.setCursor(2, 0);
+      lcd.print("o");
       } else {
-        MsTimer2::stop();
-        lcd.setCursor(2, 0);
-        lcd.print(" ");
+      MsTimer2::stop();
+      lcd.setCursor(2, 0);
+      lcd.print(" ");
       }
-    }
+      }*/
     while (digitalRead(BUTTON2) == HIGH);
   } else if (digitalRead(BUTTON3) == HIGH) { //lap mode up
     batterycount = 0;
