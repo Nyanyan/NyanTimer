@@ -161,13 +161,13 @@ void convertLCD() {
     else if (inspmode == 0)
       lcd.print("  ");
   }
-  /*
-    lcd.setCursor(2, 0);
-    if (outmode)
-      lcd.print("o");
-    else
-      lcd.print(" ");
-  */
+  
+  lcd.setCursor(2, 0);
+  if (outmode)
+    lcd.print("o");
+  else
+    lcd.print(" ");
+    
   lcd.setCursor(0, 1);
   lcd.print("L");
   lcd.setCursor(1, 1);
