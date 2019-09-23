@@ -299,11 +299,32 @@ void button() {
     }
   } else if (digitalRead(BUTTON2) == HIGH) { //inspstatection mode
     batterycount = 0;
-    inspmode += 1;
-    if (inspmode > 2)
-      inspmode = 0;
+    int i = 0;
+    int t = 500;
+    while (digitalRead(BUTTON2) == HIGH) {
+      i++;
+      if (i >= t)
+        break;
+    }
+    if (i < t) { //inspectiontime mode
+      inspmode += 1;
+      if (inspmode > 2)
+        inspmode = 0;
+    } else { //serial out mode
+      outmode = !outmode;
+      if (outmode) {
+        MsTimer2::set(125, out);
+        MsTimer2::start();
+        lcd.setCursor(2, 0);
+        lcd.print("o");
+      } else {
+        MsTimer2::stop();
+        lcd.setCursor(2, 0);
+        lcd.print(" ");
+      }
+    }
     while (digitalRead(BUTTON2) == HIGH);
-  } else if (digitalRead(BUTTON3) == HIGH && digitalRead(BUTTON4) == LOW) { //lap mode up
+  } else if (digitalRead(BUTTON3) == HIGH) { //lap mode up
     batterycount = 0;
     lapUP();
     convertLCD();
@@ -318,7 +339,7 @@ void button() {
       delay(100);
       convertLCD();
     }
-  } else if (digitalRead(BUTTON4) == HIGH && digitalRead(BUTTON3) == LOW) { //lap mode down
+  } else if (digitalRead(BUTTON4) == HIGH) { //lap mode down
     batterycount = 0;
     lapDOWN();
     convertLCD();
@@ -332,18 +353,6 @@ void button() {
       lapDOWN();
       delay(100);
       convertLCD();
-    }
-  } else if (digitalRead(BUTTON4) == HIGH && digitalRead(BUTTON3) == LOW) { //outmode
-    outmode = !outmode;
-    if (outmode) {
-      MsTimer2::set(125, out);
-      MsTimer2::start();
-      lcd.setCursor(2, 0);
-      lcd.print("o");
-    } else {
-      MsTimer2::stop();
-      lcd.setCursor(2, 0);
-      lcd.print(" ");
     }
   } else if (stat == 'I')
     batterycount++;
