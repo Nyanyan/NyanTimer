@@ -193,6 +193,8 @@ int touch(int mode) {
   if (outmode)
     t = 4;
   float k = 0.5;
+  if (outmode)
+    k = 0.75;
   float VAL1 = 0;
   float VAL2 = 0;
 
