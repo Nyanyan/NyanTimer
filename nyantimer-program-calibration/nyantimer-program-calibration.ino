@@ -525,6 +525,17 @@ void timer() {
       Timer1.attachInterrupt(count);
       Timer1.start();
       setLCDclear(1);
+      bool touchflag = true;
+      int cnt = 0;
+      int touchthreshold = 10;
+      while (touchflag) {
+        if (touch(1) == 0)
+          cnt++;
+        else
+          cnt = 0;
+        if (cnt > touchthreshold)
+          touchflag = false;
+      }
     }
 
     else if (stat == 'I' && inspstat == 1) { //inspection time starts
