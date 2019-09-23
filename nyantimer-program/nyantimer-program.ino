@@ -148,11 +148,18 @@ void convertLCD() {
   if (inspstat == 0) {
     lcd.setCursor(0, 0); //print mode & status
     if (inspmode == 1)
-      lcd.print("I     ");
+      lcd.print("I ");
     else if (inspmode == 2)
-      lcd.print("Is    ");
+      lcd.print("Is");
     else if (inspmode == 0)
-      lcd.print("      ");
+      lcd.print("  ");
+  }
+  if (outmode) {
+    lcd.setCursor(2, 0);
+    lcd.print("o");
+  } else {
+    lcd.setCursor(2, 0);
+    lcd.print(" ");
   }
   lcd.setCursor(0, 1);
   lcd.print("L");
@@ -302,6 +309,7 @@ void button() {
     int i = 0;
     int t = 500;
     while (digitalRead(BUTTON2) == HIGH) {
+      delay(1);
       i++;
       if (i >= t)
         break;
@@ -315,13 +323,8 @@ void button() {
       if (outmode) {
         MsTimer2::set(125, out);
         MsTimer2::start();
-        lcd.setCursor(2, 0);
-        lcd.print("o");
-      } else {
+      } else
         MsTimer2::stop();
-        lcd.setCursor(2, 0);
-        lcd.print(" ");
-      }
     }
     while (digitalRead(BUTTON2) == HIGH);
   } else if (digitalRead(BUTTON3) == HIGH) { //lap mode up
