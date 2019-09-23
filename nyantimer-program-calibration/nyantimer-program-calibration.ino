@@ -66,8 +66,8 @@ void setup() {
   lap[0][0] = 0;
   lap[0][1] = 0;
   lap[0][2] = 0;
-  pad1inthreshold = analogRead(PAD1IN) * 0.6; //calibration
-  pad2inthreshold = analogRead(PAD2IN) * 0.6;
+  pad1inthreshold = analogRead(PAD1IN) * 0.8; //calibration
+  pad2inthreshold = analogRead(PAD2IN) * 0.8;
   digitalWrite(PAD1OUT, LOW);
   digitalWrite(PAD2OUT, LOW);
 }
@@ -195,10 +195,10 @@ void convertLED() {
 int touch(int mode) {
   float threshold = 20;
   if (outmode)
-    threshold = 150;
+    threshold = 60;
   float t = 15;
   if (outmode)
-    t = 2;
+    t = 5;
   float k = 0.5;
   float VAL1 = 0;
   float VAL2 = 0;
@@ -221,15 +221,18 @@ int touch(int mode) {
         break;
     }
     digitalWrite(PAD2OUT, LOW);
-
     if (val1 > 0 && val2 > 0) {
       VAL1 += val1;
       VAL2 += val2;
     } else
       i--;
 
-    delayMicroseconds(100);
+    delayMicroseconds(5);
   }
+  /*
+      lcd.setCursor(7, 1);
+    lcd.print(VAL1 / t);
+    */
   if (mode == 0) {
     if (VAL1 > threshold * t * k && VAL2 > threshold * t * k)
       return 1;
