@@ -427,7 +427,17 @@ void timer() {
             lap[lapcount][1]--;
           }
         }
-        while (touch(1) != 0);
+        bool touchflag = false;
+        int cnt = 0;
+        int touchthreshold = 5;
+        while (touchflag) {
+          if (touch(1) == 0)
+            cnt++;
+          else
+            cnt = 0;
+          if (cnt > touchthreshold)
+            touchflag = true;
+        }
         /*
           bool touchflag = true;
           while (touchflag) {
