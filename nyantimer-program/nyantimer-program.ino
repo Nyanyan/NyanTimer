@@ -323,8 +323,13 @@ void button() {
       if (outmode) {
         MsTimer2::set(125, out);
         MsTimer2::start();
-      } else
+        lcd.setCursor(2, 0);
+        lcd.print("o");
+      } else {
         MsTimer2::stop();
+        lcd.setCursor(2, 0);
+        lcd.print(" ");
+      }
     }
     while (digitalRead(BUTTON2) == HIGH);
   } else if (digitalRead(BUTTON3) == HIGH) { //lap mode up
