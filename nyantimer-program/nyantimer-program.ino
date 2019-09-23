@@ -180,10 +180,10 @@ void convertLED() {
 
 
 int touch(int mode) {
-  float threshold = 25;
+  float threshold = 60;
   float VAL1 = 0;
   float VAL2 = 0;
-  float t = 30;
+  float t = 10;
   float k = 0.5;
 
   for (int i = 0; i < t; i++) {
@@ -211,7 +211,7 @@ int touch(int mode) {
     } else
       i--;
 
-    delayMicroseconds(100);
+    delayMicroseconds(10);
   }
   if (mode == 0) {
     if (VAL1 > threshold * t * k && VAL2 > threshold * t * k)
