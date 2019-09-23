@@ -193,7 +193,7 @@ void convertLED() {
 
 
 int touch(int mode) {
-  float threshold = 10;
+  float threshold = 15;
   if (outmode)
     threshold = 25;
   float t = 5;
@@ -437,7 +437,7 @@ void timer() {
         ledr = 1;
         ledg = 0;
         convertLED();
-        int waitingthreshold = 10;
+        int waitingthreshold = 20;
         while (touch(0) == 1 && i < waitingthreshold) { //wait about 0.55sec
           i++;
           delay(1);
