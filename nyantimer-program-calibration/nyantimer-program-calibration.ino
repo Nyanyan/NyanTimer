@@ -394,10 +394,10 @@ void button() {
 
 void timer() {
   if (touch(1) != 0) {
-    if (stat == ' ') { //when timer stops
+    if (stat == ' ') {
 
       bool tmp = false;
-      if (lapcount == lapmode - 1 && touch(0) == 1) {
+      if (lapcount == lapmode - 1 && touch(0) == 1) { //when timer stops
         stat = 'S';
         Timer1.stop();
         ledr = 0;
@@ -405,7 +405,7 @@ void timer() {
         tmp = true;
       }
 
-      if (lapcount < lapmode - 1 || tmp) {
+      if (lapcount < lapmode - 1 || tmp) { //lap++
         lapcount++;
         lap[lapcount][0] = minute;
         lap[lapcount][1] = second;
@@ -427,6 +427,7 @@ void timer() {
             lap[lapcount][1]--;
           }
         }
+        while (touch(1) != 0);
         /*
           bool touchflag = true;
           while (touchflag) {
@@ -441,7 +442,6 @@ void timer() {
           }
         */
       }
-      while (touch(1) != 0);
 
 
     } else if (stat == 'I' && touch(0) == 1) { //timer ready to start
