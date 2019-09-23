@@ -189,9 +189,9 @@ int touch(int mode) {
   float threshold = 20;
   if (outmode)
     threshold = 100;
-  float t = 30;
+  float t = 20;
   if (outmode)
-    t = 6;
+    t = 4;
   float k = 0.5;
   float VAL1 = 0;
   float VAL2 = 0;
@@ -231,9 +231,9 @@ int touch(int mode) {
   } else {
     if (VAL1 > threshold * t * k && VAL2 > threshold * t * k)
       return 1;
-    else if (VAL1 > threshold * t * k && VAL2 <= threshold * t * k)
+    else if (VAL1 >= threshold * t * k && VAL2 < threshold * t * k)
       return 2;
-    else if (VAL1 <= threshold * t * k && VAL2 > threshold * t * k)
+    else if (VAL1 < threshold * t * k && VAL2 >= threshold * t * k)
       return 3;
     else
       return 0;
