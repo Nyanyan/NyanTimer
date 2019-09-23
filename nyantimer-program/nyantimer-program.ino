@@ -34,6 +34,7 @@ long batterycount = 0;
 const long batterythreshold = 60000; //1000 per 30s
 String statout;
 String inspresult = "";
+bool outmode = false;
 
 void setup() {
   Serial.begin(1200);
@@ -59,8 +60,6 @@ void setup() {
   lcd.print("      by Nyanyan");
   delay(1000);
   setLCDclear(2);
-  MsTimer2::set(125, out);
-  MsTimer2::start();
   lap[0][0] = 0;
   lap[0][1] = 0;
   lap[0][2] = 0;
@@ -180,7 +179,9 @@ void convertLED() {
 
 
 int touch(int mode) {
-  float threshold = 60;
+  float threshold = 30;
+  if (outmode)
+    threshold = 60;
   float VAL1 = 0;
   float VAL2 = 0;
   float t = 10;
@@ -211,7 +212,7 @@ int touch(int mode) {
     } else
       i--;
 
-    delayMicroseconds(10);
+    delayMicroseconds(50);
   }
   if (mode == 0) {
     if (VAL1 > threshold * t * k && VAL2 > threshold * t * k)
@@ -302,7 +303,7 @@ void button() {
     if (inspmode > 2)
       inspmode = 0;
     while (digitalRead(BUTTON2) == HIGH);
-  } else if (digitalRead(BUTTON3) == HIGH) { //lap mode up
+  } else if (digitalRead(BUTTON3) == HIGH && digitalRead(BUTTON4) == LOW) { //lap mode up
     batterycount = 0;
     lapUP();
     convertLCD();
@@ -317,7 +318,7 @@ void button() {
       delay(100);
       convertLCD();
     }
-  } else if (digitalRead(BUTTON4) == HIGH) { //lap mode down
+  } else if (digitalRead(BUTTON4) == HIGH && digitalRead(BUTTON3) == LOW) { //lap mode down
     batterycount = 0;
     lapDOWN();
     convertLCD();
@@ -331,6 +332,18 @@ void button() {
       lapDOWN();
       delay(100);
       convertLCD();
+    }
+  } else if (digitalRead(BUTTON4) == HIGH && digitalRead(BUTTON3) == LOW) { //outmode
+    outmode = !outmode;
+    if (outmode) {
+      MsTimer2::set(125, out);
+      MsTimer2::start();
+      lcd.setCursor(2, 0);
+      lcd.print("o");
+    } else {
+      MsTimer2::stop();
+      lcd.setCursor(2, 0);
+      lcd.print(" ");
     }
   } else if (stat == 'I')
     batterycount++;
