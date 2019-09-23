@@ -34,7 +34,7 @@ long batterycount = 0;
 const long batterythreshold = 60000; //1000 per 30s
 String statout;
 String inspresult = "";
-//bool outmode = false;
+bool outmode = false;
 int pad1inthreshold = 0;
 int pad2inthreshold = 0;
 
@@ -70,8 +70,6 @@ void setup() {
   pad2inthreshold = analogRead(PAD2IN) * 0.8;
   digitalWrite(PAD1OUT, LOW);
   digitalWrite(PAD2OUT, LOW);
-  MsTimer2::set(125, out);
-  MsTimer2::start();
 }
 
 
@@ -195,16 +193,12 @@ void convertLED() {
 
 
 int touch(int mode) {
-  /*
-    float threshold = 15;
-    if (outmode)
+  float threshold = 20;
+  if (outmode)
     threshold = 25;
-    float t = 5;
-    if (outmode)
+  float t = 4;
+  if (outmode)
     t = 3;
-  */
-  float threshold = 25;
-  float t = 3;
   float k = 0.5;
   float VAL1 = 0;
   float VAL2 = 0;
@@ -326,34 +320,31 @@ void button() {
     }
   } else if (digitalRead(BUTTON2) == HIGH) { //inspstatection mode
     batterycount = 0;
-    /*
-      int i = 0;
-      int t = 500;
-      while (digitalRead(BUTTON2) == HIGH) {
+    int i = 0;
+    int t = 500;
+    while (digitalRead(BUTTON2) == HIGH) {
       delay(1);
       i++;
       if (i >= t)
         break;
-      }
-      if (i < t) { //inspectiontime mode
-    */
-    inspmode += 1;
-    if (inspmode > 2)
-      inspmode = 0;
-    /*
-      } else { //serial out mode
+    }
+    if (i < t) { //inspectiontime mode
+      inspmode += 1;
+      if (inspmode > 2)
+        inspmode = 0;
+    } else { //serial out mode
       outmode = !outmode;
       if (outmode) {
-      MsTimer2::set(125, out);
-      MsTimer2::start();
-      lcd.setCursor(2, 0);
-      lcd.print("o");
+        MsTimer2::set(125, out);
+        MsTimer2::start();
+        lcd.setCursor(2, 0);
+        lcd.print("o");
       } else {
-      MsTimer2::stop();
-      lcd.setCursor(2, 0);
-      lcd.print(" ");
+        MsTimer2::stop();
+        lcd.setCursor(2, 0);
+        lcd.print(" ");
       }
-      }*/
+    }
     while (digitalRead(BUTTON2) == HIGH);
   } else if (digitalRead(BUTTON3) == HIGH) { //lap mode up
     batterycount = 0;
@@ -450,28 +441,30 @@ void timer() {
         while (touch(0) == 1 && i < waitingthreshold) { //wait about 0.55sec
           i++;
           delay(1);
-          if (inspstatcount > 0 && inspstatcount < 16) {
-            String inspstatcountstr = String(int(inspstatcount / 10)) + String(inspstatcount - 10 * int(inspstatcount / 10));
-            lcd.setCursor(3, 0);
-            lcd.print(inspstatcountstr);
-          } else if (inspstatcount > -2 && inspstatcount <= 0) {
-            inspresult = "+2";
-            lcd.setCursor(3, 0);
-            lcd.print("+2");
-          } else if  (inspstatcount <= -2) {
-            inspresult = "DNF";
-            lcd.setCursor(3, 0);
-            lcd.print("DNF");
-            Timer1.stop();
-          }
           if (inspmode == 2) {
-            if (inspstatcount == 7 || inspstatcount == 3)
-              buz = 1;
-            else
+            if (inspstatcount > 0 && inspstatcount < 16) {
+              String inspstatcountstr = String(int(inspstatcount / 10)) + String(inspstatcount - 10 * int(inspstatcount / 10));
+              lcd.setCursor(3, 0);
+              lcd.print(inspstatcountstr);
+            } else if (inspstatcount > -2 && inspstatcount <= 0) {
+              inspresult = "+2";
+              lcd.setCursor(3, 0);
+              lcd.print("+2");
+            } else if  (inspstatcount <= -2) {
+              inspresult = "DNF";
+              lcd.setCursor(3, 0);
+              lcd.print("DNF");
+              Timer1.stop();
+            }
+            if (inspmode == 2) {
+              if (inspstatcount == 7 || inspstatcount == 3)
+                buz = 1;
+              else
+                buz = 0;
+            } else
               buz = 0;
-          } else
-            buz = 0;
-          digitalWrite(BUZZER, buz);
+            digitalWrite(BUZZER, buz);
+          }
         }
         if (i >= waitingthreshold)  //timer is able to start
           stat = 'A';
