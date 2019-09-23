@@ -34,7 +34,7 @@ long batterycount = 0;
 const long batterythreshold = 60000; //1000 per 30s
 String statout;
 String inspresult = "";
-bool outmode = false;
+//bool outmode = false;
 int pad1inthreshold = 0;
 int pad2inthreshold = 0;
 
@@ -163,13 +163,13 @@ void convertLCD() {
     else if (inspmode == 0)
       lcd.print("  ");
   }
-
-  lcd.setCursor(2, 0);
-  if (outmode)
-    lcd.print("o");
-  else
-    lcd.print(" ");
-
+  /*
+    lcd.setCursor(2, 0);
+    if (outmode)
+      lcd.print("o");
+    else
+      lcd.print(" ");
+  */
   lcd.setCursor(0, 1);
   lcd.print("L");
   lcd.setCursor(1, 1);
