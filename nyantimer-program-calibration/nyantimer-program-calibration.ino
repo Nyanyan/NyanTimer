@@ -419,7 +419,7 @@ void timer() {
         bool touchflag = true;
         while (touchflag == true) {
           int cnt = 0;
-          int touchthreshold = 10;
+          int touchthreshold = 5;
           for (cnt = 0; cnt <= touchthreshold; cnt++) {
             if (touch(0) == 1)
               break;
@@ -436,7 +436,7 @@ void timer() {
         ledr = 1;
         ledg = 0;
         convertLED();
-        int waitingthreshold = 30;
+        int waitingthreshold = 10;
         while (touch(0) == 1 && i < waitingthreshold) { //wait about 0.55sec
           i++;
           delay(1);
