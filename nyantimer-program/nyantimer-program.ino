@@ -191,7 +191,9 @@ int touch(int mode) {
     threshold = 60;
   float VAL1 = 0;
   float VAL2 = 0;
-  float t = 10;
+  float t = 20;
+  if (outmode)
+    threshold = 10;
   float k = 0.5;
 
   for (int i = 0; i < t; i++) {
