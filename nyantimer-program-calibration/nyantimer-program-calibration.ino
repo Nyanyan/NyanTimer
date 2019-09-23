@@ -229,9 +229,10 @@ int touch(int mode) {
 
     delayMicroseconds(5);
   }
-  lcd.setCursor(7, 1);
-  lcd.print(VAL1 / t);
-
+  /*
+    lcd.setCursor(7, 1);
+    lcd.print(VAL1 / t);
+  */
   if (mode == 0) {
     if (VAL1 > threshold * t * k && VAL2 > threshold * t * k)
       return 1;
