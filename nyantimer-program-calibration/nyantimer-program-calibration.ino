@@ -193,12 +193,12 @@ void convertLED() {
 
 
 int touch(int mode) {
-  float threshold = 20;
+  float threshold = 10;
   if (outmode)
-    threshold = 60;
-  float t = 15;
+    threshold = 50;
+  float t = 10;
   if (outmode)
-    t = 5;
+    t = 2;
   float k = 0.5;
   float VAL1 = 0;
   float VAL2 = 0;
@@ -229,10 +229,9 @@ int touch(int mode) {
 
     delayMicroseconds(5);
   }
-  /*
-      lcd.setCursor(7, 1);
-    lcd.print(VAL1 / t);
-    */
+  lcd.setCursor(7, 1);
+  lcd.print(VAL1 / t);
+
   if (mode == 0) {
     if (VAL1 > threshold * t * k && VAL2 > threshold * t * k)
       return 1;
