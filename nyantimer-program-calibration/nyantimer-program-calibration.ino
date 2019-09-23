@@ -13,7 +13,7 @@ ST7032 lcd;
 #define LEDR 13 //red led
 #define LEDG 12 //green led
 #define PAD1OUT 15
-#define PAD1IN 2
+#define PAD1IN 16
 #define PAD2OUT 5
 #define PAD2IN 17
 
@@ -35,6 +35,8 @@ const long batterythreshold = 60000; //1000 per 30s
 String statout;
 String inspresult = "";
 bool outmode = false;
+int pad1inthreshold = 0;
+int pad2inthreshold = 0;
 
 void setup() {
   Serial.begin(1200);
@@ -53,7 +55,8 @@ void setup() {
   lcd.setContrast(40);
 
   resettime();
-
+  digitalWrite(PAD1OUT, HIGH);
+  digitalWrite(PAD2OUT, HIGH);
   lcd.setCursor(0, 0); //when power is off: print "Nyan Timer"
   lcd.print("NyanTimer       ");
   lcd.setCursor(0, 1);
@@ -63,6 +66,10 @@ void setup() {
   lap[0][0] = 0;
   lap[0][1] = 0;
   lap[0][2] = 0;
+  pad1inthreshold = analogRead(PAD1IN) * 0.6; //calibration
+  pad2inthreshold = analogRead(PAD2IN) * 0.6;
+  digitalWrite(PAD1OUT, LOW);
+  digitalWrite(PAD2OUT, LOW);
 }
 
 
@@ -200,7 +207,7 @@ int touch(int mode) {
     float val1 = 0;
     float val2 = 0;
     digitalWrite(PAD1OUT, HIGH);
-    while (digitalRead(PAD1IN) == LOW) {
+    while (analogRead(PAD1IN) < pad1inthreshold) {
       val1++;
       if (val1 > threshold)
         break;
@@ -208,7 +215,7 @@ int touch(int mode) {
     digitalWrite(PAD1OUT, LOW);
 
     digitalWrite(PAD2OUT, HIGH);
-    while (digitalRead(PAD2IN) == LOW) {
+    while (analogRead(PAD2IN) < pad2inthreshold) {
       val2++;
       if (val2 > threshold)
         break;
