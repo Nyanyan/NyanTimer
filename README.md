@@ -205,11 +205,13 @@ Fusion360のファイルとobjとstlファイル
 
 ncファイルはPartsTogether内のが最新版です
 
-### nyantimer-program
+### program
 
 プログラム
 
-inoファイル
+Arduinoのinoファイルです。
+
+中に“calibration”とついたものがありますが、これはタッチセンサで電源投入時に自動でキャリブレーションを行うプログラムです。2019/09/24現在キャリブレーションは試用の機能なので分けて開発しています(Gitを使いこなせていない)
 
 ### README
 
