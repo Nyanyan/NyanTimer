@@ -66,8 +66,8 @@ void setup() {
   lap[0][0] = 0;
   lap[0][1] = 0;
   lap[0][2] = 0;
-  pad1inthreshold = analogRead(PAD1IN) * 0.8; //calibration
-  pad2inthreshold = analogRead(PAD2IN) * 0.8;
+  pad1inthreshold = max(analogRead(PAD1IN), 150) * 0.8; //calibration
+  pad2inthreshold = max(analogRead(PAD2IN), 150) * 0.8;
   digitalWrite(PAD1OUT, LOW);
   digitalWrite(PAD2OUT, LOW);
   MsTimer2::set(125, out);
