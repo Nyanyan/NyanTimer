@@ -14243,9 +14243,9 @@ Source: 008-0260-0_E.pdf</description>
 <wire x1="107.95" y1="45.72" x2="114.3" y2="45.72" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U1" gate="G$1" pin="PD5(T1)"/>
-<wire x1="57.15" y1="106.68" x2="58.42" y2="106.68" width="0.1524" layer="91"/>
-<label x="58.42" y="106.68" size="1.778" layer="95"/>
+<pinref part="U1" gate="G$1" pin="PC2(ADC2)"/>
+<wire x1="57.15" y1="137.16" x2="58.42" y2="137.16" width="0.1524" layer="91"/>
+<label x="58.42" y="137.16" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
