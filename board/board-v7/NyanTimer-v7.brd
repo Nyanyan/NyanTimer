@@ -169,6 +169,7 @@
 <layer number="255" name="routoute" color="7" fill="1" visible="yes" active="yes"/>
 </layers>
 <board>
+<fusionsync huburn="a.cGVyc29uYWw6dWUyZDY1ODA3" projecturn="a.cGVyc29uYWw6dWUyZDY1ODA3IzIwMTgwOTMwMTUxNjc4Mzgx" f3durn="urn:adsk.wipprod:dm.lineage:HZn5fMgTTJKOyip3mBVZMA" pcbguid="90678893-8f50-44b1-a255-14d25019db93" lastpulledtime="" lastsyncedchangeguid="f16c29d8-f572-6caa-3653-47bf9a888ec9"/>
 <plain>
 <hole x="-42" y="4" drill="3"/>
 <hole x="-56.5" y="41" drill="3"/>
@@ -3001,11 +3002,11 @@ design rules under a new name.</description>
 <attribute name="SPICEPREFIX" value="C" x="-26.82" y="-9.63" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="VALUE" x="31.473" y="7.388" size="1.27" layer="27" ratio="10" rot="R270"/>
 </element>
-<element name="C3" library="rcl" library_urn="urn:adsk.eagle:library:334" package="C025-024X044" package3d_urn="urn:adsk.eagle:package:23630/1" value="0.1u" x="30.14" y="19.28" smashed="yes" rot="R90">
-<attribute name="NAME" x="32.743" y="21.502" size="1.27" layer="25" ratio="10" rot="R90"/>
-<attribute name="POPULARITY" value="56" x="30.14" y="19.28" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="SPICEPREFIX" value="C" x="91.1" y="39.6" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="VALUE" x="32.807" y="17.502" size="1.27" layer="27" ratio="10" rot="R90"/>
+<element name="C3" library="rcl" library_urn="urn:adsk.eagle:library:334" package="C025-024X044" package3d_urn="urn:adsk.eagle:package:23630/1" value="0.1u" x="31.14" y="18.28" smashed="yes" rot="R180">
+<attribute name="NAME" x="28.918" y="20.883" size="1.27" layer="25" ratio="10" rot="R180"/>
+<attribute name="POPULARITY" value="56" x="31.14" y="18.28" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="SPICEPREFIX" value="C" x="10.82" y="79.24" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="VALUE" x="32.918" y="20.947" size="1.27" layer="27" ratio="10" rot="R180"/>
 </element>
 <element name="C4" library="rcl" library_urn="urn:adsk.eagle:library:334" package="C025-024X044" package3d_urn="urn:adsk.eagle:package:23630/1" value="0.1u" x="-34.16" y="11.2" smashed="yes" rot="R90">
 <attribute name="NAME" x="-30.557" y="11.422" size="1.27" layer="25" ratio="10" rot="R270"/>
@@ -3286,7 +3287,7 @@ design rules under a new name.</description>
 <contactref element="IC1" pad="2"/>
 <contactref element="C9" pad="1"/>
 <contactref element="C10" pad="1"/>
-<wire x1="22.78" y1="27.04" x2="30.14" y2="18.01" width="0" layer="19" extent="1-1"/>
+<wire x1="22.78" y1="27.04" x2="32.41" y2="18.28" width="0" layer="19" extent="1-1"/>
 <wire x1="22.8" y1="18.04" x2="22.78" y2="27.04" width="0" layer="19" extent="1-1"/>
 <wire x1="34.14" y1="6.88" x2="22.8" y2="18.04" width="0" layer="19" extent="1-1"/>
 <wire x1="8.08" y1="30.44" x2="22.78" y2="27.04" width="0" layer="19" extent="1-1"/>
@@ -3339,7 +3340,7 @@ design rules under a new name.</description>
 <contactref element="R5" pad="2"/>
 <contactref element="U1" pad="13"/>
 <contactref element="CONNECTOR3" pad="4"/>
-<wire x1="27.28" y1="27.04" x2="30.14" y2="20.55" width="0" layer="19" extent="1-1"/>
+<wire x1="27.28" y1="27.04" x2="29.87" y2="18.28" width="0" layer="19" extent="1-1"/>
 <wire x1="6.37" y1="11.2" x2="27.28" y2="27.04" width="0" layer="19" extent="1-1"/>
 <wire x1="-5.05" y1="35.28" x2="6.37" y2="11.2" width="0" layer="19" extent="1-1"/>
 </signal>
@@ -3527,6 +3528,11 @@ design rules under a new name.</description>
 Since Version 8.2, EAGLE supports online libraries. The ids
 of those online libraries will not be understood (or retained)
 with this version.
+</note>
+<note version="8.3" severity="warning">
+Since Version 8.3, EAGLE supports Fusion synchronisation.
+This feature will not be available in this version and saving
+the document will break the link to the Fusion PCB feature.
 </note>
 <note version="8.3" severity="warning">
 Since Version 8.3, EAGLE supports URNs for individual library
