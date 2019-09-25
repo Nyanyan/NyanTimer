@@ -195,7 +195,7 @@ https://github.com/fw42/atmel/tree/master/stackmat
 
 ### board
 
-基板です。2019/09/05現在、v4-v6まで全てのボードの動作確認がとれています。
+基板です。2019/09/05現在、v4-v6までのボードの動作確認がとれています。
 
 ### body
 
