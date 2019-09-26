@@ -13495,6 +13495,8 @@ Source: 008-0260-0_E.pdf</description>
 <part name="C17" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="025-024X044" package3d_urn="urn:adsk.eagle:package:23630/1" value="22p"/>
 <part name="C18" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="025-024X044" package3d_urn="urn:adsk.eagle:package:23630/1" value="22p"/>
 <part name="SV1" library="con-lstb" library_urn="urn:adsk.eagle:library:162" deviceset="MA06-1" device="" package3d_urn="urn:adsk.eagle:package:8340/1"/>
+<part name="P+8" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
+<part name="GND14" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -13752,6 +13754,12 @@ Source: 008-0260-0_E.pdf</description>
 <attribute name="VALUE" x="53.34" y="7.62" size="1.778" layer="96"/>
 <attribute name="NAME" x="53.34" y="28.702" size="1.778" layer="95"/>
 </instance>
+<instance part="P+8" gate="1" x="64.77" y="17.78" smashed="yes" rot="R270">
+<attribute name="VALUE" x="59.69" y="20.32" size="1.778" layer="96"/>
+</instance>
+<instance part="GND14" gate="1" x="64.77" y="12.7" smashed="yes" rot="R90">
+<attribute name="VALUE" x="67.31" y="10.16" size="1.778" layer="96" rot="R90"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -13873,9 +13881,8 @@ Source: 008-0260-0_E.pdf</description>
 <wire x1="-5.08" y1="96.52" x2="-5.08" y2="95.25" width="0.1524" layer="91"/>
 </segment>
 <segment>
+<pinref part="GND14" gate="1" pin="GND"/>
 <pinref part="SV1" gate="1" pin="1"/>
-<wire x1="62.23" y1="12.7" x2="64.77" y2="12.7" width="0.1524" layer="91"/>
-<label x="64.77" y="12.7" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="+5V" class="0">
@@ -13936,6 +13943,10 @@ Source: 008-0260-0_E.pdf</description>
 <pinref part="P+5" gate="1" pin="+5V"/>
 <pinref part="C10" gate="G$1" pin="1"/>
 <wire x1="-5.08" y1="107.95" x2="-5.08" y2="104.14" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="P+8" gate="1" pin="+5V"/>
+<pinref part="SV1" gate="1" pin="3"/>
 </segment>
 </net>
 <net name="BUZ+" class="0">
