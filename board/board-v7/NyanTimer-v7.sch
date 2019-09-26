@@ -13872,6 +13872,11 @@ Source: 008-0260-0_E.pdf</description>
 <pinref part="GND13" gate="1" pin="GND"/>
 <wire x1="-5.08" y1="96.52" x2="-5.08" y2="95.25" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="SV1" gate="1" pin="1"/>
+<wire x1="62.23" y1="12.7" x2="64.77" y2="12.7" width="0.1524" layer="91"/>
+<label x="64.77" y="12.7" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="+5V" class="0">
 <segment>
