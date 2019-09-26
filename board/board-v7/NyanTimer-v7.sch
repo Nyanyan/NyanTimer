@@ -13497,6 +13497,8 @@ Source: 008-0260-0_E.pdf</description>
 <part name="SV1" library="con-lstb" library_urn="urn:adsk.eagle:library:162" deviceset="MA06-1" device="" package3d_urn="urn:adsk.eagle:package:8340/1"/>
 <part name="P+8" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 <part name="GND14" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="GND19" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="C19" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="025-024X044" package3d_urn="urn:adsk.eagle:package:23630/1" value="0.1u"/>
 </parts>
 <sheets>
 <sheet>
@@ -13760,6 +13762,13 @@ Source: 008-0260-0_E.pdf</description>
 <instance part="GND14" gate="1" x="64.77" y="12.7" smashed="yes" rot="R90">
 <attribute name="VALUE" x="67.31" y="10.16" size="1.778" layer="96" rot="R90"/>
 </instance>
+<instance part="GND19" gate="1" x="71.12" y="15.24" smashed="yes" rot="R90">
+<attribute name="VALUE" x="73.66" y="12.7" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="C19" gate="G$1" x="64.77" y="25.4" smashed="yes" rot="R90">
+<attribute name="NAME" x="64.389" y="26.924" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="69.469" y="26.924" size="1.778" layer="96" rot="R90"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -13883,6 +13892,11 @@ Source: 008-0260-0_E.pdf</description>
 <segment>
 <pinref part="GND14" gate="1" pin="GND"/>
 <pinref part="SV1" gate="1" pin="1"/>
+</segment>
+<segment>
+<pinref part="SV1" gate="1" pin="2"/>
+<wire x1="62.23" y1="15.24" x2="68.58" y2="15.24" width="0.1524" layer="91"/>
+<pinref part="GND19" gate="1" pin="GND"/>
 </segment>
 </net>
 <net name="+5V" class="0">
@@ -14248,11 +14262,17 @@ Source: 008-0260-0_E.pdf</description>
 <wire x1="-10.16" y1="165.1" x2="-10.16" y2="162.56" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$8" class="0">
+<net name="RESET" class="0">
 <segment>
 <pinref part="R9" gate="G$1" pin="2"/>
 <pinref part="U1" gate="G$1" pin="PC6(/RESET)"/>
 <wire x1="6.35" y1="142.24" x2="8.89" y2="142.24" width="0.1524" layer="91"/>
+<label x="5.08" y="143.51" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="C19" gate="G$1" pin="2"/>
+<wire x1="69.85" y1="25.4" x2="72.39" y2="25.4" width="0.1524" layer="91"/>
+<label x="71.12" y="25.4" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="VCC" class="0">
@@ -14357,6 +14377,11 @@ Source: 008-0260-0_E.pdf</description>
 <wire x1="-48.26" y1="111.76" x2="-50.8" y2="111.76" width="0.1524" layer="91"/>
 <label x="-53.34" y="111.76" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="SV1" gate="1" pin="5"/>
+<wire x1="62.23" y1="22.86" x2="63.5" y2="22.86" width="0.1524" layer="91"/>
+<label x="63.5" y="22.86" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="PADRIN" class="0">
 <segment>
@@ -14380,6 +14405,24 @@ Source: 008-0260-0_E.pdf</description>
 <pinref part="U1" gate="G$1" pin="PC2(ADC2)"/>
 <wire x1="57.15" y1="137.16" x2="58.42" y2="137.16" width="0.1524" layer="91"/>
 <label x="58.42" y="137.16" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="RX" class="0">
+<segment>
+<pinref part="SV1" gate="1" pin="4"/>
+<wire x1="62.23" y1="20.32" x2="63.5" y2="20.32" width="0.1524" layer="91"/>
+<label x="63.5" y="20.32" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U1" gate="G$1" pin="PD0(RXD)"/>
+<wire x1="57.15" y1="119.38" x2="59.69" y2="119.38" width="0.1524" layer="91"/>
+<label x="59.69" y="119.38" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$6" class="0">
+<segment>
+<pinref part="C19" gate="G$1" pin="1"/>
+<pinref part="SV1" gate="1" pin="6"/>
 </segment>
 </net>
 </nets>
