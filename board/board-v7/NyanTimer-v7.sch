@@ -13970,9 +13970,9 @@ Source: 008-0260-0_E.pdf</description>
 <label x="19.05" y="50.8" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U1" gate="G$1" pin="PC0(ADC0)"/>
-<wire x1="57.15" y1="142.24" x2="59.69" y2="142.24" width="0.1524" layer="91"/>
-<label x="59.69" y="142.24" size="1.778" layer="95"/>
+<pinref part="U1" gate="G$1" pin="PD5(T1)"/>
+<wire x1="57.15" y1="106.68" x2="59.69" y2="106.68" width="0.1524" layer="91"/>
+<label x="59.69" y="106.68" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="LEDR" class="0">
@@ -14082,11 +14082,6 @@ Source: 008-0260-0_E.pdf</description>
 </net>
 <net name="PADR" class="0">
 <segment>
-<pinref part="U1" gate="G$1" pin="PD2(INT0)"/>
-<wire x1="57.15" y1="114.3" x2="59.69" y2="114.3" width="0.1524" layer="91"/>
-<label x="59.69" y="114.3" size="1.778" layer="95"/>
-</segment>
-<segment>
 <label x="114.3" y="53.34" size="1.778" layer="95"/>
 <pinref part="PIN2" gate="G$1" pin="P$1"/>
 <wire x1="88.9" y1="53.34" x2="97.79" y2="53.34" width="0.1524" layer="91"/>
@@ -14095,6 +14090,11 @@ Source: 008-0260-0_E.pdf</description>
 <wire x1="97.79" y1="58.42" x2="97.79" y2="53.34" width="0.1524" layer="91"/>
 <wire x1="97.79" y1="53.34" x2="99.06" y2="53.34" width="0.1524" layer="91"/>
 <junction x="97.79" y="53.34"/>
+</segment>
+<segment>
+<pinref part="U1" gate="G$1" pin="PC2(ADC2)"/>
+<wire x1="57.15" y1="137.16" x2="58.42" y2="137.16" width="0.1524" layer="91"/>
+<label x="58.42" y="137.16" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="PADL" class="0">
@@ -14402,9 +14402,9 @@ Source: 008-0260-0_E.pdf</description>
 <wire x1="107.95" y1="45.72" x2="114.3" y2="45.72" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U1" gate="G$1" pin="PC2(ADC2)"/>
-<wire x1="57.15" y1="137.16" x2="58.42" y2="137.16" width="0.1524" layer="91"/>
-<label x="58.42" y="137.16" size="1.778" layer="95"/>
+<pinref part="U1" gate="G$1" pin="PC0(ADC0)"/>
+<wire x1="57.15" y1="142.24" x2="59.69" y2="142.24" width="0.1524" layer="91"/>
+<label x="59.69" y="142.24" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="RX" class="0">
