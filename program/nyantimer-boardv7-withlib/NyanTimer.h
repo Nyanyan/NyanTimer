@@ -5,6 +5,6 @@
 class NyanTimer {
   public:
     bool getButton(int button);
-}
+};
 
 #endif
