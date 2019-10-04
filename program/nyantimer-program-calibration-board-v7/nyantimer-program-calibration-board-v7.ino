@@ -438,19 +438,6 @@ void timer() {
           if (cnt > touchthreshold)
             touchflag = false;
         }
-        /*
-          bool touchflag = true;
-          while (touchflag) {
-          int cnt = 0;
-          int touchthreshold = 20;
-          for (cnt = 0; cnt <= touchthreshold; cnt++) {
-            if (touch(0) == 1)
-              break;
-          }
-          if (cnt >= touchthreshold)
-            touchflag = false;
-          }
-        */
       }
 
 
