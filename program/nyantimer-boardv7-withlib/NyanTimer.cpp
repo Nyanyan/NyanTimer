@@ -16,7 +16,7 @@
 #define PAD2OUT 14
 #define PAD2IN 17
 
-bool getButton(button) {
+bool getButton(int button) {
   if (digitalRead(button) == HIGH)
     return true;
   else
