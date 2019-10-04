@@ -1,6 +1,10 @@
 #ifndef _NyanTimer_h
 #define _NyanTimer_h
+#include "Arduino.h"
 
-bool getButton(int button);
+class NyanTimer {
+  public:
+    bool getButton(int button);
+}
 
 #endif

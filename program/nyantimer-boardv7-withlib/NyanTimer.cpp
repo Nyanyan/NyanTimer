@@ -1,4 +1,5 @@
 #include "NyanTimer.h"
+#include "Arduino.h"
 #include <MsTimer2.h>
 #include <TimerOne.h>
 #include <Wire.h>
