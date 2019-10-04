@@ -6,6 +6,7 @@
 #include <ST7032.h>
 
 ST7032 lcd;
+NyanTimer NyanTimer();
 
 
 #define BUTTON1 6 //reset
@@ -76,6 +77,8 @@ void setup() {
   digitalWrite(PAD2OUT, LOW);
   MsTimer2::set(125, out);
   MsTimer2::start();
+  
+  NyanTimer::lightLED(LEDR, 1)
 }
 
 
@@ -311,7 +314,7 @@ void setLCDclear(int m) {
 }
 
 void button() {
-  if (NyanTimer::getButton(BUTTON1)) {//reset /*********************************************************************************************************/
+  if (digitalRead(BUTTON1) == HIGH) {//reset /*********************************************************************************************************/
     int a = 0;
     int t = 500;
     while (digitalRead(BUTTON1) == HIGH) {

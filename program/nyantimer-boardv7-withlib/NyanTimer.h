@@ -4,7 +4,7 @@
 
 class NyanTimer {
   public:
-    bool getButton(int button);
+    void lightLED(int LED, bool HL);
 };
 
 #endif

@@ -17,9 +17,7 @@
 #define PAD2OUT 14
 #define PAD2IN 17
 
-bool getButton(int button) {
-  if (digitalRead(button) == HIGH)
-    return true;
-  else
-    return false;
+
+void NyanTimer::lightLED(int LED, bool HL) {
+  digitalWrite(LED, HL);
 }
