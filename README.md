@@ -1,6 +1,12 @@
 # NyanTimer
 DIY Stackmat Timer for cubing
 
+**日本語は下部にあります。**
+
+## Abstract
+
+This timer is made by a cuber for cubers, so it has some functions that ordinal timers don’t have: Measuring the inspection time and lap time. These functions are deviced 
+
 ## 概要
 
 このタイマーはキューバー目線をコンセプトに製作したものです。そのため、普通のスタックタイマーにはない2つの大きな追加機能、インスペクションタイム計測とラップタイム計測があります。これらの機能は私がTwitterでキューバーの皆さんに向けて取ったアンケートの結果に基づいてつけた機能です。
