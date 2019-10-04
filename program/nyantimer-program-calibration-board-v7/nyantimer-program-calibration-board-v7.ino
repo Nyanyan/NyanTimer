@@ -527,7 +527,7 @@ void timer() {
 
     else if (stat == 'I' && inspstat == 1) { //inspection time starts
       ledr = 1;
-      ledg = 1;
+      ledg = 0;
       convertLED();
       inspstat = 2;
       Timer1.stop();
