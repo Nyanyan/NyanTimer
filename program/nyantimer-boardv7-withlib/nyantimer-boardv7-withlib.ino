@@ -1,9 +1,12 @@
+#include "NyanTimer.h"
+/*
 #include <MsTimer2.h>
 #include <TimerOne.h>
 #include <Wire.h>
 #include <ST7032.h>
 
 ST7032 lcd;
+
 
 #define BUTTON1 6 //reset
 #define BUTTON2 8 //inspection mode
@@ -16,6 +19,7 @@ ST7032 lcd;
 #define PAD1IN 16
 #define PAD2OUT 14
 #define PAD2IN 17
+*/
 
 int minute, second, msecond = 0;
 int output[7] = {0, 0, 0, 0, 0, 0, 0};
