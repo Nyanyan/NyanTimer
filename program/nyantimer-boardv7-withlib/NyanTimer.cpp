@@ -1,7 +1,7 @@
 #include "NyanTimer.h"
 #include "Arduino.h"
 
-//ST7032 lcd;
+ST7032 lcd;
 
 void NyanTimer::begin() {
   lcd.begin(16, 2);

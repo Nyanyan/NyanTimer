@@ -18,8 +18,6 @@
 #define PAD2OUT 14
 #define PAD2IN 17
 
-ST7032 lcd;
-
 class NyanTimer {
   public:
     void begin();
