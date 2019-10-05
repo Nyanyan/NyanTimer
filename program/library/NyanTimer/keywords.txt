@@ -1,0 +1,22 @@
+#######################################
+# Syntax Coloring Map NyanTimer library
+#######################################
+
+NyanTimer       KEYWORD1
+
+
+lightLED		KEYWORD2
+printLCD		KEYWORD2
+
+
+BUTTON1         LITERAL1
+BUTTON2         LITERAL1
+BUTTON3         LITERAL1
+BUTTON4         LITERAL1
+BUZZER          LITERAL1
+LEDR            LITERAL1
+LEDG            LITERAL1
+PAD1OUT         LITERAL1
+PAD1IN          LITERAL1
+PAD2OUT         LITERAL1
+PAD2IN          LITERAL1
