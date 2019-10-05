@@ -1,12 +1,5 @@
 #include "NyanTimer.h"
 #include "Arduino.h"
-/*
-#include <MsTimer2.h>
-#include <TimerOne.h>
-#include <Wire.h>
-#include <ST7032.h>
-*/
-
 
 void NyanTimer::lightLED(int LED, bool HL) {
   _LED = LED;
@@ -14,6 +7,7 @@ void NyanTimer::lightLED(int LED, bool HL) {
   digitalWrite(_LED, _HL);
 }
 
+/*
 void NyanTimer::setLCD(int row, int col, char str) {
   _row = row;
   _col = col;
@@ -21,3 +15,4 @@ void NyanTimer::setLCD(int row, int col, char str) {
   lcd.setCursor(_row, _col);
   lcd.print(_str);
 }
+*/

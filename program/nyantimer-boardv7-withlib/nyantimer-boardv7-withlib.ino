@@ -2,6 +2,7 @@
 
 //ST7032 lcd;
 NyanTimer NyanTimer;
+ST7032 lcd;
 
 /*
 #define BUTTON1 6 //reset

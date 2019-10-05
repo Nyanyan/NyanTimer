@@ -6,8 +6,6 @@
 #include <Wire.h>
 #include <ST7032.h>
 
-ST7032 lcd;
-
 #define BUTTON1 6 //reset
 #define BUTTON2 8 //inspection mode
 #define BUTTON3 7 //lap up
