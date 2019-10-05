@@ -1,6 +1,5 @@
-#include "NyanTimer.h"
+#include <NyanTimer.h>
 
-//ST7032 lcd;
 NyanTimer NyanTimer;
 
 /*
@@ -167,11 +166,11 @@ void convertLCD() {
     lcd.print(" ");
   */
   NyanTimer.setLCD(0, 1, "L");
-  NyanTimer.setLCD(1, 1, char(int(lapcount / 10)));
-  NyanTimer.setLCD(2, 1, char(lapcount - int(lapcount / 10) * 10));
+  NyanTimer.setLCD(1, 1, String(int(lapcount / 10)));
+  NyanTimer.setLCD(2, 1, String(lapcount - int(lapcount / 10) * 10));
   NyanTimer.setLCD(3, 1, "/");
-  NyanTimer.setLCD(4, 1, char(int(lapmode / 10)));
-  NyanTimer.setLCD(5, 1, char(lapmode - int(lapmode / 10) * 10));
+  NyanTimer.setLCD(4, 1, String(int(lapmode / 10)));
+  NyanTimer.setLCD(5, 1, String(lapmode - int(lapmode / 10) * 10));
   /*
     lcd.setCursor(0, 1);
     lcd.print("L");
