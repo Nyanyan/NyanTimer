@@ -38,22 +38,9 @@ int pad1inthreshold = 0;
 int pad2inthreshold = 0;
 
 void setup() {
-  Serial.begin(1200);
-  pinMode(BUTTON1, INPUT);
-  pinMode(BUTTON2, INPUT);
-  pinMode(BUTTON3, INPUT);
-  pinMode(BUTTON4, INPUT);
-  pinMode(BUZZER, OUTPUT);
-  pinMode(LEDR, OUTPUT);
-  pinMode(LEDG, OUTPUT);
-  pinMode(PAD1OUT, OUTPUT);
-  pinMode(PAD2OUT, OUTPUT);
-  pinMode(PAD1IN, INPUT);
-  pinMode(PAD2IN, INPUT);
-
-  resettime();
   digitalWrite(PAD1OUT, HIGH);
   digitalWrite(PAD2OUT, HIGH);
+  resettime();
   NyanTimer.begin();
   setLCDclear(2);
   lap[0][0] = 0;
@@ -70,7 +57,6 @@ void setup() {
 
 void out() { //serial output, every 125msec
   String serout = statout;
-
   for (int i = 1; i < 7; i++)
     serout += output[i];
   int tmp = 0;
