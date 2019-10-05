@@ -1,14 +1,9 @@
 #include "NyanTimer.h"
 
-#include <MsTimer2.h>
-#include <TimerOne.h>
-#include <Wire.h>
-#include <ST7032.h>
-
-ST7032 lcd;
+//ST7032 lcd;
 NyanTimer NyanTimer;
 
-
+/*
 #define BUTTON1 6 //reset
 #define BUTTON2 8 //inspection mode
 #define BUTTON3 7 //lap up
@@ -20,7 +15,7 @@ NyanTimer NyanTimer;
 #define PAD1IN 16
 #define PAD2OUT 14
 #define PAD2IN 17
-
+*/
 
 int minute, second, msecond = 0;
 int output[7] = {0, 0, 0, 0, 0, 0, 0};
@@ -77,8 +72,6 @@ void setup() {
   digitalWrite(PAD2OUT, LOW);
   MsTimer2::set(125, out);
   MsTimer2::start();
-  
-  NyanTimer::lightLED(LEDR, 1)
 }
 
 
