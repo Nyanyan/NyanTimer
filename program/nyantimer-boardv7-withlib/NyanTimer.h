@@ -18,16 +18,19 @@
 #define PAD2OUT 14
 #define PAD2IN 17
 
+ST7032 lcd;
+
 class NyanTimer {
   public:
+    void begin();
     void lightLED(int LED, bool HL);
-    void setLCD(int row, int col, char str);
+    void setLCD(int row, int col, String str);
   private:
     int _LED;
     bool _HL;
     int _row;
     int _col;
-    char _str;
+    String _str;
 };
 
 #endif

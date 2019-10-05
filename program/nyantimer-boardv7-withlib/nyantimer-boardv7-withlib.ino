@@ -2,20 +2,19 @@
 
 //ST7032 lcd;
 NyanTimer NyanTimer;
-ST7032 lcd;
 
 /*
-#define BUTTON1 6 //reset
-#define BUTTON2 8 //inspection mode
-#define BUTTON3 7 //lap up
-#define BUTTON4 4 //lap down
-#define BUZZER 5 //buzzer
-#define LEDR 13 //red led
-#define LEDG 12 //green led
-#define PAD1OUT 15
-#define PAD1IN 16
-#define PAD2OUT 14
-#define PAD2IN 17
+  #define BUTTON1 6 //reset
+  #define BUTTON2 8 //inspection mode
+  #define BUTTON3 7 //lap up
+  #define BUTTON4 4 //lap down
+  #define BUZZER 5 //buzzer
+  #define LEDR 13 //red led
+  #define LEDG 12 //green led
+  #define PAD1OUT 15
+  #define PAD1IN 16
+  #define PAD2OUT 14
+  #define PAD2IN 17
 */
 
 int minute, second, msecond = 0;
@@ -52,17 +51,11 @@ void setup() {
   pinMode(PAD2OUT, OUTPUT);
   pinMode(PAD1IN, INPUT);
   pinMode(PAD2IN, INPUT);
-  lcd.begin(16, 2);
-  lcd.setContrast(40);
 
   resettime();
   digitalWrite(PAD1OUT, HIGH);
   digitalWrite(PAD2OUT, HIGH);
-  lcd.setCursor(0, 0); //when power is off: print "Nyan Timer"
-  lcd.print("NyanTimer       ");
-  lcd.setCursor(0, 1);
-  lcd.print("      by Nyanyan");
-  delay(1000);
+  NyanTimer.begin();
   setLCDclear(2);
   lap[0][0] = 0;
   lap[0][1] = 0;
@@ -130,11 +123,12 @@ void count() { //every 1 msec
 
 
 void convertLCD() {
-  lcd.setCursor(7, 0); //print time
+  //lcd.setCursor(7, 0); //print time
   String lcdouta = String(output[0]) + String(output[1]) + ':' + String(output[2]) + String(output[3]) + '.' + String(output[4]) + String(output[5]) + String(output[6]);
-  lcd.print(lcdouta);
+  //lcd.print(lcdouta);
+  NyanTimer.setLCD(7, 0, lcdouta);
 
-  lcd.setCursor(7, 1); //print lap time
+  //lcd.setCursor(7, 1); //print lap time
   String lcdoutb;
   if (lapcount >= 1) {
     int a[7];
@@ -153,16 +147,17 @@ void convertLCD() {
     lcdoutb = String(a[0]) + String(a[1]) + ':' + String(a[2]) + String(a[3]) + '.' + String(a[4]) + String(a[5]) + String(a[6]);
   } else
     lcdoutb = "         ";
-  lcd.print(lcdoutb);
+  //lcd.print(lcdoutb);
+  NyanTimer.setLCD(7, 0, lcdoutb);
 
   if (inspstat == 0) {
-    lcd.setCursor(0, 0); //print mode & status
+    //lcd.setCursor(0, 0); //print mode & status
     if (inspmode == 1)
-      lcd.print("I ");
+      NyanTimer.setLCD(0, 0, "I ");
     else if (inspmode == 2)
-      lcd.print("Is");
+      NyanTimer.setLCD(0, 0, "Is");
     else if (inspmode == 0)
-      lcd.print("  ");
+      NyanTimer.setLCD(0, 0, "  ");
   }
   /*
     lcd.setCursor(2, 0);
@@ -171,18 +166,26 @@ void convertLCD() {
     else
     lcd.print(" ");
   */
-  lcd.setCursor(0, 1);
-  lcd.print("L");
-  lcd.setCursor(1, 1);
-  lcd.print(int(lapcount / 10));
-  lcd.setCursor(2, 1);
-  lcd.print(lapcount - int(lapcount / 10) * 10);
-  lcd.setCursor(3, 1);
-  lcd.print("/");
-  lcd.setCursor(4, 1);
-  lcd.print(int(lapmode / 10));
-  lcd.setCursor(5, 1);
-  lcd.print(lapmode - int(lapmode / 10) * 10);
+  NyanTimer.setLCD(0, 1, "L");
+  NyanTimer.setLCD(1, 1, char(int(lapcount / 10)));
+  NyanTimer.setLCD(2, 1, char(lapcount - int(lapcount / 10) * 10));
+  NyanTimer.setLCD(3, 1, "/");
+  NyanTimer.setLCD(4, 1, char(int(lapmode / 10)));
+  NyanTimer.setLCD(5, 1, char(lapmode - int(lapmode / 10) * 10));
+  /*
+    lcd.setCursor(0, 1);
+    lcd.print("L");
+    lcd.setCursor(1, 1);
+    lcd.print(int(lapcount / 10));
+    lcd.setCursor(2, 1);
+    lcd.print(lapcount - int(lapcount / 10) * 10);
+    lcd.setCursor(3, 1);
+    lcd.print("/");
+    lcd.setCursor(4, 1);
+    lcd.print(int(lapmode / 10));
+    lcd.setCursor(5, 1);
+    lcd.print(lapmode - int(lapmode / 10) * 10);
+  */
 }
 
 
@@ -298,12 +301,18 @@ void lapDOWN() {
 
 void setLCDclear(int m) {
   if (m == 0 || m == 2) {
-    lcd.setCursor(0, 0);
-    lcd.print("                ");
+    NyanTimer.setLCD(0, 0, "                ");
+    /*
+      lcd.setCursor(0, 0);
+      lcd.print("                ");
+    */
   }
   if (m == 1 || m == 2) {
-    lcd.setCursor(0, 1);
-    lcd.print("                ");
+    NyanTimer.setLCD(0, 1, "                ");
+    /*
+      lcd.setCursor(0, 1);
+      lcd.print("                ");
+    */
   }
 }
 
@@ -322,13 +331,16 @@ void button() {
       batterycount = 0;
       stat = 'I';
       inspresult = "";
-      lcd.setCursor(3, 0);
-      lcd.print("    ");
+      NyanTimer.setLCD(3, 0, "    ");
+      /*
+        lcd.setCursor(3, 0);
+        lcd.print("    ");
+      */
     }
   } else if (digitalRead(BUTTON2) == HIGH) { //inspstatection mode
     batterycount = 0;
-    int i = 0;
-    int t = 500;
+    //int i = 0;
+    //int t = 500;
 
     /*
       while (digitalRead(BUTTON2) == HIGH) {
@@ -361,7 +373,7 @@ void button() {
     batterycount = 0;
     lapUP();
     convertLCD();
-    bool flag = false;
+    //bool flag = false;
     for (int i = 0; i < 1000; i++) {
       if (digitalRead(BUTTON3) == LOW)
         break;
@@ -376,7 +388,7 @@ void button() {
     batterycount = 0;
     lapDOWN();
     convertLCD();
-    bool flag = false;
+    //bool flag = false;
     for (int i = 0; i < 1000; i++) {
       if (digitalRead(BUTTON4) == LOW)
         break;
@@ -455,16 +467,25 @@ void timer() {
           if (inspmode == 2) {
             if (inspstatcount > 0 && inspstatcount < 16) {
               String inspstatcountstr = String(int(inspstatcount / 10)) + String(inspstatcount - 10 * int(inspstatcount / 10));
-              lcd.setCursor(3, 0);
-              lcd.print(inspstatcountstr);
+              NyanTimer.setLCD(3, 0, inspstatcountstr);
+              /*
+                lcd.setCursor(3, 0);
+                lcd.print(inspstatcountstr);
+              */
             } else if (inspstatcount > -2 && inspstatcount <= 0) {
               inspresult = "+2";
-              lcd.setCursor(3, 0);
-              lcd.print("+2");
+              NyanTimer.setLCD(3, 0, "+2");
+              /*
+                lcd.setCursor(3, 0);
+                lcd.print("+2");
+              */
             } else if  (inspstatcount <= -2) {
               inspresult = "DNF";
-              lcd.setCursor(3, 0);
-              lcd.print("DNF");
+              NyanTimer.setLCD(3, 0, "DNF");
+              /*
+                lcd.setCursor(3, 0);
+                lcd.print("DNF");
+              */
               Timer1.stop();
             }
             if (inspmode == 2) {
@@ -543,8 +564,11 @@ void timer() {
   if ((stat == 'I' && inspstat == 2) || (stat == 'A' && inspstat == 2)) {
     if (inspstatcount > 0 && inspstatcount < 16) {
       String inspstatcountstr = String(int(inspstatcount / 10)) + String(inspstatcount - 10 * int(inspstatcount / 10));
+      NyanTimer.setLCD(3,0,inspstatcountstr);
+      /*
       lcd.setCursor(3, 0);
       lcd.print(inspstatcountstr);
+    */
     } else if (inspstatcount > -2 && inspstatcount <= 0)
       inspresult = "+2";
     else if  (inspstatcount <= -2) {
@@ -601,6 +625,9 @@ void loop() {
 
   convertLCD();
   convertLED();
+  NyanTimer.setLCD(3,0,inspresult);
+  /*
   lcd.setCursor(3, 0);
   lcd.print(inspresult);
+*/
 }
