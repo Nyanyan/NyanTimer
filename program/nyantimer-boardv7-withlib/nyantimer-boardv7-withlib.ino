@@ -125,7 +125,7 @@ void convertLCD() {
   //lcd.setCursor(7, 0); //print time
   String lcdouta = String(output[0]) + String(output[1]) + ':' + String(output[2]) + String(output[3]) + '.' + String(output[4]) + String(output[5]) + String(output[6]);
   //lcd.print(lcdouta);
-  NyanTimer.setLCD(7, 0, lcdouta);
+  NyanTimer.printLCD(7, 0, lcdouta);
 
   //lcd.setCursor(7, 1); //print lap time
   String lcdoutb;
@@ -147,16 +147,16 @@ void convertLCD() {
   } else
     lcdoutb = "         ";
   //lcd.print(lcdoutb);
-  NyanTimer.setLCD(7, 0, lcdoutb);
+  NyanTimer.printLCD(7, 1, lcdoutb);
 
   if (inspstat == 0) {
     //lcd.setCursor(0, 0); //print mode & status
     if (inspmode == 1)
-      NyanTimer.setLCD(0, 0, "I ");
+      NyanTimer.printLCD(0, 0, "I ");
     else if (inspmode == 2)
-      NyanTimer.setLCD(0, 0, "Is");
+      NyanTimer.printLCD(0, 0, "Is");
     else if (inspmode == 0)
-      NyanTimer.setLCD(0, 0, "  ");
+      NyanTimer.printLCD(0, 0, "  ");
   }
   /*
     lcd.setCursor(2, 0);
@@ -165,12 +165,12 @@ void convertLCD() {
     else
     lcd.print(" ");
   */
-  NyanTimer.setLCD(0, 1, "L");
-  NyanTimer.setLCD(1, 1, String(int(lapcount / 10)));
-  NyanTimer.setLCD(2, 1, String(lapcount - int(lapcount / 10) * 10));
-  NyanTimer.setLCD(3, 1, "/");
-  NyanTimer.setLCD(4, 1, String(int(lapmode / 10)));
-  NyanTimer.setLCD(5, 1, String(lapmode - int(lapmode / 10) * 10));
+  NyanTimer.printLCD(0, 1, "L");
+  NyanTimer.printLCD(1, 1, String(int(lapcount / 10)));
+  NyanTimer.printLCD(2, 1, String(lapcount - int(lapcount / 10) * 10));
+  NyanTimer.printLCD(3, 1, "/");
+  NyanTimer.printLCD(4, 1, String(int(lapmode / 10)));
+  NyanTimer.printLCD(5, 1, String(lapmode - int(lapmode / 10) * 10));
   /*
     lcd.setCursor(0, 1);
     lcd.print("L");
@@ -300,14 +300,14 @@ void lapDOWN() {
 
 void setLCDclear(int m) {
   if (m == 0 || m == 2) {
-    NyanTimer.setLCD(0, 0, "                ");
+    NyanTimer.printLCD(0, 0, "                ");
     /*
       lcd.setCursor(0, 0);
       lcd.print("                ");
     */
   }
   if (m == 1 || m == 2) {
-    NyanTimer.setLCD(0, 1, "                ");
+    NyanTimer.printLCD(0, 1, "                ");
     /*
       lcd.setCursor(0, 1);
       lcd.print("                ");
@@ -316,7 +316,7 @@ void setLCDclear(int m) {
 }
 
 void button() {
-  if (digitalRead(BUTTON1) == HIGH) {//reset /*********************************************************************************************************/
+  if (digitalRead(BUTTON1) == HIGH) {//reset
     int a = 0;
     int t = 500;
     while (digitalRead(BUTTON1) == HIGH) {
@@ -330,7 +330,7 @@ void button() {
       batterycount = 0;
       stat = 'I';
       inspresult = "";
-      NyanTimer.setLCD(3, 0, "    ");
+      NyanTimer.printLCD(3, 0, "    ");
       /*
         lcd.setCursor(3, 0);
         lcd.print("    ");
@@ -466,21 +466,21 @@ void timer() {
           if (inspmode == 2) {
             if (inspstatcount > 0 && inspstatcount < 16) {
               String inspstatcountstr = String(int(inspstatcount / 10)) + String(inspstatcount - 10 * int(inspstatcount / 10));
-              NyanTimer.setLCD(3, 0, inspstatcountstr);
+              NyanTimer.printLCD(3, 0, inspstatcountstr);
               /*
                 lcd.setCursor(3, 0);
                 lcd.print(inspstatcountstr);
               */
             } else if (inspstatcount > -2 && inspstatcount <= 0) {
               inspresult = "+2";
-              NyanTimer.setLCD(3, 0, "+2");
+              NyanTimer.printLCD(3, 0, "+2");
               /*
                 lcd.setCursor(3, 0);
                 lcd.print("+2");
               */
             } else if  (inspstatcount <= -2) {
               inspresult = "DNF";
-              NyanTimer.setLCD(3, 0, "DNF");
+              NyanTimer.printLCD(3, 0, "DNF");
               /*
                 lcd.setCursor(3, 0);
                 lcd.print("DNF");
@@ -563,7 +563,7 @@ void timer() {
   if ((stat == 'I' && inspstat == 2) || (stat == 'A' && inspstat == 2)) {
     if (inspstatcount > 0 && inspstatcount < 16) {
       String inspstatcountstr = String(int(inspstatcount / 10)) + String(inspstatcount - 10 * int(inspstatcount / 10));
-      NyanTimer.setLCD(3,0,inspstatcountstr);
+      NyanTimer.printLCD(3,0,inspstatcountstr);
       /*
       lcd.setCursor(3, 0);
       lcd.print(inspstatcountstr);
@@ -624,7 +624,7 @@ void loop() {
 
   convertLCD();
   convertLED();
-  NyanTimer.setLCD(3,0,inspresult);
+  NyanTimer.printLCD(3,0,inspresult);
   /*
   lcd.setCursor(3, 0);
   lcd.print(inspresult);
