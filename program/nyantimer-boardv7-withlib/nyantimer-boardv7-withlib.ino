@@ -6,7 +6,7 @@
 #include <ST7032.h>
 
 ST7032 lcd;
-NyanTimer NyanTimer();
+NyanTimer NyanTimer;
 
 
 #define BUTTON1 6 //reset
