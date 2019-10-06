@@ -472,13 +472,6 @@ void timer() {
     if (stat == 'A') { //start solving
       stat = ' ';
       inspstat = 0;
-      /*
-        Timer1.stop();
-
-        Timer1.initialize(1000);
-        Timer1.attachInterrupt(count);
-        Timer1.start();
-      */
       NyanTimer.stopTimer(2);
       NyanTimer.startTimer(2, 1, count);
 
@@ -505,11 +498,6 @@ void timer() {
       NyanTimer.stopTimer(2);
       inspstatcount = 16;
       NyanTimer.startTimer(2, 1000, inspection);
-      /*
-        Timer1.initialize(1000*1000);
-        Timer1.attachInterrupt(inspection);
-        Timer1.start();
-        */
     }
   }
 
