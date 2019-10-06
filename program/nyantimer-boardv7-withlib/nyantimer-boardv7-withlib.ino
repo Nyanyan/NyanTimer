@@ -50,8 +50,11 @@ void setup() {
   pad2inthreshold = analogRead(PAD2IN) * 0.8;
   digitalWrite(PAD1OUT, LOW);
   digitalWrite(PAD2OUT, LOW);
-  MsTimer2::set(125, out);
-  MsTimer2::start();
+  NyanTimer.startTimer(2, 125, out);
+  /*
+    MsTimer2::set(125, out);
+    MsTimer2::start();
+  */
 }
 
 
