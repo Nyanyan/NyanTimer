@@ -7,6 +7,8 @@ NyanTimer       KEYWORD1
 
 lightLED		KEYWORD2
 printLCD		KEYWORD2
+startTimer   	KEYWORD2
+stopTimer       KEYWORD2
 
 
 BUTTON1         LITERAL1

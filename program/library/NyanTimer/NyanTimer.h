@@ -23,12 +23,17 @@ class NyanTimer {
     void begin();
     void lightLED(int LED, bool HL);
     void printLCD(int row, int col, String str);
+    void startTimer(int mode, int msec, void (*f)());
+    void stopTimer(int mode);
   private:
     int _LED;
     bool _HL;
     int _row;
     int _col;
     String _str;
+    int _mode;
+    int _msec;
+    void (*_f)();
 };
 
 #endif

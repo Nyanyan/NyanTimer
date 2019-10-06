@@ -39,3 +39,26 @@ void NyanTimer::printLCD(int col, int row, String str) {
   lcd.setCursor(_col, _row);
   lcd.print(_str);
 }
+
+void NyanTimer::startTimer(int mode, int msec, void (*f)()) {
+  _mode = mode;
+  _msec = msec;
+  _f = f;
+  if (mode == 1) {
+    Timer1.initialize(_msec * 1000);
+    Timer1.attachInterrupt(_f);
+    Timer1.start();
+  } else if (mode == 2) {
+    MsTimer2::set(_msec, _f);
+    MsTimer2::start();
+  }
+}
+
+void NyanTimer::stopTimer(int mode) {
+  _mode = mode;
+  if (mode == 1) {
+    Timer1.stop();
+  } else if (mode == 2) {
+    MsTimer2::stop();
+  }
+}
