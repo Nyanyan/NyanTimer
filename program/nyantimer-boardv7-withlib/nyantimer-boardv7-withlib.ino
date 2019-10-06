@@ -2,22 +2,8 @@
 
 NyanTimer NyanTimer;
 
-/*
-  #define BUTTON1 6 //reset
-  #define BUTTON2 8 //inspection mode
-  #define BUTTON3 7 //lap up
-  #define BUTTON4 4 //lap down
-  #define BUZZER 5 //buzzer
-  #define LEDR 13 //red led
-  #define LEDG 12 //green led
-  #define PAD1OUT 15
-  #define PAD1IN 16
-  #define PAD2OUT 14
-  #define PAD2IN 17
-*/
-
 int minute, second, msecond = 0;
-int output[7] = {0, 0, 0, 0, 0, 0, 0};
+int output[7] = {0, 0, 0, 0, 0, 0, 0}; /////////
 char stat = 'I'; //status
 bool ledr = 0; //red led status
 bool ledg = 0; //green led status
@@ -31,33 +17,24 @@ int inspstatcount = 16; //inspstatection time count
 bool buz = 0;
 long batterycount = 0;
 const long batterythreshold = 60000; //1000 per 30s
-String statout;
+String statout;  //////////
 String inspresult = "";
 bool outmode = false;
+/*
 int pad1inthreshold = 0;
 int pad2inthreshold = 0;
-
+*/
 void setup() {
-  digitalWrite(PAD1OUT, HIGH);
-  digitalWrite(PAD2OUT, HIGH);
   resettime();
   NyanTimer.begin();
   setLCDclear(2);
   lap[0][0] = 0;
   lap[0][1] = 0;
   lap[0][2] = 0;
-  pad1inthreshold = analogRead(PAD1IN) * 0.8; //calibration
-  pad2inthreshold = analogRead(PAD2IN) * 0.8;
-  digitalWrite(PAD1OUT, LOW);
-  digitalWrite(PAD2OUT, LOW);
-  NyanTimer.startTimer(2, 125, out);
-  /*
-    MsTimer2::set(125, out);
-    MsTimer2::start();
-  */
+  NyanTimer.startTimer(2, 125, NyanTimer.serialOut);
 }
 
-
+/*
 void out() { //serial output, every 125msec
   String serout = statout;
   for (int i = 1; i < 7; i++)
@@ -72,6 +49,7 @@ void out() { //serial output, every 125msec
   Serial.print(char(13));
   Serial.print(char(10));
 }
+*/
 
 
 void inspection() {
@@ -186,16 +164,8 @@ void convertLED() {
 
 
 
-
+/*
 int touch(int mode) {
-  /*
-    float threshold = 20;
-    if (outmode)
-    threshold = 25;
-    float t = 4;
-    if (outmode)
-    t = 3;
-  */
   float threshold = 20;
   float t = 4;
   float k = 0.5;
@@ -228,10 +198,6 @@ int touch(int mode) {
 
     delayMicroseconds(5);
   }
-  /*
-    lcd.setCursor(7, 1);
-    lcd.print(VAL1 / t);
-  */
   if (mode == 0) {
     if (VAL1 > threshold * t * k && VAL2 > threshold * t * k)
       return 1;
@@ -248,6 +214,7 @@ int touch(int mode) {
       return 0;
   }
 }
+*/
 
 void resettime() {
   minute = 0;
@@ -396,11 +363,11 @@ void button() {
 
 
 void timer() {
-  if (touch(1) != 0) {
+  if (NyanTimer.touch(1) != 0) {
     if (stat == ' ') {
 
       bool tmp = false;
-      if (lapcount == lapmode - 1 && touch(0) == 1) { //when timer stops
+      if (lapcount == lapmode - 1 && NyanTimer.touch(0) == 1) { //when timer stops
         stat = 'S';
         NyanTimer.stopTimer(1);
         //Timer1.stop();
@@ -435,7 +402,7 @@ void timer() {
         int cnt = 0;
         int touchthreshold = 10;
         while (touchflag) {
-          if (touch(1) == 0)
+          if (NyanTimer.touch(1) == 0)
             cnt++;
           else
             cnt = 0;
@@ -445,14 +412,14 @@ void timer() {
       }
 
 
-    } else if (stat == 'I' && touch(0) == 1) { //timer ready to start
+    } else if (stat == 'I' && NyanTimer.touch(0) == 1) { //timer ready to start
       if (inspmode == 0 || (inspmode == 1 && inspstat == 2) || (inspmode == 2 && inspstat == 2)) { //not inspstatection mode
         int i = 0;
         ledr = 1;
         ledg = 0;
         convertLED();
         int waitingthreshold = 20;
-        while (touch(0) == 1 && i < waitingthreshold) { //wait about 0.55sec
+        while (NyanTimer.touch(0) == 1 && i < waitingthreshold) { //wait about 0.55sec
           i++;
           delay(1);
           if (inspmode == 2) {
@@ -495,7 +462,7 @@ void timer() {
       } else if ((inspmode == 1 && inspstat == 0) || (inspmode == 2 && inspstat == 0)) { //inspstatection mode
         int i = 0;
         int waitingthreshold = 15;
-        while (touch(0) == 1 && i < waitingthreshold) { //wait about 0.55sec
+        while (NyanTimer.touch(0) == 1 && i < waitingthreshold) { //wait about 0.55sec
           i++;
           delay(1);
         }
@@ -508,7 +475,7 @@ void timer() {
           ledg = 0;
         }
         convertLED();
-        while (touch(0) == 1);
+        while (NyanTimer.touch(0) == 1);
       }
     }
   }
@@ -516,7 +483,7 @@ void timer() {
 
 
 
-  if (touch(0) == 0) { //when pads are open
+  if (NyanTimer.touch(0) == 0) { //when pads are open
 
     if (stat == 'A') { //start solving
       stat = ' ';
@@ -536,7 +503,7 @@ void timer() {
       int cnt = 0;
       int touchthreshold = 10;
       while (touchflag) {
-        if (touch(1) == 0)
+        if (NyanTimer.touch(1) == 0)
           cnt++;
         else
           cnt = 0;
@@ -619,9 +586,9 @@ void loop() {
     ledg = 0;
   }
 
-  if (stat == 'I' && touch(1) == 2)
+  if (stat == 'I' && NyanTimer.touch(1) == 2)
     statout = 'R';
-  else if (stat == 'I' && touch(1) == 3)
+  else if (stat == 'I' && NyanTimer.touch(1) == 3)
     statout = 'L';
   else
     statout = String(stat);
