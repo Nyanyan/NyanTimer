@@ -57,6 +57,8 @@ void count() { //every 1 msec
   if (minute >= 100)
     NyanTimer.stopTimer(1);
   //Timer1.stop();
+  NyanTimer.calcTime(minute, second, msecond, output);
+  /*
   output[0] = int(minute / 10);
   output[1] = minute - output[0] * 10;
   output[2] = int(second / 10);
@@ -64,6 +66,7 @@ void count() { //every 1 msec
   output[4] = int(msecond / 100);
   output[5] = int(msecond / 10) - output[4] * 10;
   output[6] = msecond - output[4] * 100 - output[5] * 10;
+  */
 }
 
 
