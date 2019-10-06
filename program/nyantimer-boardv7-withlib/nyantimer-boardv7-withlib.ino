@@ -55,7 +55,7 @@ void count() { //every 1 msec
     ledr = !ledr;
   }
   if (minute >= 100)
-    NyanTimer.stopTimer(1);
+    NyanTimer.stopTimer(2);
   //Timer1.stop();
   NyanTimer.calcTime(minute, second, msecond, output);
   /*
@@ -267,7 +267,7 @@ void button() {
         break;
     }
     if (a >= t) {
-      NyanTimer.stopTimer(1);
+      NyanTimer.stopTimer(2);
       //Timer1.stop();
       batterycount = 0;
       stat = 'I';
@@ -353,7 +353,7 @@ void timer() {
       bool tmp = false;
       if (lapcount == lapmode - 1 && NyanTimer.touch(0) == 1) { //when timer stops
         stat = 'S';
-        NyanTimer.stopTimer(1);
+        NyanTimer.stopTimer(2);
         //Timer1.stop();
         ledr = 0;
         ledg = 0;
@@ -428,7 +428,7 @@ void timer() {
                 lcd.setCursor(3, 0);
                 lcd.print("DNF");
               */
-              NyanTimer.stopTimer(1);
+              NyanTimer.stopTimer(2);
               //Timer1.stop();
             }
             if (inspmode == 2) {
@@ -527,7 +527,7 @@ void timer() {
     else if  (inspstatcount <= -2) {
       inspresult = "DNF";
       //Timer1.stop();
-      NyanTimer.stopTimer(1);
+      NyanTimer.stopTimer(2);
     }
     if (inspmode == 2) {
       if (inspstatcount == 7 || inspstatcount == 3)
