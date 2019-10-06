@@ -21,8 +21,8 @@ String statout;  //////////
 String inspresult = "";
 bool outmode = false;
 /*
-int pad1inthreshold = 0;
-int pad2inthreshold = 0;
+  int pad1inthreshold = 0;
+  int pad2inthreshold = 0;
 */
 void setup() {
   resettime();
@@ -31,7 +31,7 @@ void setup() {
   lap[0][0] = 0;
   lap[0][1] = 0;
   lap[0][2] = 0;
-  
+  NyanTimer.startTimer(2, 125, out);
 }
 
 
@@ -147,14 +147,14 @@ void convertLCD() {
 
 
 void convertLED() {
-  digitalWrite(LEDR, ledr);
-  digitalWrite(LEDG, ledg);
+  NyanTimer.lightLED(LEDR, ledr);
+  NyanTimer.lightLED(LEDG, ledg);
 }
 
 
 
 /*
-int touch(int mode) {
+  int touch(int mode) {
   float threshold = 20;
   float t = 4;
   float k = 0.5;
@@ -202,7 +202,7 @@ int touch(int mode) {
     else
       return 0;
   }
-}
+  }
 */
 
 void resettime() {
