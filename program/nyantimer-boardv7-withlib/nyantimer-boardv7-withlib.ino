@@ -31,25 +31,14 @@ void setup() {
   lap[0][0] = 0;
   lap[0][1] = 0;
   lap[0][2] = 0;
-  NyanTimer.startTimer(2, 125, NyanTimer.serialOut);
+  
 }
 
-/*
+
 void out() { //serial output, every 125msec
-  String serout = statout;
-  for (int i = 1; i < 7; i++)
-    serout += output[i];
-  int tmp = 0;
-  for (int i = 1; i < 7; i++) {
-    tmp += output[i];
-  }
-  char checksum = 64 + tmp;
-  serout += String(checksum);
-  Serial.print(serout);
-  Serial.print(char(13));
-  Serial.print(char(10));
+  NyanTimer.signalOut();
 }
-*/
+
 
 
 void inspection() {
