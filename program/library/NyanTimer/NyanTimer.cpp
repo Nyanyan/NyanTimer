@@ -44,10 +44,7 @@ void NyanTimer::printLCD(int col, int row, String str) {
 
 void NyanTimer::startTimer(int mode, int msec, void (*f)()) {
   if (mode == 1) {
-    if (msec == 1000)
-      Timer1.initialize(1000000);
-    else
-      Timer1.initialize(msec * 1000);
+    Timer1.initialize(125000);
     Timer1.attachInterrupt(f);
     Timer1.start();
   } else if (mode == 2) {

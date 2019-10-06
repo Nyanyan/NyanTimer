@@ -26,7 +26,7 @@ void setup() {
   lap[0][0] = 0;
   lap[0][1] = 0;
   lap[0][2] = 0;
-  NyanTimer.startTimer(2, 125, out);
+  NyanTimer.startTimer(1, 125000, out);
 }
 
 void out() { //serial output, every 125msec
@@ -479,8 +479,8 @@ void timer() {
         Timer1.attachInterrupt(count);
         Timer1.start();
       */
-      NyanTimer.stopTimer(1);
-      NyanTimer.startTimer(1, 1, count);
+      NyanTimer.stopTimer(2);
+      NyanTimer.startTimer(2, 1, count);
 
       setLCDclear(1);
       bool touchflag = true;
@@ -502,9 +502,9 @@ void timer() {
       convertLED();
       inspstat = 2;
       //Timer1.stop();
-      NyanTimer.stopTimer(1);
+      NyanTimer.stopTimer(2);
       inspstatcount = 16;
-      NyanTimer.startTimer(1, 1000, inspection);
+      NyanTimer.startTimer(2, 1000, inspection);
       /*
         Timer1.initialize(1000*1000);
         Timer1.attachInterrupt(inspection);
