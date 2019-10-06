@@ -44,7 +44,10 @@ void NyanTimer::printLCD(int col, int row, String str) {
 
 void NyanTimer::startTimer(int mode, int msec, void (*f)()) {
   if (mode == 1) {
-    Timer1.initialize(msec * 1000);
+    if (msec == 1000)
+      Timer1.initialize(1000000);
+    else
+      Timer1.initialize(msec * 1000);
     Timer1.attachInterrupt(f);
     Timer1.start();
   } else if (mode == 2) {
@@ -111,7 +114,7 @@ int NyanTimer::touch(int mode) {
   }
 }
 
-void NyanTimer::signalOut() {
+void NyanTimer::signalOut(int output[], String statout) {
   String serout = statout;
   for (int i = 1; i < 7; i++)
     serout += output[i];
@@ -124,4 +127,19 @@ void NyanTimer::signalOut() {
   Serial.print(serout);
   Serial.print(char(13));
   Serial.print(char(10));
+}
+
+void NyanTimer::calcTime(int minute, int second, int msecond, int *output) {
+  int a[7];
+  a[0] = int(minute / 10);
+  a[1] = minute - a[0] * 10;
+  a[2] = int(second / 10);
+  a[3] = second - a[2] * 10;
+  a[4] = int(msecond / 100);
+  a[5] = int(msecond / 10) - a[4] * 10;
+  a[6] = msecond - a[4] * 100 - a[5] * 10;
+  for (int i = 0;i < 7;i++) {
+    *output = a[i];
+    ++output;
+  }
 }

@@ -506,10 +506,10 @@ void timer() {
       inspstatcount = 16;
       NyanTimer.startTimer(1, 1000, inspection);
       /*
-        Timer1.initialize(1000000);
+        Timer1.initialize(1000*1000);
         Timer1.attachInterrupt(inspection);
         Timer1.start();
-      */
+        */
     }
   }
 

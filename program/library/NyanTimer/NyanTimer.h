@@ -26,12 +26,12 @@ class NyanTimer {
     void startTimer(int mode, int msec, void (*f)());
     void stopTimer(int mode);
     int touch(int mode);
-    void signalOut();
+    void signalOut(int output[], String statout);
+    void calcTime(int minute, int second, int msecond, int *output);
   private:
     int pad1inthreshold;
     int pad2inthreshold;
-    int output[7] = {0, 0, 0, 0, 0, 0, 0};
-    String statout;
+    
 
     
 };
