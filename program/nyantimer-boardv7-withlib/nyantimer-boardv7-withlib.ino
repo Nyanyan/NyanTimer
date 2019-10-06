@@ -3,7 +3,7 @@
 NyanTimer NyanTimer;
 
 int minute, second, msecond = 0;
-int output[7] = {0, 0, 0, 0, 0, 0, 0}; /////////
+int output[7] = {0, 0, 0, 0, 0, 0, 0};
 char stat = 'I'; //status
 bool ledr = 0; //red led status
 bool ledg = 0; //green led status
@@ -17,13 +17,8 @@ int inspstatcount = 16; //inspstatection time count
 bool buz = 0;
 long batterycount = 0;
 const long batterythreshold = 60000; //1000 per 30s
-String statout;  //////////
+String statout;
 String inspresult = "";
-bool outmode = false;
-/*
-  int pad1inthreshold = 0;
-  int pad2inthreshold = 0;
-*/
 void setup() {
   resettime();
   NyanTimer.begin();
@@ -34,12 +29,9 @@ void setup() {
   NyanTimer.startTimer(2, 125, out);
 }
 
-
 void out() { //serial output, every 125msec
-  NyanTimer.signalOut();
+  NyanTimer.signalOut(output, statout);
 }
-
-
 
 void inspection() {
   inspstatcount--;
