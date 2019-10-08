@@ -26,18 +26,12 @@ void setup() {
   lap[0][0] = 0;
   lap[0][1] = 0;
   lap[0][2] = 0;
-  //NyanTimer.signalBegin(out);
-  Timer1.initialize(125000);
-  Timer1.attachInterrupt(out);
-  Timer1.start();
+  NyanTimer.signalBegin(out);
 }
 
 void out() {
-  //NyanTimer.lightLED(LEDR, HIGH);
   NyanTimer.signalOut(output, statout);
 }
-
-
 
 
 void inspection() {
@@ -66,13 +60,13 @@ void count() { //every 1 msec
   //Timer1.stop();
   NyanTimer.calcTime(minute, second, msecond, output);
   /*
-  output[0] = int(minute / 10);
-  output[1] = minute - output[0] * 10;
-  output[2] = int(second / 10);
-  output[3] = second - output[2] * 10;
-  output[4] = int(msecond / 100);
-  output[5] = int(msecond / 10) - output[4] * 10;
-  output[6] = msecond - output[4] * 100 - output[5] * 10;
+    output[0] = int(minute / 10);
+    output[1] = minute - output[0] * 10;
+    output[2] = int(second / 10);
+    output[3] = second - output[2] * 10;
+    output[4] = int(msecond / 100);
+    output[5] = int(msecond / 10) - output[4] * 10;
+    output[6] = msecond - output[4] * 100 - output[5] * 10;
   */
 }
 
@@ -97,13 +91,13 @@ void convertLCD() {
       t = lapcount;
     NyanTimer.calcTime(minute, second, msecond, a);
     /*
-    a[0] = lap[t][0] / 10;
-    a[1] = lap[t][0] - a[0] * 10;
-    a[2] = lap[t][1] / 10;
-    a[3] = lap[t][1] - a[2] * 10;
-    a[4] = lap[t][2] / 100;
-    a[5] = lap[t][2] / 10 - a[4] * 10;
-    a[6] = lap[t][2] - a[4] * 100 - a[5] * 10;
+      a[0] = lap[t][0] / 10;
+      a[1] = lap[t][0] - a[0] * 10;
+      a[2] = lap[t][1] / 10;
+      a[3] = lap[t][1] - a[2] * 10;
+      a[4] = lap[t][2] / 100;
+      a[5] = lap[t][2] / 10 - a[4] * 10;
+      a[6] = lap[t][2] - a[4] * 100 - a[5] * 10;
     */
     lcdoutb = String(a[0]) + String(a[1]) + ':' + String(a[2]) + String(a[3]) + '.' + String(a[4]) + String(a[5]) + String(a[6]);
   } else
@@ -506,7 +500,8 @@ void timer() {
       inspstat = 2;
       //Timer1.stop();
       NyanTimer.stopTimer();
-      inspstatcount = 16;
+      inspstatcount = 15;
+      convertLCD();
       NyanTimer.startTimer(1000, inspection);
     }
   }
