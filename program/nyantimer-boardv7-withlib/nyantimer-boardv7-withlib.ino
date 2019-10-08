@@ -65,7 +65,7 @@ void count() { //every 1 msec
 
 
 void convertLCD() {
-  String lcdouta = String(output[0]) + String(output[1]) + ':' + String(output[2]) + String(output[3]) + '.' + String(output[4]) + String(output[5]) + String(output[6]);
+  String lcdouta = NyanTimer.strTime(output);
   NyanTimer.printLCD(7, 0, lcdouta);
 
   String lcdoutb;
@@ -76,8 +76,8 @@ void convertLCD() {
       t = lapcount + 1;
     else
       t = lapcount;
-    NyanTimer.calcTime(minute, second, msecond, a);
-    lcdoutb = String(a[0]) + String(a[1]) + ':' + String(a[2]) + String(a[3]) + '.' + String(a[4]) + String(a[5]) + String(a[6]);
+    NyanTimer.calcTime(lap[t][0], lap[t][1], lap[t][2], a);
+    lcdoutb = NyanTimer.strTime(a);
   } else
     lcdoutb = "         ";
   NyanTimer.printLCD(7, 1, lcdoutb);
