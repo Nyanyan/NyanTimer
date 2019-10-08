@@ -95,6 +95,8 @@ void convertLCD() {
       t = lapcount + 1;
     else
       t = lapcount;
+    NyanTimer.calcTime(minute, second, msecond, a);
+    /*
     a[0] = lap[t][0] / 10;
     a[1] = lap[t][0] - a[0] * 10;
     a[2] = lap[t][1] / 10;
@@ -102,6 +104,7 @@ void convertLCD() {
     a[4] = lap[t][2] / 100;
     a[5] = lap[t][2] / 10 - a[4] * 10;
     a[6] = lap[t][2] - a[4] * 100 - a[5] * 10;
+    */
     lcdoutb = String(a[0]) + String(a[1]) + ':' + String(a[2]) + String(a[3]) + '.' + String(a[4]) + String(a[5]) + String(a[6]);
   } else
     lcdoutb = "         ";
