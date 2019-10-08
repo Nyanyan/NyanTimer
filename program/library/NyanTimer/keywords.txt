@@ -10,12 +10,14 @@ NyanTimer	KEYWORD1
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
+begin		KEYWORD2
 lightLED	KEYWORD2
 printLCD	KEYWORD2
 startTimer	KEYWORD2
 stopTimer	KEYWORD2
 touch		KEYWORD2
 signalOut	KEYWORD2
+signalBegin	KEYWORD2
 calcTime	KEYWORD2
 
 #######################################

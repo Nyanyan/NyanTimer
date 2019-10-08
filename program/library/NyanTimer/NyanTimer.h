@@ -23,17 +23,15 @@ class NyanTimer {
     void begin();
     void lightLED(int LED, bool HL);
     void printLCD(int row, int col, String str);
-    void startTimer(int mode, int msec, void (*f)());
-    void stopTimer(int mode);
+    void startTimer(int msec, void (*f)());
+    void stopTimer();
     int touch(int mode);
     void signalOut(int output[], String statout);
+    void signalBegin(void (*f)());
     void calcTime(int minute, int second, int msecond, int *output);
   private:
     int pad1inthreshold;
-    int pad2inthreshold;
-    
-
-    
+    int pad2inthreshold; 
 };
 
 #endif

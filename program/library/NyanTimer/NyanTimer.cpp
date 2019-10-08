@@ -21,7 +21,7 @@ void NyanTimer::begin() {
   digitalWrite(PAD2OUT, HIGH);
   lcd.begin(16, 2);
   lcd.setContrast(40);
-  lcd.setCursor(0, 0); //when power is off: print "Nyan Timer"
+  lcd.setCursor(0, 0);
   lcd.print("NyanTimer       ");
   lcd.setCursor(0, 1);
   lcd.print("      by Nyanyan");
@@ -30,6 +30,27 @@ void NyanTimer::begin() {
   pad2inthreshold = analogRead(PAD2IN) * 0.8;
   digitalWrite(PAD1OUT, LOW);
   digitalWrite(PAD2OUT, LOW);
+}
+
+void NyanTimer::signalOut(int output[], String statout) {
+  String serout = statout;
+  for (int i = 1; i < 7; i++)
+    serout += output[i];
+  int tmp = 0;
+  for (int i = 1; i < 7; i++) {
+    tmp += output[i];
+  }
+  char checksum = 64 + tmp;
+  serout += String(checksum);
+  Serial.print(serout);
+  Serial.print(char(13));
+  Serial.print(char(10));
+}
+
+void NyanTimer::signalBegin(void (*f)()) {
+  Timer1.initialize(125000);
+  Timer1.attachInterrupt(f);
+  Timer1.start();
 }
 
 void NyanTimer::lightLED(int LED, bool HL) {
@@ -42,23 +63,13 @@ void NyanTimer::printLCD(int col, int row, String str) {
   lcd.print(str);
 }
 
-void NyanTimer::startTimer(int mode, int msec, void (*f)()) {
-  if (mode == 1) {
-    Timer1.initialize(125000);
-    Timer1.attachInterrupt(f);
-    Timer1.start();
-  } else if (mode == 2) {
-    MsTimer2::set(msec, f);
-    MsTimer2::start();
-  }
+void NyanTimer::startTimer(int msec, void (*f)()) {
+  MsTimer2::set(msec, f);
+  MsTimer2::start();
 }
 
-void NyanTimer::stopTimer(int mode) {
-  if (mode == 1) {
-    Timer1.stop();
-  } else if (mode == 2) {
-    MsTimer2::stop();
-  }
+void NyanTimer::stopTimer() {
+  MsTimer2::stop();
 }
 
 int NyanTimer::touch(int mode) {
@@ -109,21 +120,6 @@ int NyanTimer::touch(int mode) {
     else
       return 0;
   }
-}
-
-void NyanTimer::signalOut(int output[], String statout) {
-  String serout = statout;
-  for (int i = 1; i < 7; i++)
-    serout += output[i];
-  int tmp = 0;
-  for (int i = 1; i < 7; i++) {
-    tmp += output[i];
-  }
-  char checksum = 64 + tmp;
-  serout += String(checksum);
-  Serial.print(serout);
-  Serial.print(char(13));
-  Serial.print(char(10));
 }
 
 void NyanTimer::calcTime(int minute, int second, int msecond, int *output) {
