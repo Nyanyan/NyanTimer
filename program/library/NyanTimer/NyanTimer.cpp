@@ -136,3 +136,7 @@ void NyanTimer::calcTime(int minute, int second, int msecond, int *output) {
     ++output;
   }
 }
+
+String NyanTimer::strTime(int input[]) {
+  return String(input[0]) + String(input[1]) + ':' + String(input[2]) + String(input[3]) + '.' + String(input[4]) + String(input[5]) + String(input[6]);
+}

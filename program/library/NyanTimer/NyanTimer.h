@@ -29,6 +29,7 @@ class NyanTimer {
     void signalOut(int output[], String statout);
     void signalBegin(void (*f)());
     void calcTime(int minute, int second, int msecond, int *output);
+    String strTime(int input[]);
   private:
     int pad1inthreshold;
     int pad2inthreshold; 

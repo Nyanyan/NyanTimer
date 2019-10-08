@@ -19,6 +19,7 @@ touch		KEYWORD2
 signalOut	KEYWORD2
 signalBegin	KEYWORD2
 calcTime	KEYWORD2
+strTime		KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
