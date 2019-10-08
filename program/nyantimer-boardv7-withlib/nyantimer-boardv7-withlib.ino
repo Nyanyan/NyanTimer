@@ -26,12 +26,19 @@ void setup() {
   lap[0][0] = 0;
   lap[0][1] = 0;
   lap[0][2] = 0;
-  NyanTimer.startTimer(1, 125000, out);
+  //NyanTimer.signalBegin(out);
+  Timer1.initialize(125000);
+  Timer1.attachInterrupt(out);
+  Timer1.start();
 }
 
-void out() { //serial output, every 125msec
+void out() {
+  //NyanTimer.lightLED(LEDR, HIGH);
   NyanTimer.signalOut(output, statout);
 }
+
+
+
 
 void inspection() {
   inspstatcount--;
@@ -55,7 +62,7 @@ void count() { //every 1 msec
     ledr = !ledr;
   }
   if (minute >= 100)
-    NyanTimer.stopTimer(2);
+    NyanTimer.stopTimer();
   //Timer1.stop();
   NyanTimer.calcTime(minute, second, msecond, output);
   /*
@@ -267,7 +274,7 @@ void button() {
         break;
     }
     if (a >= t) {
-      NyanTimer.stopTimer(2);
+      NyanTimer.stopTimer();
       //Timer1.stop();
       batterycount = 0;
       stat = 'I';
@@ -353,7 +360,7 @@ void timer() {
       bool tmp = false;
       if (lapcount == lapmode - 1 && NyanTimer.touch(0) == 1) { //when timer stops
         stat = 'S';
-        NyanTimer.stopTimer(2);
+        NyanTimer.stopTimer();
         //Timer1.stop();
         ledr = 0;
         ledg = 0;
@@ -428,7 +435,7 @@ void timer() {
                 lcd.setCursor(3, 0);
                 lcd.print("DNF");
               */
-              NyanTimer.stopTimer(2);
+              NyanTimer.stopTimer();
               //Timer1.stop();
             }
             if (inspmode == 2) {
@@ -472,8 +479,8 @@ void timer() {
     if (stat == 'A') { //start solving
       stat = ' ';
       inspstat = 0;
-      NyanTimer.stopTimer(2);
-      NyanTimer.startTimer(2, 1, count);
+      NyanTimer.stopTimer();
+      NyanTimer.startTimer(1, count);
 
       setLCDclear(1);
       bool touchflag = true;
@@ -495,9 +502,9 @@ void timer() {
       convertLED();
       inspstat = 2;
       //Timer1.stop();
-      NyanTimer.stopTimer(2);
+      NyanTimer.stopTimer();
       inspstatcount = 16;
-      NyanTimer.startTimer(2, 1000, inspection);
+      NyanTimer.startTimer(1000, inspection);
     }
   }
 
@@ -515,7 +522,7 @@ void timer() {
     else if  (inspstatcount <= -2) {
       inspresult = "DNF";
       //Timer1.stop();
-      NyanTimer.stopTimer(2);
+      NyanTimer.stopTimer();
     }
     if (inspmode == 2) {
       if (inspstatcount == 7 || inspstatcount == 3)
