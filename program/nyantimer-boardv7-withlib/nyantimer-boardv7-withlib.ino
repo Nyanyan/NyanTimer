@@ -1,3 +1,9 @@
+#include "functions.h"
+int pad1inthreshold;
+int pad2inthreshold;
+int output[7] = {0, 0, 0, 0, 0, 0, 0};
+String statout;
+
 int minute, second, msecond = 0;
 char stat = 'I'; //status
 bool ledr = 0; //red led status
@@ -21,7 +27,7 @@ void setup() {
   lap[0][0] = 0;
   lap[0][1] = 0;
   lap[0][2] = 0;
-  NyanTimer::signalBegin(out);
+  NyanTimer::signalBegin(NyanTimer::signalOut(output, statout));
 }
 
 void out() {
