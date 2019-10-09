@@ -6,6 +6,27 @@
 
 ST7032 lcd;
 
+int pad1inthreshold;
+int pad2inthreshold;
+int output[7] = {0, 0, 0, 0, 0, 0, 0};
+String statout;
+
+static void signalOut() {
+  String serout = statout;
+  for (int i = 1; i < 7; i++)
+    serout += output[i];
+  int tmp = 0;
+  for (int i = 1; i < 7; i++) {
+    tmp += output[i];
+  }
+  char checksum = 64 + tmp;
+  serout += String(checksum);
+  Serial.print(serout);
+  Serial.print(char(13));
+  Serial.print(char(10));
+}
+
+
 void NyanTimer::bgn() {
   Serial.begin(1200);
   pinMode(BUTTON1, INPUT);
@@ -33,26 +54,8 @@ void NyanTimer::bgn() {
   pad2inthreshold = analogRead(PAD2IN) * 0.8;
   digitalWrite(PAD1OUT, LOW);
   digitalWrite(PAD2OUT, LOW);
-}
-
-void NyanTimer::signalOut(int output[], String statout) {
-  String serout = statout;
-  for (int i = 1; i < 7; i++)
-    serout += output[i];
-  int tmp = 0;
-  for (int i = 1; i < 7; i++) {
-    tmp += output[i];
-  }
-  char checksum = 64 + tmp;
-  serout += String(checksum);
-  Serial.print(serout);
-  Serial.print(char(13));
-  Serial.print(char(10));
-}
-
-void NyanTimer::signalBegin(void (*f)(void)) {
   Timer1.initialize(125000);
-  Timer1.attachInterrupt(f);
+  Timer1.attachInterrupt(signalOut);
   Timer1.start();
 }
 
