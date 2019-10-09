@@ -47,7 +47,7 @@ void NyanTimer::signalOut(int output[], String statout) {
   Serial.print(char(10));
 }
 
-void NyanTimer::signalBegin(void (*f)()) {
+void NyanTimer::signalBegin(void (*f)(void)) {
   Timer1.initialize(125000);
   Timer1.attachInterrupt(f);
   Timer1.start();
@@ -139,4 +139,12 @@ void NyanTimer::calcTime(int minute, int second, int msecond, int *output) {
 
 String NyanTimer::strTime(int input[]) {
   return String(input[0]) + String(input[1]) + ':' + String(input[2]) + String(input[3]) + '.' + String(input[4]) + String(input[5]) + String(input[6]);
+}
+
+bool NyanTimer::button(int n) {
+  if (digitalRead(n) == HIGH)
+    return true;
+  else
+    return false
+  
 }

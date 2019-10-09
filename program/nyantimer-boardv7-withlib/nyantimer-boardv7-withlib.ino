@@ -1,5 +1,3 @@
-
-
 int minute, second, msecond = 0;
 int output[7] = {0, 0, 0, 0, 0, 0, 0};
 char stat = 'I'; //status
@@ -17,6 +15,7 @@ long batterycount = 0;
 const long batterythreshold = 60000; //1000 per 30s
 String statout;
 String inspresult = "";
+
 void setup() {
   resettime();
   NyanTimer.begin();

@@ -3,6 +3,8 @@
 #include <Wire.h>
 #include <ST7032.h>
 
+ST7032 lcd;
+
 #define BUTTON1 6 //reset
 #define BUTTON2 8 //inspection mode
 #define BUTTON3 7 //lap up
@@ -14,6 +16,9 @@
 #define PAD1IN 16
 #define PAD2OUT 14
 #define PAD2IN 17
+
+int pad1inthreshold;
+int pad2inthreshold;
 
 namespace NyanTimer {
   void begin() {
