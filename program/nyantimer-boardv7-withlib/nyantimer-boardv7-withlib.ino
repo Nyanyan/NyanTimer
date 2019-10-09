@@ -27,7 +27,7 @@ void setup() {
   lap[0][0] = 0;
   lap[0][1] = 0;
   lap[0][2] = 0;
-  NyanTimer::signalBegin(NyanTimer::signalOut(output, statout));
+  NyanTimer::signalBegin(out);
 }
 
 void out() {
