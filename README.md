@@ -5,7 +5,29 @@ DIY Stackmat Timer for cubing
 
 ## Abstract
 
-This timer is made by a cuber for cubers, so it has some functions that ordinal timers don’t have: Measuring the inspection time and lap time. These functions are deviced 
+This timer is made by a cuber for cubers, so it has some functions that ordinal timers don’t have: Measuring the inspection time and lap time. These functions are developped with asking cubers on Twitter.
+
+I aim to sell this timer in the future, but on this page, there is enough information you to make one yourself.
+
+If you have any questions, ask me through any medium (Twitter is better).
+
+https://twitter.com/nyanyan_cube
+
+The movie of NyanTimer below:
+
+https://www.youtube.com/watch?v=Nj-br9DjQB4&t=30s
+
+Photos:
+
+<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/nyantimer-real.png" width="500">
+
+<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/nyantimer-fusion.PNG" width="500">
+
+<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/nyantimer-board.png" width="500">
+
+## Functions
+
+
 
 ## 概要
 

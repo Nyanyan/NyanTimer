@@ -6,18 +6,18 @@
 
 ST7032 lcd;
 
-int pad1inthreshold;
-int pad2inthreshold;
-int output[7] = {0, 0, 0, 0, 0, 0, 0};
-String statout;
+static int pad1inthreshold;
+static int pad2inthreshold;
+int NyanTimer::output[7] = {0, 0, 0, 0, 0, 0, 0};
+String NyanTimer::statout;
 
 static void signalOut() {
-  String serout = statout;
+  String serout = NyanTimer::statout;
   for (int i = 1; i < 7; i++)
-    serout += output[i];
+    serout += NyanTimer::output[i];
   int tmp = 0;
   for (int i = 1; i < 7; i++) {
-    tmp += output[i];
+    tmp += NyanTimer::output[i];
   }
   char checksum = 64 + tmp;
   serout += String(checksum);
@@ -33,11 +33,11 @@ void NyanTimer::bgn() {
   pinMode(BUTTON2, INPUT);
   pinMode(BUTTON3, INPUT);
   pinMode(BUTTON4, INPUT);
-  pinMode(BUZZER, OUTPUT);
-  pinMode(LEDR, OUTPUT);
-  pinMode(LEDG, OUTPUT);
-  pinMode(PAD1OUT, OUTPUT);
-  pinMode(PAD2OUT, OUTPUT);
+  pinMode(BUZZER, NyanTimer::output);
+  pinMode(LEDR, NyanTimer::output);
+  pinMode(LEDG, NyanTimer::output);
+  pinMode(PAD1OUT, NyanTimer::output);
+  pinMode(PAD2OUT, NyanTimer::output);
   pinMode(PAD1IN, INPUT);
   pinMode(PAD2IN, INPUT);
 

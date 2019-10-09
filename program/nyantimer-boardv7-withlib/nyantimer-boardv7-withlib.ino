@@ -49,7 +49,7 @@ void count() { //every 1 msec
   }
   if (minute >= 100)
     NyanTimer::stopTimer();
-  NyanTimer::calcTime(minute, second, msecond, output);
+  NyanTimer::calcTime(minute, second, msecond, NyanTimer::output);
 }
 
 
@@ -57,7 +57,7 @@ void count() { //every 1 msec
 
 
 void convertLCD() {
-  String lcdouta = NyanTimer::strTime(output);
+  String lcdouta = NyanTimer::strTime(NyanTimer::output);
   NyanTimer::printLCD(7, 0, lcdouta);
 
   String lcdoutb;
@@ -104,7 +104,7 @@ void resettime() {
   second = 0;
   msecond = 0;
   for (int i = 0; i < 7; i++)
-    output[i] = 0;
+    NyanTimer::output[i] = 0;
   for (int i = 0; i < maxlap; i++) {
     for (int j = 0; j < 3; j++)
       lap[i][j] = 0;
@@ -395,11 +395,11 @@ void loop() {
   }
 
   if (stat == 'I' && NyanTimer::touch(1) == 2)
-    statout = 'R';
+    NyanTimer::statout = 'R';
   else if (stat == 'I' && NyanTimer::touch(1) == 3)
-    statout = 'L';
+    NyanTimer::statout = 'L';
   else
-    statout = String(stat);
+    NyanTimer::statout = String(stat);
 
   convertLCD();
   convertLED();
