@@ -1,6 +1,4 @@
-#include <NyanTimer.h>
 
-NyanTimer NyanTimer;
 
 int minute, second, msecond = 0;
 int output[7] = {0, 0, 0, 0, 0, 0, 0};
