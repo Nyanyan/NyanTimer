@@ -259,4 +259,6 @@ Arduinoのinoファイルです。
 
 ## 参考資料
 
-信号関係: https://github.com/fw42/atmel/tree/master/stackmat
+信号関係(私がまとめた日本語記事): https://qiita.com/Nyanyan_Cube/items/e517e71cf5c4e2aaf1e5
+
+信号関係(英語記事): https://github.com/fw42/atmel/tree/master/stackmat
