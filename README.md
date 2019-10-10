@@ -65,7 +65,7 @@ https://www.youtube.com/watch?v=Nj-br9DjQB4&t=30s
 
 ### 電池
 
-左右にある写真の蓋を取って、CR2540を入れます。
+左右にある写真の蓋を取って、CR2450を入れます。
 
 <img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/battery.jpeg" width="500">
 
