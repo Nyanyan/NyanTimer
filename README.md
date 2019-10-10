@@ -243,7 +243,7 @@ https://github.com/fw42/atmel/tree/master/stackmat
 
 Fusion360のファイルとobjとstlファイル
 
-ncファイルはPartsTogether内のが最新版です
+body-v2内のncファイルはPartsTogether内のが最新版です
 
 ### program
 
