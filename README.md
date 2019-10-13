@@ -227,7 +227,7 @@ Autodesk Fusion 360
 
 ボディはAutodesk Fusion 360で設計し、CNCフライス盤で切り出しました(今後レーザーカッターでの出力に方針転換する予定)
 
-<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/nyantimer-fusion.PNG" width="500">
+<img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/nyantimer-fusion.PNG" width="500">
 
 #### タッチセンサ
 
