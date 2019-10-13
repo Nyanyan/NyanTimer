@@ -1,4 +1,4 @@
-#include <NyanTimer.h>
+#include "NyanTimer.h"
 
 bool ledr = 0; //red led status
 bool ledg = 0; //green led status
@@ -137,9 +137,9 @@ void lapDOWN() {
 }
 
 void setLCDclear(int m) {
-  if (m == 0 || m == 2) 
+  if (m == 0 || m == 2)
     NyanTimer::printLCD(0, 0, "                ");
-  if (m == 1 || m == 2) 
+  if (m == 1 || m == 2)
     NyanTimer::printLCD(0, 1, "                ");
 }
 
@@ -251,11 +251,11 @@ void timer() {
 
     } else if (NyanTimer::stat == 'I' && NyanTimer::touch(0) == 1) { //timer ready to start
       if (inspmode == 0 || (inspmode == 1 && inspstat == 2) || (inspmode == 2 && inspstat == 2)) { //not inspstatection mode
-        int i = 0;
         ledr = 1;
         ledg = 0;
         convertLED();
         int waitingthreshold = 20;
+        int i = 0;
         while (NyanTimer::touch(0) == 1 && i < waitingthreshold) { //wait about 0.55sec
           i++;
           delay(1);
@@ -367,6 +367,13 @@ void timer() {
 
 
 void loop() {
+      /***********************************************************************test***********************************************************************************/
+    if (NyanTimer::stat == 'a')
+      NyanTimer::stat = 'b';
+    else
+      NyanTimer::stat = 'a';
+    /***********************************************************************test***********************************************************************************/
+    /***
   button();
   if (NyanTimer::stat == 'I' || NyanTimer::stat == 'A') {
     resettime();
@@ -402,4 +409,6 @@ void loop() {
   convertLCD();
   convertLED();
   NyanTimer::printLCD(3, 0, inspresult);
+  ***/
+  Serial.println(NyanTimer::stat);
 }
