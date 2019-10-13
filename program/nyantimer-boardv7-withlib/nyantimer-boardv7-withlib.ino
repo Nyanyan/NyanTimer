@@ -1,6 +1,5 @@
 #include <NyanTimer.h>
 
-char stat = 'I'; //status
 bool ledr = 0; //red led status
 bool ledg = 0; //green led status
 int inspmode = 0; //0:off 1:sndOFF 2:sndON
@@ -33,20 +32,20 @@ void inspection() {
 
 
 void count() { //every 1 msec
-  msecond++;
-  if (msecond == 1000) {
-    msecond = 0;
-    second++;
+  NyanTimer::msecond++;
+  if (NyanTimer::msecond == 1000) {
+    NyanTimer::msecond = 0;
+    NyanTimer::second++;
   }
-  if (second == 60) {
-    second = 0;
-    minute++;
+  if (NyanTimer::second == 60) {
+    NyanTimer::second = 0;
+    NyanTimer::minute++;
   }
-  if (stat == ' ' && msecond % 100 == 0) {
+  if (NyanTimer::stat == ' ' && NyanTimer::msecond % 100 == 0) {
     ledg = ledr;
     ledr = !ledr;
   }
-  if (minute >= 100)
+  if (NyanTimer::minute >= 100)
     NyanTimer::stopTimer();
   NyanTimer::calcTime(NyanTimer::minute, NyanTimer::second, NyanTimer::msecond, NyanTimer::output);
 }
@@ -63,7 +62,7 @@ void convertLCD() {
   if (lapcount >= 1) {
     int a[7];
     int t;
-    if (stat == 'I')
+    if (NyanTimer::stat == 'I')
       t = lapcount + 1;
     else
       t = lapcount;
@@ -99,9 +98,9 @@ void convertLED() {
 
 
 void resettime() {
-  minute = 0;
-  second = 0;
-  msecond = 0;
+  NyanTimer::minute = 0;
+  NyanTimer::second = 0;
+  NyanTimer::msecond = 0;
   for (int i = 0; i < 7; i++)
     NyanTimer::output[i] = 0;
   for (int i = 0; i < maxlap; i++) {
@@ -113,11 +112,11 @@ void resettime() {
 
 
 void lapUP() {
-  if (stat == 'I') {
+  if (NyanTimer::stat == 'I') {
     lapmode++;
     if (lapmode > maxlap)
       lapmode = 1;
-  } else if (stat == 'S') {
+  } else if (NyanTimer::stat == 'S') {
     lapcount++;
     if (lapcount > lapmode) {
       lapcount = 1;
@@ -126,11 +125,11 @@ void lapUP() {
 }
 
 void lapDOWN() {
-  if (stat == 'I') {
+  if (NyanTimer::stat == 'I') {
     lapmode--;
     if (lapmode < 1)
       lapmode = maxlap;
-  } else if (stat == 'S') {
+  } else if (NyanTimer::stat == 'S') {
     lapcount--;
     if (lapcount < 1)
       lapcount = lapmode;
@@ -157,7 +156,7 @@ void button() {
     if (a >= t) {
       NyanTimer::stopTimer();
       batterycount = 0;
-      stat = 'I';
+      NyanTimer::stat = 'I';
       inspresult = "";
       NyanTimer::printLCD(3, 0, "    ");
     }
@@ -195,7 +194,7 @@ void button() {
       delay(100);
       convertLCD();
     }
-  } else if (stat == 'I')
+  } else if (NyanTimer::stat == 'I')
     batterycount++;
 }
 
@@ -203,11 +202,11 @@ void button() {
 
 void timer() {
   if (NyanTimer::touch(1) != 0) {
-    if (stat == ' ') {
+    if (NyanTimer::stat == ' ') {
 
       bool tmp = false;
       if (lapcount == lapmode - 1 && NyanTimer::touch(0) == 1) { //when timer stops
-        stat = 'S';
+        NyanTimer::stat = 'S';
         NyanTimer::stopTimer();
         ledr = 0;
         ledg = 0;
@@ -216,9 +215,9 @@ void timer() {
 
       if (lapcount < lapmode - 1 || tmp) { //lap++
         lapcount++;
-        lap[lapcount][0] = minute;
-        lap[lapcount][1] = second;
-        lap[lapcount][2] = msecond;
+        lap[lapcount][0] = NyanTimer::minute;
+        lap[lapcount][1] = NyanTimer::second;
+        lap[lapcount][2] = NyanTimer::msecond;
         for (int i = lapcount - 1; i >= 0; i--) {
           lap[lapcount][0] -= lap[i][0];
           lap[lapcount][1] -= lap[i][1];
@@ -250,7 +249,7 @@ void timer() {
       }
 
 
-    } else if (stat == 'I' && NyanTimer::touch(0) == 1) { //timer ready to start
+    } else if (NyanTimer::stat == 'I' && NyanTimer::touch(0) == 1) { //timer ready to start
       if (inspmode == 0 || (inspmode == 1 && inspstat == 2) || (inspmode == 2 && inspstat == 2)) { //not inspstatection mode
         int i = 0;
         ledr = 1;
@@ -282,7 +281,7 @@ void timer() {
           }
         }
         if (i >= waitingthreshold)  //timer is able to start
-          stat = 'A';
+          NyanTimer::stat = 'A';
       } else if ((inspmode == 1 && inspstat == 0) || (inspmode == 2 && inspstat == 0)) { //inspstatection mode
         int i = 0;
         int waitingthreshold = 15;
@@ -309,8 +308,8 @@ void timer() {
 
   if (NyanTimer::touch(0) == 0) { //when pads are open
 
-    if (stat == 'A') { //start solving
-      stat = ' ';
+    if (NyanTimer::stat == 'A') { //start solving
+      NyanTimer::stat = ' ';
       inspstat = 0;
       NyanTimer::stopTimer();
       NyanTimer::startTimer(1, count);
@@ -329,7 +328,7 @@ void timer() {
       }
     }
 
-    else if (stat == 'I' && inspstat == 1) { //inspection time starts
+    else if (NyanTimer::stat == 'I' && inspstat == 1) { //inspection time starts
       ledr = 1;
       ledg = 0;
       convertLED();
@@ -342,7 +341,7 @@ void timer() {
   }
 
 
-  if ((stat == 'I' && inspstat == 2) || (stat == 'A' && inspstat == 2)) {
+  if ((NyanTimer::stat == 'I' && inspstat == 2) || (NyanTimer::stat == 'A' && inspstat == 2)) {
     if (inspstatcount > 0 && inspstatcount < 16) {
       String inspstatcountstr = String(int(inspstatcount / 10)) + String(inspstatcount - 10 * int(inspstatcount / 10));
       NyanTimer::printLCD(3, 0, inspstatcountstr);
@@ -369,36 +368,36 @@ void timer() {
 
 void loop() {
   button();
-  if (stat == 'I' || stat == 'A') {
+  if (NyanTimer::stat == 'I' || NyanTimer::stat == 'A') {
     resettime();
   }
 
   timer();
 
-  if (stat != 'I') //autopower off unit
+  if (NyanTimer::stat != 'I') //autopower off unit
     batterycount = 0;
   if (batterycount >= batterythreshold) {
     setLCDclear(2);
     for (;;);
   }
 
-  if (stat == 'S') {
+  if (NyanTimer::stat == 'S') {
     ledr = 0;
     ledg = 1;
-  } else if (stat == 'A') {
+  } else if (NyanTimer::stat == 'A') {
     ledr = 1;
     ledg = 1;
-  } else if (stat == 'I') {
+  } else if (NyanTimer::stat == 'I') {
     ledr = 0;
     ledg = 0;
   }
 
-  if (stat == 'I' && NyanTimer::touch(1) == 2)
+  if (NyanTimer::stat == 'I' && NyanTimer::touch(1) == 2)
     NyanTimer::statout = 'R';
-  else if (stat == 'I' && NyanTimer::touch(1) == 3)
+  else if (NyanTimer::stat == 'I' && NyanTimer::touch(1) == 3)
     NyanTimer::statout = 'L';
   else
-    NyanTimer::statout = String(stat);
+    NyanTimer::statout = String(NyanTimer::stat);
 
   convertLCD();
   convertLED();
