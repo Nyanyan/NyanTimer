@@ -145,6 +145,19 @@ GND-CTS-VCC-TX-RX-DTR
 
 です。
 
+### 専用関数群
+
+NyanTimerのハックにあたって必要となるであろう関数をまとめて提供しています。
+
+#### 入手
+
+このGitHub内のNyanTimer/program/nyantimer-boardv7-withfunc/にある
+
+* functions.h
+* functions.ino
+
+が関数群です。お書きになったプログラムと同じフォルダに入れてご使用ください。
+
 ## 開発環境
 
 Visual Studio Code
