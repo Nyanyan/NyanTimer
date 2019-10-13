@@ -145,18 +145,30 @@ GND-CTS-VCC-TX-RX-DTR
 
 です。
 
-### 専用関数群
+### NyanTimerライブラリ
 
-NyanTimerのハックにあたって必要となるであろう関数をまとめて提供しています。
+NyanTimerのハックにあたって必要となるであろう関数をまとめてライブラリとして提供しています。
 
 #### 入手
 
-このGitHub内のNyanTimer/program/nyantimer-boardv7-withfunc/にある
+このGitHub内のNyanTimer/program/library/内の“NyanTimer”がライブラリです。このままダウンロードしてご自身のライブラリフォルダに入れて使ってください。
 
-* functions.h
-* functions.ino
+#### 必要なライブラリ
 
-が関数群です。お書きになったプログラムと同じフォルダに入れてご使用ください。
+NyanTimerには前提として必要なライブラリがあります。以下のライブラリをインストールしておいてください。最近のArduinoライブラリではメニューバーの“スケッチ->ライブラリをインクルード->ライブラリを管理“から大抵のライブラリはインストールできますが、2019/10/13現在ST7032ライブラリのみインターネットから自分で取ってくる必要があります。
+
+* TimerOne
+  https://www.arduinolibraries.info/libraries/timer-one
+* MsTimer2
+  https://playground.arduino.cc/Main/MsTimer2/
+* Wire
+  標準ライブラリです。
+* ST7032
+  https://ore-kb.net/archives/195
+
+#### 関数の紹介
+
+
 
 ## 開発環境
 
