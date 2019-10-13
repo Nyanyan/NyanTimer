@@ -402,10 +402,4 @@ void loop() {
   convertLCD();
   convertLED();
   NyanTimer::printLCD(3, 0, inspresult);
-
-  if (batterycount == int(batterycount / 100) * 100) {
-    Serial.print(batterycount);
-    Serial.print("\t");
-    Serial.println(float(batterycount / batterythreshold)*100);
-  }
 }
