@@ -144,10 +144,10 @@ void setLCDclear(int m) {
 }
 
 void button() {
-  if (digitalRead(BUTTON1) == HIGH) {//reset
+  if (NyanTimer::inputButton(BUTTON1)) {//reset
     int a = 0;
     int t = 500;
-    while (digitalRead(BUTTON1) == HIGH) {
+    while (NyanTimer::inputButton(BUTTON1)) {
       a++;
       delay(1);
       if (a >= t)
@@ -160,36 +160,36 @@ void button() {
       inspresult = "";
       NyanTimer::printLCD(3, 0, "    ");
     }
-  } else if (digitalRead(BUTTON2) == HIGH) { //inspstatection mode
+  } else if (NyanTimer::inputButton(BUTTON2)) { //inspstatection mode
     batterycount = 0;
     inspmode += 1;
     if (inspmode > 2)
       inspmode = 0;
-    while (digitalRead(BUTTON2) == HIGH);
-  } else if (digitalRead(BUTTON3) == HIGH) { //lap mode up
+    while (NyanTimer::inputButton(BUTTON2));
+  } else if (NyanTimer::inputButton(BUTTON3)) { //lap mode up
     batterycount = 0;
     lapUP();
     convertLCD();
     for (int i = 0; i < 1000; i++) {
-      if (digitalRead(BUTTON3) == LOW)
+      if (!NyanTimer::inputButton(BUTTON3))
         break;
       delay(1);
     }
-    while (digitalRead(BUTTON3) == HIGH) {
+    while (NyanTimer::inputButton(BUTTON3)) {
       lapUP();
       delay(100);
       convertLCD();
     }
-  } else if (digitalRead(BUTTON4) == HIGH) { //lap mode down
+  } else if (NyanTimer::inputButton(BUTTON4)) { //lap mode down
     batterycount = 0;
     lapDOWN();
     convertLCD();
     for (int i = 0; i < 1000; i++) {
-      if (digitalRead(BUTTON4) == LOW)
+      if (!NyanTimer::inputButton(BUTTON4))
         break;
       delay(1);
     }
-    while (digitalRead(BUTTON4) == HIGH) {
+    while (NyanTimer::inputButton(BUTTON4)) {
       lapDOWN();
       delay(100);
       convertLCD();
