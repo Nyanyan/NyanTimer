@@ -1,6 +1,5 @@
-#include "functions.h"
+#include <NyanTimer.h>
 
-int minute, second, msecond = 0;
 char stat = 'I'; //status
 bool ledr = 0; //red led status
 bool ledg = 0; //green led status
@@ -18,7 +17,7 @@ String inspresult = "";
 
 void setup() {
   resettime();
-  NyanTimer::bgn();
+  NyanTimer::begin();
   setLCDclear(2);
   lap[0][0] = 0;
   lap[0][1] = 0;
@@ -49,7 +48,7 @@ void count() { //every 1 msec
   }
   if (minute >= 100)
     NyanTimer::stopTimer();
-  NyanTimer::calcTime(minute, second, msecond, NyanTimer::output);
+  NyanTimer::calcTime(NyanTimer::minute, NyanTimer::second, NyanTimer::msecond, NyanTimer::output);
 }
 
 
