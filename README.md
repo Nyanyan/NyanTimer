@@ -19,9 +19,9 @@ https://www.youtube.com/watch?v=Nj-br9DjQB4&t=30s
 
 Photos:
 
-<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/nyantimer-real.png" width="500">
+<img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/nyantimer-real.png" width="500">
 
-<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/nyantimer-fusion.PNG" width="500">
+<img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/nyantimer-fusion.PNG" width="500">
 
 <img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/nyantimer-board.png" width="500">
 
