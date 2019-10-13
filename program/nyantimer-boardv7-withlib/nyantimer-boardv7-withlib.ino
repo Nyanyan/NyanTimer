@@ -202,6 +202,7 @@ void button() {
 
 void timer() {
   if (NyanTimer::touch(1) != 0) {
+    batterycount = 0;
     if (NyanTimer::stat == ' ') {
       bool tmp = false;
       if (lapcount == lapmode - 1 && NyanTimer::touch(0) == 1) { //when timer stops
@@ -401,4 +402,10 @@ void loop() {
   convertLCD();
   convertLED();
   NyanTimer::printLCD(3, 0, inspresult);
+
+  if (batterycount == int(batterycount / 100) * 100) {
+    Serial.print(batterycount);
+    Serial.print("\t");
+    Serial.println(float(batterycount / batterythreshold)*100);
+  }
 }
