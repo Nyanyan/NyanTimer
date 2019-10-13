@@ -212,9 +212,23 @@ NyanTimerには前提として必要なライブラリがあります。以下�
 
 #### 関数の紹介
 
-##### begin()
+##### void begin()
 
+##### void lightLED(int LED, bool HL)
 
+##### void printLCD(int row, int col, String str)
+
+ ##### void startTimer(int msec, void (*function)())
+
+  ##### void stopTimer()
+
+ #####  int touch(int mode)
+
+  ##### void calcTime(int minute, int second, int msecond, int *output)
+
+  ##### String strTime(int input[])
+
+  ##### bool inputButton(int n)
 
 ## 開発環境
 
