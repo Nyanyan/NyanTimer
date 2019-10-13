@@ -23,7 +23,7 @@ Photos:
 
 <img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/nyantimer-fusion.PNG" width="500">
 
-<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/nyantimer-board.png" width="500">
+<img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/nyantimer-board.png" width="500">
 
 ## Functions
 
@@ -45,11 +45,11 @@ https://www.youtube.com/watch?v=Nj-br9DjQB4&t=30s
 
 画像
 
-<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/nyantimer-real.png" width="500">
+<img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/nyantimer-real.png" width="500">
 
-<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/nyantimer-fusion.PNG" width="500">
+<img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/nyantimer-fusion.PNG" width="500">
 
-<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/nyantimer-board.png" width="500">
+<img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/nyantimer-board.png" width="500">
 
 ## 機能
 
@@ -65,7 +65,7 @@ https://www.youtube.com/watch?v=Nj-br9DjQB4&t=30s
 
 左右にある写真の蓋を取って、CR2450を入れます。
 
-<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/battery.jpeg" width="500">
+<img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/battery.jpeg" width="500">
 
 ちょっと蓋が取りにくいです。裏側に出ているネジを押しつつ表側でネジの上を押さえると取りやすいです。
 
@@ -73,13 +73,13 @@ https://www.youtube.com/watch?v=Nj-br9DjQB4&t=30s
 
 タイマーにあるスライドスイッチで電源が入ります。これも少し扱いにくいです(ごめんなさい)
 
-<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/power.jpeg" width="500">
+<img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/power.jpeg" width="500">
 
 秋月にいい感じのスイッチが見当たらなくて…
 
 ### ボタン
 
-<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/switch.jpeg" width="500">
+<img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/switch.jpeg" width="500">
 
 * 左上: インスペクションタイム計測モード切り替え
 
@@ -157,7 +157,7 @@ Autodesk Fusion 360
 
 スタックタイマーのタッチセンサは静電容量方式のセンサです。これについて、今回は自作しました。
 
-<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/touchsensor.PNG" width="500">
+<img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/touchsensor.PNG" width="500">
 
 少々図が汚いですが勘弁してください。
 
@@ -185,7 +185,7 @@ http://nn-hokuson.hatenablog.com/entry/2017/03/22/200454
 
 #### 全体的な処理
 
-<img src="https://github.com/Nyanyan/NyanTimer/blob/images/image/flow.png" width="1000">
+<img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/flow.png" width="1000">
 
 なぜか繰り返し記号が使えなかったので適当に六角形で代用です。
 
