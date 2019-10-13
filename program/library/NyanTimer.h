@@ -24,8 +24,8 @@ namespace NyanTimer {
   bool inputButton(int n);
   
   extern int output[7];
-  extern String statout;
-  extern String stat;
+  extern char statout;
+  extern char stat;
   extern int msecond;
   extern int second;
   extern int minute;

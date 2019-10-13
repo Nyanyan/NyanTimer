@@ -9,14 +9,14 @@ ST7032 lcd;
 static int pad1inthreshold;
 static int pad2inthreshold;
 int NyanTimer::output[7] = {0, 0, 0, 0, 0, 0, 0};
-String NyanTimer::statout;
-String NyanTimer::stat;
+char NyanTimer::statout;
+char NyanTimer::stat;
 int NyanTimer::minute;
 int NyanTimer::second;
 int NyanTimer::msecond;
 
 static void signalOut() {
-  String serout = NyanTimer::statout;
+  String serout = String(NyanTimer::statout);
   for (int i = 1; i < 7; i++)
     serout += NyanTimer::output[i];
   int tmp = 0;
@@ -37,11 +37,11 @@ void NyanTimer::begin() {
   pinMode(BUTTON2, INPUT);
   pinMode(BUTTON3, INPUT);
   pinMode(BUTTON4, INPUT);
-  pinMode(BUZZER, NyanTimer::output);
-  pinMode(LEDR, NyanTimer::output);
-  pinMode(LEDG, NyanTimer::output);
-  pinMode(PAD1OUT, NyanTimer::output);
-  pinMode(PAD2OUT, NyanTimer::output);
+  pinMode(BUZZER, OUTPUT);
+  pinMode(LEDR, OUTPUT);
+  pinMode(LEDG, OUTPUT);
+  pinMode(PAD1OUT, OUTPUT);
+  pinMode(PAD2OUT, OUTPUT);
   pinMode(PAD1IN, INPUT);
   pinMode(PAD2IN, INPUT);
   NyanTimer::stat = 'I';
@@ -64,7 +64,7 @@ void NyanTimer::begin() {
   digitalWrite(PAD2OUT, LOW);
   Timer1.initialize(125000);
   Timer1.attachInterrupt(signalOut);
-  //Timer1.start();
+  Timer1.start();
 }
 
 void NyanTimer::lightLED(int LED, bool HL) {

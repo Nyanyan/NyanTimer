@@ -12,9 +12,6 @@ inputButton	KEYWORD2
 
 output	LITERAL1
 statout	LITERAL1
-msecond	LITERAL1
-second	LITERAL1
-minute	LITERAL1
 stat	LITERAL1
 
 BUTTON1	LITERAL1
