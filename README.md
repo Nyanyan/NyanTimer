@@ -127,7 +127,9 @@ NyanTimer board-v7以降のボードではNyanTimerのプログラムを簡単�
 
 #### board-v7でのハック
 
-まず裏側のネジを全て取り外し、内部の基板を見ます。
+まず裏側のネジを全て取り外し、内部の基板を見ます。基板左上にUSBシリアル変換接続端子があります。
+
+<img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/USB-Serial.jpeg" width="500">
 
 ## 開発環境
 
