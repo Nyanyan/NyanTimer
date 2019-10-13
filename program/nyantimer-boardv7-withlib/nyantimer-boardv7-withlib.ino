@@ -203,7 +203,6 @@ void button() {
 void timer() {
   if (NyanTimer::touch(1) != 0) {
     if (NyanTimer::stat == " ") {
-
       bool tmp = false;
       if (lapcount == lapmode - 1 && NyanTimer::touch(0) == 1) { //when timer stops
         NyanTimer::stat = "S";
@@ -367,12 +366,6 @@ void timer() {
 
 
 void loop() {
-      /***********************************************************************test***********************************************************************************/
-    if (NyanTimer::stat == "a")
-      NyanTimer::stat = "b";
-    else
-      NyanTimer::stat = "a";
-    /***********************************************************************test***********************************************************************************/
   button();
   if (NyanTimer::stat == "I" || NyanTimer::stat == "A") {
     resettime();
