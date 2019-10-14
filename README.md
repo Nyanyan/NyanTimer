@@ -256,13 +256,35 @@ msecにインターバルをミリ秒で入力し、functionに実行する関�
 
 **mode == 0**
 
+返す数字が
 
+0: どちらのパッドもタッチされていないまたはお片方のパッドがタッチされている場合
 
-* **void calcTime(int minute, int second, int msecond, int *output)**
+1: 両方のパッドがタッチされた場合
+
+**mode == 1**
+
+0: どちらのパッドもタッチされていない場合
+
+1: 両方のパッドがタッチされている場合
+
+2: 右パッドがタッチされている場合
+
+3: 左パッドがタッチされている場合
+
+* **void calcTime(int minute, int second, int msecond, int output)**
+
+minute(分), second(秒), msecond(ミリ秒)の情報から、LCDへの出力に使いやすい時間配列を作ります。なお、output配列(長さ7)の内容を破壊的に変更します。
 
 * **String strTime(int input[])**
 
+input配列(長さ7)の情報から、LCDに出力する時に使うString文字列を作成します。
+
 * **bool inputButton(int n)**
+
+ボタンが押されればtrue、押されていなければfalseを返す関数です。
+
+nにBUTTON1などを入力します。
 
 ## 開発環境
 
