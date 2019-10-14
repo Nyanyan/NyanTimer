@@ -220,11 +220,11 @@ NyanTimer::function(argments);
 
 の形で使ってください。
 
-##### void begin()
+* void begin()
 
 NyanTimerの初期処理関数です。必ずvoid setup()の中で実行してください。
 
-##### void lightLED(int LED, bool HL)
+* void lightLED(int LED, bool HL)
 
 LEDを光らせる関数です。赤色のLEDを光らせたければ、
 
