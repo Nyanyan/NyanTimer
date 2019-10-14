@@ -174,40 +174,42 @@ NyanTimerには前提として必要なライブラリがあります。以下�
 
 以下のものです
 
-* BUTTON1
+* **BUTTON1**
   リセットボタン
-* BUTTON2
+* **BUTTON2**
   インスペクションモードボタン
-* BUTTON3
+* **BUTTON3**
   ラップのカウントアップボタン
-* BUTTON4
+* **BUTTON4**
   ラップのカウントダウンボタン
-* BUZZER
+* **BUZZER**
   ブザー(HIGHにするだけで勝手に鳴ります)
-* LEDR
+* **LEDR**
   赤色LED
-* LEDG
+* **LEDG**
   緑色LED
-* PAD1OUT
+* **PAD1OUT**
   右パッドの出力ピン
-* PAD1IN
+* **PAD1IN**
   右パッドの入力ピン
-* PAD2OUT
+* **PAD2OUT**
   左パッドのっ出力ピン
-* PAD2IN
+* **PAD2IN**
   左パッドの入力ピン
+
+なお、PAD1OUT, PAD1IN, PAD2OUT, PAD2INについて、ユーザが直接触ることはないと思います。
 
 ##### 基礎的な変数
 
 以下のものです。
 
-* int output[7]
+* **int output[7]**
   シリアル出力をする際に時間情報を格納しておく配列。長さは7
-* char statout
+* **char statout**
   シリアル出力をする際のステータス
-* char stat
+* **char stat**
   ステータス情報。statoutと大体同じだが時々違う
-* int minute, second, msecond
+* **int minute, second, msecond**
   時間。分秒ミリ秒
 
 #### 関数の紹介
