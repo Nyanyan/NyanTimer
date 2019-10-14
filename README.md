@@ -228,13 +228,7 @@ NyanTimerの初期処理関数です。必ずvoid setup()の中で実行して�
 
 * **void lightLED(int LED, bool HL)**
 
-LEDを光らせる関数です。赤色のLEDを光らせたければ、
-
-```Python
-NyanTimer::lightLED(LEDR,true);
-```
-
-のようにします。
+LEDを光らせる関数です。LEDにLEDGまたはLEDR、HLにtrue(点灯)またはfalse(消灯)を入力します。
 
 * **void printLCD(int row, int col, String str)**
 
