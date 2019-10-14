@@ -306,7 +306,7 @@ Autodesk Fusion 360
 
 ####  ボディ
 
-ボディはAutodesk Fusion 360で設計し、CNCフライス盤で切り出しました~~(今後レーザーカッターでの出力に方針転換する予定)~~ 3Dプリンタで試作した後、金型作って大量生産する予定です。
+ボディはAutodesk Fusion 360で設計し、CNCフライス盤で切り出しました ~~(今後レーザーカッターでの出力に方針転換する予定)~~  今後は3Dプリンタで試作した後、金型作って大量生産する予定です。
 
 <img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/nyantimer-fusion.PNG" width="500">
 
