@@ -220,11 +220,11 @@ NyanTimer::function(argments);
 
 の形で使ってください。
 
-* void begin()
+* **void begin()**
 
 NyanTimerの初期処理関数です。必ずvoid setup()の中で実行してください。
 
-* void lightLED(int LED, bool HL)
+* **void lightLED(int LED, bool HL)**
 
 LEDを光らせる関数です。赤色のLEDを光らせたければ、
 
@@ -234,21 +234,33 @@ NyanTimer::lightLED(LEDR,true);
 
 のようにします。
 
-* void printLCD(int row, int col, String str)
+* **void printLCD(int row, int col, String str)**
 
 LCDになにか文字を表示する関数です。rowで表示する段(0か1)、colで表示開始列(0-15)を選択し、strを表示します。
 
-* void startTimer(int msec, void (*function)())
+* **void startTimer(int msec, void function())**
 
-* void stopTimer()
+タイマーをスタートさせる関数です。内部はMsTimer2の関数で構成されています。
 
-* int touch(int mode)
+msecにインターバルをミリ秒で入力し、functionに実行する関数を入力します。この関数を実行すると即座にタイマーがスタートします。
 
-* void calcTime(int minute, int second, int msecond, int *output)
+* **void stopTimer()**
 
-* String strTime(int input[])
+タイマーをストップします。
 
-* bool inputButton(int n)
+* **int touch(int mode)**
+
+タッチパッドの情報を得る関数です。modeについて解説します。
+
+**mode == 0**
+
+
+
+* **void calcTime(int minute, int second, int msecond, int *output)**
+
+* **String strTime(int input[])**
+
+* **bool inputButton(int n)**
 
 ## 開発環境
 
