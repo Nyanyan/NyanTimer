@@ -234,21 +234,21 @@ NyanTimer::lightLED(LEDR,true);
 
 のようにします。
 
-##### void printLCD(int row, int col, String str)
+* void printLCD(int row, int col, String str)
 
-LCDになにか文字を表示する関数です。
+LCDになにか文字を表示する関数です。rowで表示する段(0か1)、colで表示開始列(0-15)を選択し、strを表示します。
 
- ##### void startTimer(int msec, void (*function)())
+* void startTimer(int msec, void (*function)())
 
-  ##### void stopTimer()
+* void stopTimer()
 
- #####  int touch(int mode)
+* int touch(int mode)
 
-  ##### void calcTime(int minute, int second, int msecond, int *output)
+* void calcTime(int minute, int second, int msecond, int *output)
 
-  ##### String strTime(int input[])
+* String strTime(int input[])
 
-  ##### bool inputButton(int n)
+* bool inputButton(int n)
 
 ## 開発環境
 
