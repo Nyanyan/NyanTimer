@@ -103,7 +103,6 @@ int NyanTimer::touch(int mode) {
         break;
     }
     digitalWrite(PAD1OUT, LOW);
-
     digitalWrite(PAD2OUT, HIGH);
     while (analogRead(PAD2IN) < pad2inthreshold) {
       val2++;
@@ -116,7 +115,6 @@ int NyanTimer::touch(int mode) {
       VAL2 += val2;
     } else
       i--;
-
     delayMicroseconds(5);
   }
   if (mode == 0) {
