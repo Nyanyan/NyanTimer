@@ -239,11 +239,31 @@ NyanTimerには前提として必要なライブラリがあります。以下�
 
 #### 関数の紹介
 
+全ての関数は必ず
+
+```Python
+NyanTimer::function(argments);
+```
+
+の形で使ってください。
+
 ##### void begin()
+
+NyanTimerの初期処理関数です。必ずvoid setup()の中で実行してください。
 
 ##### void lightLED(int LED, bool HL)
 
+LEDを光らせる関数です。赤色のLEDを光らせたければ、
+
+```Python
+NyanTimer::lightLED(LEDR,true);
+```
+
+のようにします。
+
 ##### void printLCD(int row, int col, String str)
+
+LCDになにか文字を表示する関数です。
 
  ##### void startTimer(int msec, void (*function)())
 
