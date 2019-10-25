@@ -50,6 +50,8 @@ This timer is made by a cuber for cubers, so it has some functions that ordinal 
 
 I aim to sell this timer in the future, but on this page, there is enough information you to make one yourself.
 
+This is an instruction manual for NyanTimer.
+
 If you have any questions, ask me through any medium (Twitter is better).
 
 https://twitter.com/nyanyan_cube
@@ -57,14 +59,6 @@ https://twitter.com/nyanyan_cube
 The movie of NyanTimer below:
 
 https://www.youtube.com/watch?v=Nj-br9DjQB4&t=30s
-
-Photos:
-
-<img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/nyantimer-real.png" width="500">
-
-<img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/nyantimer-fusion.PNG" width="500">
-
-<img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/nyantimer-board.png" width="500">
 
 ## Functions
 
@@ -83,14 +77,6 @@ https://twitter.com/nyanyan_cube
 NyanTimerの紹介動画のURLを載せておきます。
 
 https://www.youtube.com/watch?v=Nj-br9DjQB4&t=30s
-
-画像
-
-<img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/nyantimer-real.png" width="500">
-
-<img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/nyantimer-fusion.PNG" width="500">
-
-<img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/nyantimer-board.png" width="500">
 
 ## 注意
 
