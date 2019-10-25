@@ -53,6 +53,13 @@ https://www.youtube.com/watch?v=Nj-br9DjQB4&t=30s
 
 <img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/nameJP.png" width="500">
 
+### ボタン名称
+
+* 左上: インスペクションタイム計測モード切り替え
+* 左下: タイムリセット
+* 右上: ラップ計測回数調整(アップ)
+* 右下: ラップ計測回数調整(ダウン)
+
 ## 電源を入れる
 
 ### 電池
@@ -62,13 +69,6 @@ https://www.youtube.com/watch?v=Nj-br9DjQB4&t=30s
 ### 電源
 
 タイマーにあるスライドスイッチで電源が入ります。
-
-### ボタン
-
-* 左上: インスペクションタイム計測モード切り替え
-* 左下: タイムリセット
-* 右上: ラップ計測回数調整(アップ)
-* 右下: ラップ計測回数調整(ダウン)
 
 ## 時間を計測する
 
