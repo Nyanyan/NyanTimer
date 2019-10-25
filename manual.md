@@ -3,47 +3,6 @@ DIY Stackmat Timer for cubing
 
 **日本語は下部にあります。**
 
-<!-- TOC -->
-
-- [NyanTimer](#nyantimer)
-    - [Abstract](#abstract)
-    - [Functions](#functions)
-    - [概要](#概要)
-    - [機能](#機能)
-    - [使い方](#使い方)
-        - [電池](#電池)
-        - [電源](#電源)
-        - [ボタン](#ボタン)
-        - [タイマースタート・ストップ](#タイマースタート・ストップ)
-        - [インスペクションタイム計測](#インスペクションタイム計測)
-        - [ラップタイム計測](#ラップタイム計測)
-        - [ハック](#ハック)
-            - [board-v7でのハック](#board-v7でのハック)
-        - [NyanTimerライブラリ](#nyantimerライブラリ)
-            - [入手](#入手)
-            - [必要なライブラリ](#必要なライブラリ)
-            - [関数で使用する定数と変数](#関数で使用する定数と変数)
-                - [NyanTimerの各ピン](#nyantimerの各ピン)
-                - [基礎的な変数](#基礎的な変数)
-            - [関数の紹介](#関数の紹介)
-    - [開発環境](#開発環境)
-    - [技術的な解説](#技術的な解説)
-        - [ハードウェア](#ハードウェア)
-            - [ボディ](#ボディ)
-            - [タッチセンサ](#タッチセンサ)
-            - [その他の入出力部品](#その他の入出力部品)
-        - [ソフトウェア](#ソフトウェア)
-            - [全体的な処理](#全体的な処理)
-            - [信号](#信号)
-    - [ファイル](#ファイル)
-        - [board](#board)
-        - [body](#body)
-        - [program](#program)
-        - [README](#readme)
-    - [参考資料](#参考資料)
-
-<!-- /TOC -->
-
 ## Abstract
 
 This timer is made by a cuber for cubers, so it has some functions that ordinal timers don’t have: Measuring the inspection time and lap time. These functions are developped with asking cubers on Twitter.
