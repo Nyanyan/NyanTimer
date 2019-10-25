@@ -51,7 +51,7 @@ https://www.youtube.com/watch?v=Nj-br9DjQB4&t=30s
 
 ## 各部名称
 
-
+<img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/nameJP.png" width="500">
 
 ## 電源を入れる
 
