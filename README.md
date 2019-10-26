@@ -58,9 +58,9 @@ If you have any questions, ask me through any medium (Twitter is better).
 
 https://twitter.com/nyanyan_cube
 
-The movie of NyanTimer below:
+PV of NyanTimer below:
 
-https://www.youtube.com/watch?v=Nj-br9DjQB4&t=30s
+https://www.youtube.com/watch?v=ierR8ZPBncU&feature=youtu.be
 
 Photos:
 
@@ -84,9 +84,9 @@ Photos:
 
 https://twitter.com/nyanyan_cube
 
-NyanTimerの紹介動画のURLを載せておきます。
+NyanTimerのPVです。
 
-https://www.youtube.com/watch?v=Nj-br9DjQB4&t=30s
+https://www.youtube.com/watch?v=ierR8ZPBncU&feature=youtu.be
 
 画像
 
