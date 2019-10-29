@@ -6,8 +6,8 @@
 
 ST7032 lcd;
 
-static int pad1inthreshold;
-static int pad2inthreshold;
+static int pad1inthreshold = 0;
+static int pad2inthreshold = 0;
 int NyanTimer::output[7] = {0, 0, 0, 0, 0, 0, 0};
 char NyanTimer::statout;
 char NyanTimer::stat;
@@ -57,9 +57,11 @@ void NyanTimer::begin() {
   lcd.print("NyanTimer       ");
   lcd.setCursor(0, 1);
   lcd.print("      by Nyanyan");
-  delay(1000);
-  pad1inthreshold = analogRead(PAD1IN) * 0.7; //calibration
-  pad2inthreshold = analogRead(PAD2IN) * 0.7;
+  for(int i=0;i<10;i++) {
+    delay(100);
+    pad1inthreshold = max(pad1inthreshold, analogRead(PAD1IN) * 0.7); //calibration
+    pad2inthreshold = max(pad2inthreshold, analogRead(PAD2IN) * 0.7);
+  }
   digitalWrite(PAD1OUT, LOW);
   digitalWrite(PAD2OUT, LOW);
   Timer1.initialize(125000);
