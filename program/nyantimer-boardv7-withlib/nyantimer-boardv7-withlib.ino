@@ -11,7 +11,7 @@ int inspstat = 0; //1=during inspstatection time
 int inspstatcount = 16; //inspstatection time count
 bool buz = 0;
 long batterycount = 0;
-const long batterythreshold = 2000 * 5; //1000 per 30s
+const long batterythreshold = 1000; //1000 per 30s
 String inspresult = "";
 
 void setup() {
@@ -145,6 +145,7 @@ void setLCDclear(int m) {
 
 void button() {
   if (NyanTimer::inputButton(BUTTON1)) {//reset
+    batterycount = 0;
     int a = 0;
     int t = 500;
     while (NyanTimer::inputButton(BUTTON1)) {
@@ -155,7 +156,6 @@ void button() {
     }
     if (a >= t) {
       NyanTimer::stopTimer();
-      batterycount = 0;
       NyanTimer::stat = 'I';
       inspresult = "";
       NyanTimer::printLCD(3, 0, "    ");
@@ -194,7 +194,7 @@ void button() {
       delay(100);
       convertLCD();
     }
-  } else if (NyanTimer::stat == 'I')
+  } else if (NyanTimer::stat == 'I' || NyanTimer::stat == 'S')
     batterycount++;
 }
 
@@ -367,21 +367,22 @@ void timer() {
 
 
 void loop() {
+  Serial.println(batterycount);
   //button unit
   if (NyanTimer::stat != ' ')
     button();
 
+  //reset time unit
   if (NyanTimer::stat == 'I' || NyanTimer::stat == 'A')
     resettime();
 
   //timer unit
   timer();
 
-  //autopower off unit
-  if (NyanTimer::stat == 'I' || NyanTimer::stat == 'S')
-    batterycount = 0;
+  //auto power off unit
   if (batterycount >= batterythreshold) {
     setLCDclear(2);
+    delay(1000);
     SMCR |= (1 << SM1);
     SMCR |= 1;
     ADCSRA &= ~(1 << ADEN);
