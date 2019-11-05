@@ -11,7 +11,7 @@ int inspstat = 0; //1=during inspstatection time
 int inspstatcount = 16; //inspstatection time count
 bool buz = 0;
 long batterycount = 0;
-const long batterythreshold = 1000; //1000 per 30s
+const long batterythreshold = 2000 * 5; //1000 per 30s
 String inspresult = "";
 
 void setup() {
@@ -367,7 +367,6 @@ void timer() {
 
 
 void loop() {
-  Serial.println(batterycount);
   //button unit
   if (NyanTimer::stat != ' ')
     button();
