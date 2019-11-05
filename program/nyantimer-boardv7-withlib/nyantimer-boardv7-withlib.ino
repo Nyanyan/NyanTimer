@@ -11,7 +11,7 @@ int inspstat = 0; //1=during inspstatection time
 int inspstatcount = 16; //inspstatection time count
 bool buz = 0;
 long batterycount = 0;
-const long batterythreshold = 60000; //1000 per 30s
+const long batterythreshold = 2000 * 5; //1000 per 30s
 String inspresult = "";
 
 void setup() {
@@ -367,20 +367,30 @@ void timer() {
 
 
 void loop() {
-  if (stat != 'A')
+  //button unit
+  if (NyanTimer::stat != ' ')
     button();
+
   if (NyanTimer::stat == 'I' || NyanTimer::stat == 'A')
     resettime();
 
+  //timer unit
   timer();
 
-  if (NyanTimer::stat != 'I')
-    batterycount = 0; //autopower off unit
+  //autopower off unit
+  if (NyanTimer::stat == 'I' || NyanTimer::stat == 'S')
+    batterycount = 0;
   if (batterycount >= batterythreshold) {
     setLCDclear(2);
-    for (;;);
+    SMCR |= (1 << SM1);
+    SMCR |= 1;
+    ADCSRA &= ~(1 << ADEN);
+    MCUCR |= (1 << BODSE) | (1 << BODS);
+    MCUCR = (MCUCR & ~(1 << BODSE)) | (1 << BODS);
+    asm("sleep");
   }
 
+  //led unit
   if (NyanTimer::stat == 'S') {
     ledr = 0;
     ledg = 1;
@@ -392,6 +402,7 @@ void loop() {
     ledg = 0;
   }
 
+  //serial out unit
   if (NyanTimer::stat == 'I' && NyanTimer::touch(1) == 2)
     NyanTimer::statout = 'R';
   else if (NyanTimer::stat == 'I' && NyanTimer::touch(1) == 3)
@@ -399,6 +410,7 @@ void loop() {
   else
     NyanTimer::statout = NyanTimer::stat;
 
+  //convert lcd and led unit
   convertLCD();
   convertLED();
   NyanTimer::printLCD(3, 0, inspresult);
