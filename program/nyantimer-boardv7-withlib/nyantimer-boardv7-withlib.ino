@@ -368,9 +368,7 @@ void timer() {
 
 void loop() {
   if (stat != 'A') button();
-  if (NyanTimer::stat == 'I' || NyanTimer::stat == 'A') {
-    resettime();
-  }
+  if (NyanTimer::stat == 'I' || NyanTimer::stat == 'A') resettime();
 
   timer();
 
