@@ -367,13 +367,15 @@ void timer() {
 
 
 void loop() {
-  if (stat != 'A') button();
-  if (NyanTimer::stat == 'I' || NyanTimer::stat == 'A') resettime();
+  if (stat != 'A')
+    button();
+  if (NyanTimer::stat == 'I' || NyanTimer::stat == 'A')
+    resettime();
 
   timer();
 
-  if (NyanTimer::stat != 'I') //autopower off unit
-    batterycount = 0;
+  if (NyanTimer::stat != 'I')
+    batterycount = 0; //autopower off unit
   if (batterycount >= batterythreshold) {
     setLCDclear(2);
     for (;;);
