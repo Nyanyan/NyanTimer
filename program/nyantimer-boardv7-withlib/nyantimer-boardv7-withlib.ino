@@ -23,6 +23,18 @@ void setup() {
   lap[0][2] = 0;
 }
 
+void dispMemory(){
+  //Serial.print(F("Free memory=")); 
+  Serial.println(freeRam(), DEC);
+  //Serial.println(F("[bytes]"));
+}
+
+int freeRam () {
+  extern int __heap_start, *__brkval;
+  int v;
+  return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
+}
+
 
 void inspection() {
   inspstatcount--;
@@ -414,4 +426,5 @@ void loop() {
   convertLCD();
   convertLED();
   NyanTimer::printLCD(3, 0, inspresult);
+
 }
