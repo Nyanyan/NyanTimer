@@ -44,6 +44,9 @@ void NyanTimer::begin() {
   pinMode(PAD2OUT, OUTPUT);
   pinMode(PAD1IN, INPUT);
   pinMode(PAD2IN, INPUT);
+  int arr[9] = {0,1,2,3,9,10,11,18,19};
+  for (int i = 0; i < 9; i++)
+    pinMode(arr[i], OUTPUT);
   NyanTimer::stat = 'I';
   NyanTimer::minute = 0;
   NyanTimer::second = 0;
@@ -64,9 +67,9 @@ void NyanTimer::begin() {
   }
   digitalWrite(PAD1OUT, LOW);
   digitalWrite(PAD2OUT, LOW);
-  Timer1.initialize(125000);
-  Timer1.attachInterrupt(signalOut);
-  Timer1.start();
+  //Timer1.initialize(125000);
+  //Timer1.attachInterrupt(signalOut);
+  //Timer1.start();
 }
 
 void NyanTimer::lightLED(int LED, bool HL) {
@@ -160,4 +163,13 @@ bool NyanTimer::inputButton(int n) {
     return true;
   else
     return false;
+}
+
+void NyanTimer::setLCDclear(int mode) {
+  if (mode == 0)
+    NyanTimer::printLCD(0, 0, "                ");
+  else if (mode == 1)
+    NyanTimer::printLCD(0, 1, "                ");
+  else if (mode == 2)
+    lcd.noDisplay();
 }

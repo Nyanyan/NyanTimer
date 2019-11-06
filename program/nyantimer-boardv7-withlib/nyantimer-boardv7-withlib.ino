@@ -17,7 +17,7 @@ String inspresult = "";
 void setup() {
   resettime();
   NyanTimer::begin();
-  setLCDclear(2);
+  NyanTimer::setLCDclear(2);
   lap[0][0] = 0;
   lap[0][1] = 0;
   lap[0][2] = 0;
@@ -134,13 +134,6 @@ void lapDOWN() {
     if (lapcount < 1)
       lapcount = lapmode;
   }
-}
-
-void setLCDclear(int m) {
-  if (m == 0 || m == 2)
-    NyanTimer::printLCD(0, 0, "                ");
-  if (m == 1 || m == 2)
-    NyanTimer::printLCD(0, 1, "                ");
 }
 
 void button() {
@@ -314,7 +307,7 @@ void timer() {
       NyanTimer::stopTimer();
       NyanTimer::startTimer(1, count);
 
-      setLCDclear(1);
+      NyanTimer::setLCDclear(1);
       bool touchflag = true;
       int cnt = 0;
       int touchthreshold = 10;
@@ -380,7 +373,7 @@ void loop() {
 
   //auto power off unit
   if (batterycount >= batterythreshold) {
-    setLCDclear(2);
+    NyanTimer::setLCDclear(2);
     delay(1000);
     SMCR |= (1 << SM1);
     SMCR |= 1;

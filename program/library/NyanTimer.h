@@ -22,6 +22,7 @@ namespace NyanTimer {
   void calcTime(int minute, int second, int msecond, int *output);
   String strTime(int input[]);
   bool inputButton(int n);
+  void setLCDclear(int mode);
   
   extern int output[7];
   extern char statout;
