@@ -168,6 +168,8 @@ void button() {
     }
     if (a >= t) {
       soundmode = !soundmode;
+      if (soundmode)
+        NyanTimer::printLCD(1, 0, "S");
       while (NyanTimer::inputButton(BUTTON2));
     } else {
       inspmode += 1;
