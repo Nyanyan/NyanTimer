@@ -219,6 +219,12 @@ void timer() {
       if (lapcount == lapmode - 1 && NyanTimer::touch(0) == 1) { //when timer stops
         NyanTimer::stat = 'S';
         NyanTimer::stopTimer();
+        String lcdouta = NyanTimer::strTime(NyanTimer::output);
+        NyanTimer::printLCD(7, 0, lcdouta);
+        if (soundmode) {
+          digitalWrite(BUZZER, HIGH);
+          delay(1000);
+        }
         ledr = 0;
         ledg = 0;
         tmp = true;
