@@ -325,6 +325,10 @@ input配列(長さ7)の情報から、LCDに出力する時に使うString文字
 
 nにBUTTON1などを入力します。
 
+* **void setLCDclear(int mode)**
+
+LCDを消去する関数です。mode == 0で上の行、1で下の行、2ですべての行がクリアされます。
+
 ## 開発環境
 
 Visual Studio Code
