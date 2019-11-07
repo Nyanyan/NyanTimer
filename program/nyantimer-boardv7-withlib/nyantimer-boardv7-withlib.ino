@@ -9,6 +9,7 @@ const int maxlap = 99;
 int lap[maxlap + 1][3];
 int inspstat = 0; //1=during inspstatection time
 int inspstatcount = 16; //inspstatection time count
+bool soundmode = false;
 bool buz = 0;
 long batterycount = 0;
 const long batterythreshold = 2000 * 5; //1000 per 30s
@@ -74,12 +75,14 @@ void convertLCD() {
 
   if (inspstat == 0) {
     if (inspmode == 1)
-      NyanTimer::printLCD(0, 0, "I ");
+      NyanTimer::printLCD(0, 0, "i");
     else if (inspmode == 2)
-      NyanTimer::printLCD(0, 0, "Is");
+      NyanTimer::printLCD(0, 0, "I");
     else if (inspmode == 0)
-      NyanTimer::printLCD(0, 0, "  ");
+      NyanTimer::printLCD(0, 0, " ");
   }
+  if (soundmode)
+    NyanTimer::printLCD(0, 1, "S");
   NyanTimer::printLCD(0, 1, "L");
   NyanTimer::printLCD(1, 1, String(int(lapcount / 10)));
   NyanTimer::printLCD(2, 1, String(lapcount - int(lapcount / 10) * 10));
@@ -155,10 +158,22 @@ void button() {
     }
   } else if (NyanTimer::inputButton(BUTTON2)) { //inspstatection mode
     batterycount = 0;
-    inspmode += 1;
-    if (inspmode > 2)
-      inspmode = 0;
-    while (NyanTimer::inputButton(BUTTON2));
+    int a = 0;
+    int t = 500;
+    while (NyanTimer::inputButton(BUTTON1)) {
+      a++;
+      delay(1);
+      if (a >= t)
+        break;
+    }
+    if (a >= t)
+      !soundmode;
+    else {
+      inspmode += 1;
+      if (inspmode > 2)
+        inspmode = 0;
+      while (NyanTimer::inputButton(BUTTON2));
+    }
   } else if (NyanTimer::inputButton(BUTTON3)) { //lap mode up
     batterycount = 0;
     lapUP();
