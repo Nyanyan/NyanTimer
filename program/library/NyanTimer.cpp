@@ -171,5 +171,5 @@ void NyanTimer::setLCDclear(int mode) {
   else if (mode == 1)
     NyanTimer::printLCD(0, 1, "                ");
   else if (mode == 2)
-    lcd.noDisplay();
+    lcd.clear();
 }
