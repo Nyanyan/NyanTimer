@@ -288,7 +288,7 @@ void timer() {
               NyanTimer::stopTimer();
             }
             if (inspmode == 2) {
-              if (inspstatcount == 7 || inspstatcount == 3)
+              if (inspstatcount == 7 || inspstatcount == 3 || inspstatcount == 0 || inspstatcount == -2)
                 buz = 1;
               else
                 buz = 0;
@@ -369,7 +369,7 @@ void timer() {
       NyanTimer::stopTimer();
     }
     if (inspmode == 2) {
-      if (inspstatcount == 7 || inspstatcount == 3)
+      if (inspstatcount == 7 || inspstatcount == 3 || inspstatcount == 0 || inspstatcount == -2)
         buz = 1;
       else
         buz = 0;
