@@ -67,9 +67,9 @@ void NyanTimer::begin() {
   }
   digitalWrite(PAD1OUT, LOW);
   digitalWrite(PAD2OUT, LOW);
-  //Timer1.initialize(125000);
-  //Timer1.attachInterrupt(signalOut);
-  //Timer1.start();
+  Timer1.initialize(125000);
+  Timer1.attachInterrupt(signalOut);
+  Timer1.start();
 }
 
 void NyanTimer::lightLED(int LED, bool HL) {
@@ -91,8 +91,8 @@ void NyanTimer::stopTimer() {
   MsTimer2::stop();
 }
 
-int NyanTimer::touch(int mode) {
-  float threshold = 20;
+int NyanTimer::touch() {
+  float threshold = 10;
   float t = 4;
   float k = 0.5;
   float VAL1 = 0;
@@ -122,21 +122,16 @@ int NyanTimer::touch(int mode) {
       i--;
     delayMicroseconds(5);
   }
-  if (mode == 0) {
-    if (VAL1 > threshold * t * k && VAL2 > threshold * t * k)
-      return 1;
-    else
-      return 0;
-  } else {
-    if (VAL1 > threshold * t * k && VAL2 > threshold * t * k)
-      return 1;
-    else if (VAL1 >= threshold * t * k && VAL2 < threshold * t * k)
-      return 2;
-    else if (VAL1 < threshold * t * k && VAL2 >= threshold * t * k)
-      return 3;
-    else
-      return 0;
-  }
+
+
+  if (VAL1 >= threshold * t * k && VAL2 >= threshold * t * k)
+    return 1;
+  else if (VAL1 >= threshold * t * k && VAL2 < threshold * t * k)
+    return 2;
+  else if (VAL1 < threshold * t * k && VAL2 >= threshold * t * k)
+    return 3;
+  else
+    return 0;
 }
 
 void NyanTimer::calcTime(int minute, int second, int msecond, int *output) {

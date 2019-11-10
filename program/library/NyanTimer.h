@@ -18,7 +18,7 @@ namespace NyanTimer {
   void printLCD(int row, int col, String str);
   void startTimer(int msec, void (*f)());
   void stopTimer();
-  int touch(int mode);
+  int touch();
   void calcTime(int minute, int second, int msecond, int *output);
   String strTime(int input[]);
   bool inputButton(int n);
