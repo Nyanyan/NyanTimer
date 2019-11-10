@@ -216,11 +216,11 @@ void button() {
 
 
 void timer() {
-  if (NyanTimer::touch(1) != 0) {
+  if (NyanTimer::touch() != 0) {
     batterycount = 0;
     if (NyanTimer::stat == ' ') {
       bool tmp = false;
-      if (lapcount == lapmode - 1 && NyanTimer::touch(0) == 1) { //when timer stops
+      if (lapcount == lapmode - 1 && NyanTimer::touch() == 1) { //when timer stops
         NyanTimer::stat = 'S';
         NyanTimer::stopTimer();
         String lcdouta = NyanTimer::strTime(NyanTimer::output);
@@ -260,7 +260,7 @@ void timer() {
         int cnt = 0;
         int touchthreshold = 10;
         while (touchflag) {
-          if (NyanTimer::touch(1) == 0)
+          if (NyanTimer::touch() != 1)
             cnt++;
           else
             cnt = 0;
@@ -270,14 +270,14 @@ void timer() {
       }
 
 
-    } else if (NyanTimer::stat == 'I' && NyanTimer::touch(0) == 1) { //timer ready to start
+    } else if (NyanTimer::stat == 'I' && NyanTimer::touch() == 1) { //timer ready to start
       if (inspmode == 0 || (inspmode == 1 && inspstat == 2) || (inspmode == 2 && inspstat == 2)) { //not inspstatection mode
         ledr = 1;
         ledg = 0;
         convertLED();
         int waitingthreshold = 20;
         int i = 0;
-        while (NyanTimer::touch(0) == 1 && i < waitingthreshold) { //wait about 0.55sec
+        while (NyanTimer::touch() == 1 && i < waitingthreshold) { //wait about 0.55sec
           i++;
           delay(1);
           if (inspmode == 2) {
@@ -306,7 +306,7 @@ void timer() {
       } else if ((inspmode == 1 && inspstat == 0) || (inspmode == 2 && inspstat == 0)) { //inspstatection mode
         int i = 0;
         int waitingthreshold = 15;
-        while (NyanTimer::touch(0) == 1 && i < waitingthreshold) { //wait about 0.55sec
+        while (NyanTimer::touch() == 1 && i < waitingthreshold) { //wait about 0.55sec
           i++;
           delay(1);
         }
@@ -319,7 +319,7 @@ void timer() {
           ledg = 0;
         }
         convertLED();
-        while (NyanTimer::touch(0) == 1);
+        while (NyanTimer::touch() == 1);
       }
     }
   }
@@ -327,7 +327,7 @@ void timer() {
 
 
 
-  if (NyanTimer::touch(0) == 0) { //when pads are open
+  if (NyanTimer::touch() != 1) { //when pads are open
 
     if (NyanTimer::stat == 'A') { //start solving
       NyanTimer::stat = ' ';
@@ -340,7 +340,7 @@ void timer() {
       int cnt = 0;
       int touchthreshold = 10;
       while (touchflag) {
-        if (NyanTimer::touch(1) == 0)
+        if (NyanTimer::touch() == 0)
           cnt++;
         else
           cnt = 0;
@@ -424,9 +424,9 @@ void loop() {
   }
 
   //serial out unit
-  if (NyanTimer::stat == 'I' && NyanTimer::touch(1) == 2)
+  if (NyanTimer::stat == 'I' && NyanTimer::touch() == 2)
     NyanTimer::statout = 'R';
-  else if (NyanTimer::stat == 'I' && NyanTimer::touch(1) == 3)
+  else if (NyanTimer::stat == 'I' && NyanTimer::touch() == 3)
     NyanTimer::statout = 'L';
   else
     NyanTimer::statout = NyanTimer::stat;
