@@ -336,13 +336,13 @@ void timer() {
       bool touchflag = true;
       int cnt = 0;
       int touchthreshold = 10;
-      while (touchflag) {
-        if (NyanTimer::touch() == 0)
-          cnt++;
-        else
-          cnt = 0;
-        if (cnt > touchthreshold)
-          touchflag = false;
+      if (lapmode != 1) {
+        while (cnt <= touchthreshold) {
+          if (NyanTimer::touch() == 0)
+            cnt++;
+          else
+            cnt = 0;
+        }
       }
     }
 
