@@ -14,6 +14,7 @@ bool buz = 0;
 long batterycount = 0;
 const long batterythreshold = 2000 * 5; //1000 per 30s
 String inspresult = "";
+int touchtmp = 0;
 
 void setup() {
   resettime();
@@ -216,11 +217,12 @@ void button() {
 
 
 void timer() {
-  if (NyanTimer::touch() != 0) {
+  int touchnow = NyanTimer::touch();
+  if (touchnow != 0 && touchtmp != touchnow) {
     batterycount = 0;
     if (NyanTimer::stat == ' ') {
       bool tmp = false;
-      if (lapcount == lapmode - 1 && NyanTimer::touch() == 1) { //when timer stops
+      if (lapcount == lapmode - 1 && touchnow == 1) { //when timer stops
         NyanTimer::stat = 'S';
         NyanTimer::stopTimer();
         String lcdouta = NyanTimer::strTime(NyanTimer::output);
@@ -256,18 +258,10 @@ void timer() {
             lap[lapcount][1]--;
           }
         }
-        int cnt = 0;
-        int touchthreshold = 10;
-        while (cnt <= touchthreshold) {
-          if (NyanTimer::touch() == 0)
-            cnt++;
-          else
-            cnt = 0;
-        }
       }
 
 
-    } else if (NyanTimer::stat == 'I' && NyanTimer::touch() == 1) { //timer ready to start
+    } else if (NyanTimer::stat == 'I' && touchnow == 1) { //timer ready to start
       if (inspmode == 0 || (inspmode == 1 && inspstat == 2) || (inspmode == 2 && inspstat == 2)) { //not inspstatection mode
         ledr = 1;
         ledg = 0;
@@ -336,14 +330,6 @@ void timer() {
       bool touchflag = true;
       int cnt = 0;
       int touchthreshold = 10;
-      if (lapmode != 1) {
-        while (cnt <= touchthreshold) {
-          if (NyanTimer::touch() == 0)
-            cnt++;
-          else
-            cnt = 0;
-        }
-      }
     }
 
     else if (NyanTimer::stat == 'I' && inspstat == 1) { //inspection time starts
@@ -380,6 +366,7 @@ void timer() {
   } else
     buz = 0;
   digitalWrite(BUZZER, buz);
+  touchtmp = NyanTimer::touch();
 }
 
 
