@@ -14,7 +14,6 @@ bool buz = 0;
 long batterycount = 0;
 const long batterythreshold = 2000 * 5; //1000 per 30s
 String inspresult = "";
-int touchtmp = 0;
 
 void setup() {
   resettime();
@@ -218,7 +217,7 @@ void button() {
 
 void timer() {
   int touchnow = NyanTimer::touch();
-  if (touchnow != 0 && touchtmp != touchnow) {
+  if (touchnow != 0) {
     batterycount = 0;
     if (NyanTimer::stat == ' ') {
       bool tmp = false;
@@ -258,6 +257,7 @@ void timer() {
             lap[lapcount][1]--;
           }
         }
+        while(NyanTimer::touch() == touchnow);
       }
 
 
@@ -366,7 +366,6 @@ void timer() {
   } else
     buz = 0;
   digitalWrite(BUZZER, buz);
-  touchtmp = NyanTimer::touch();
 }
 
 
