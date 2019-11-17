@@ -218,11 +218,10 @@ void button() {
 
 void timer() {
   int touchnow = NyanTimer::touch();
-  if (touchnow != 0 && touchnow != formertouch && formertouch != 1) {
+  if (touchnow == 1 && touchnow != formertouch && formertouch != 1) {
     batterycount = 0;
     if (NyanTimer::stat == ' ') {
-      bool tmp = false;
-      if (lapcount == lapmode - 1 && touchnow == 1) { //when timer stops
+      if (lapcount == lapmode - 1) { //when timer stops
         NyanTimer::stat = 'S';
         NyanTimer::stopTimer();
         String lcdouta = NyanTimer::strTime(NyanTimer::output);
@@ -233,10 +232,9 @@ void timer() {
         }
         ledr = 0;
         ledg = 0;
-        tmp = true;
       }
 
-      if (lapcount < lapmode - 1 || tmp) { //lap++
+      if (lapcount < lapmode - 1) { //lap++
         lapcount++;
         lap[lapcount][0] = NyanTimer::minute;
         lap[lapcount][1] = NyanTimer::second;
@@ -260,6 +258,10 @@ void timer() {
         }
         int threshold = 10;
         int cnt = 0;
+        int a[7];
+        NyanTimer::calcTime(lap[lapcount][0], lap[lapcount][1], lap[lapcount][2], a);
+        String lcdoutb = NyanTimer::strTime(a);
+        NyanTimer::printLCD(7, 1, lcdoutb);
         while (cnt <= threshold) {
           if (NyanTimer::touch() == touchnow)
             cnt = 0;
