@@ -62,8 +62,8 @@ void NyanTimer::begin() {
   lcd.print("      by Nyanyan");
   for(int i=0;i<10;i++) {
     delay(100);
-    pad1inthreshold = max(pad1inthreshold, analogRead(PAD1IN) * 0.7); //calibration
-    pad2inthreshold = max(pad2inthreshold, analogRead(PAD2IN) * 0.7);
+    pad1inthreshold = max(pad1inthreshold, analogRead(PAD1IN) * 0.9); //calibration
+    pad2inthreshold = max(pad2inthreshold, analogRead(PAD2IN) * 0.9);
   }
   digitalWrite(PAD1OUT, LOW);
   digitalWrite(PAD2OUT, LOW);
@@ -92,7 +92,7 @@ void NyanTimer::stopTimer() {
 }
 
 int NyanTimer::touch() {
-  float threshold = 10;
+  float threshold = 20;
   float t = 4;
   float k = 0.5;
   float VAL1 = 0;
@@ -120,7 +120,7 @@ int NyanTimer::touch() {
       VAL2 += val2;
     } else
       i--;
-    delayMicroseconds(5);
+    delayMicroseconds(50);
   }
 
 
