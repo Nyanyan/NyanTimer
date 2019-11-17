@@ -234,41 +234,41 @@ void timer() {
         ledg = 0;
       }
 
-      if (lapcount < lapmode - 1) { //lap++
-        lapcount++;
-        lap[lapcount][0] = NyanTimer::minute;
-        lap[lapcount][1] = NyanTimer::second;
-        lap[lapcount][2] = NyanTimer::msecond;
-        for (int i = lapcount - 1; i >= 0; i--) {
-          lap[lapcount][0] -= lap[i][0];
-          lap[lapcount][1] -= lap[i][1];
-          lap[lapcount][2] -= lap[i][2];
-          if (lap[lapcount][1] < 0) {
+      //lap++
+      lapcount++;
+      lap[lapcount][0] = NyanTimer::minute;
+      lap[lapcount][1] = NyanTimer::second;
+      lap[lapcount][2] = NyanTimer::msecond;
+      for (int i = lapcount - 1; i >= 0; i--) {
+        lap[lapcount][0] -= lap[i][0];
+        lap[lapcount][1] -= lap[i][1];
+        lap[lapcount][2] -= lap[i][2];
+        if (lap[lapcount][1] < 0) {
+          lap[lapcount][1] += 60;
+          lap[lapcount][0]--;
+        }
+        if (lap[lapcount][2] < 0) {
+          if (lap[lapcount][1] == 0) {
             lap[lapcount][1] += 60;
             lap[lapcount][0]--;
           }
-          if (lap[lapcount][2] < 0) {
-            if (lap[lapcount][1] == 0) {
-              lap[lapcount][1] += 60;
-              lap[lapcount][0]--;
-            }
-            lap[lapcount][2] += 1000;
-            lap[lapcount][1]--;
-          }
-        }
-        int threshold = 10;
-        int cnt = 0;
-        int a[7];
-        NyanTimer::calcTime(lap[lapcount][0], lap[lapcount][1], lap[lapcount][2], a);
-        String lcdoutb = NyanTimer::strTime(a);
-        NyanTimer::printLCD(7, 1, lcdoutb);
-        while (cnt <= threshold) {
-          if (NyanTimer::touch() == touchnow)
-            cnt = 0;
-          else
-            cnt++;
+          lap[lapcount][2] += 1000;
+          lap[lapcount][1]--;
         }
       }
+      int threshold = 10;
+      int cnt = 0;
+      int a[7];
+      NyanTimer::calcTime(lap[lapcount][0], lap[lapcount][1], lap[lapcount][2], a);
+      String lcdoutb = NyanTimer::strTime(a);
+      NyanTimer::printLCD(7, 1, lcdoutb);
+      while (cnt <= threshold) {
+        if (NyanTimer::touch() == touchnow)
+          cnt = 0;
+        else
+          cnt++;
+      }
+
 
 
     } else if (NyanTimer::stat == 'I' && touchnow == 1) { //timer ready to start
