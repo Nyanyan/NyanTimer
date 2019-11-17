@@ -14,8 +14,7 @@ bool buz = 0;
 long batterycount = 0;
 const long batterythreshold = 2000 * 5; //1000 per 30s
 String inspresult = "";
-int formertouch1 = 0;
-int formertouch2 = 0;
+int formertouch = 0;
 
 void setup() {
   resettime();
@@ -219,7 +218,7 @@ void button() {
 
 void timer() {
   int touchnow = NyanTimer::touch();
-  if (touchnow != 0 && touchnow != formertouch1 && touchnow != formertouch2) {
+  if (touchnow != 0 && touchnow != formertouch && formertouch != 1) {
     batterycount = 0;
     if (NyanTimer::stat == ' ') {
       bool tmp = false;
@@ -337,8 +336,7 @@ void timer() {
 
       NyanTimer::setLCDclear(1);
       bool touchflag = true;
-      int cnt = 0;
-      int touchthreshold = 10;
+      formertouch = 1;
     }
 
     else if (NyanTimer::stat == 'I' && inspstat == 1) { //inspection time starts
@@ -375,8 +373,7 @@ void timer() {
   } else
     buz = 0;
   digitalWrite(BUZZER, buz);
-  formertouch2 = formertouch1;
-  formertouch1 = touchnow;
+  formertouch = touchnow;
 }
 
 
