@@ -92,8 +92,8 @@ void NyanTimer::stopTimer() {
 }
 
 int NyanTimer::touch() {
-  float threshold = 20;
-  float t = 4;
+  float threshold = 16;
+  float t = 2;
   float k = 0.5;
   float VAL1 = 0;
   float VAL2 = 0;
@@ -106,6 +106,7 @@ int NyanTimer::touch() {
       val1++;
       if (val1 > threshold)
         break;
+      delayMicroseconds(1);
     }
     digitalWrite(PAD1OUT, LOW);
     digitalWrite(PAD2OUT, HIGH);
@@ -113,16 +114,18 @@ int NyanTimer::touch() {
       val2++;
       if (val2 > threshold)
         break;
+      delayMicroseconds(1);
     }
     digitalWrite(PAD2OUT, LOW);
+
     if (val1 > 0 && val2 > 0) {
       VAL1 += val1;
       VAL2 += val2;
     } else
       i--;
-    delayMicroseconds(50);
-  }
 
+    delayMicroseconds(5);
+  }
 
   if (VAL1 >= threshold * t * k && VAL2 >= threshold * t * k)
     return 1;
