@@ -217,11 +217,12 @@ void button() {
 
 
 void timer() {
-  int tmp1[5];
-  for (int i = 0; i < 5; i++)
+  int num = 7;
+  int tmp1[num];
+  for (int i = 0; i < num; i++)
     tmp1[i] = NyanTimer::touch();
   int tmp2[4] = {0, 0, 0, 0};
-  for (int i = 0; i < 5; i++)
+  for (int i = 0; i < num; i++)
     tmp2[tmp1[i]]++;
   int m = 0;
   int tmp3 = 0;
@@ -232,8 +233,8 @@ void timer() {
     }
   }
   int touchnow = tmp3;
-  NyanTimer::printLCD(5, 0, String(int(formertouch)));
-  NyanTimer::printLCD(6, 0, String(int(touchnow)));
+  //NyanTimer::printLCD(5, 0, String(int(formertouch)));
+  //NyanTimer::printLCD(6, 0, String(int(touchnow)));
   if (touchnow != 0 && touchnow != formertouch) {
     batterycount = 0;
     bool flag = false;
