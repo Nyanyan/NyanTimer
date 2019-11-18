@@ -217,16 +217,24 @@ void button() {
 
 
 void timer() {
-  int touchnow;
-  while (true) {
-    int tmp1 = NyanTimer::touch();
-    int tmp2 = NyanTimer::touch();
-    if (tmp1 == tmp2) {
-      touchnow = tmp1;
-      break;
+  int tmp1[5];
+  for (int i = 0; i < 5; i++)
+    tmp1[i] = NyanTimer::touch();
+  int tmp2[4] = {0, 0, 0, 0};
+  for (int i = 0; i < 5; i++)
+    tmp2[tmp1[i]]++;
+  int m = 0;
+  int tmp3 = 0;
+  for (int i = 0; i < 4; i++) {
+    if (tmp2[i] > m) {
+      m = tmp2[i];
+      tmp3 = i;
     }
   }
-  if (touchnow != 0 && touchnow != formertouch && formertouch == 0) {
+  int touchnow = tmp3;
+  NyanTimer::printLCD(5, 0, String(int(formertouch)));
+  NyanTimer::printLCD(6, 0, String(int(touchnow)));
+  if (touchnow != 0 && touchnow != formertouch) {
     batterycount = 0;
     bool flag = false;
     if (NyanTimer::stat == ' ') {
@@ -244,7 +252,7 @@ void timer() {
         flag = true;
       }
 
-      if (lapcount < lapmode - 1 || flag) { //lap++
+      if ((lapcount < lapmode - 1 && formertouch != 1) || flag) { //lap++
         lapcount++;
         lap[lapcount][0] = NyanTimer::minute;
         lap[lapcount][1] = NyanTimer::second;
