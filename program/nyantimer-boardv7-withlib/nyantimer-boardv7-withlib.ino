@@ -217,11 +217,20 @@ void button() {
 
 
 void timer() {
-  int touchnow = NyanTimer::touch();
-  if (touchnow == 1 && touchnow != formertouch && formertouch != 1) {
+  int touchnow;
+  while (true) {
+    int tmp1 = NyanTimer::touch();
+    int tmp2 = NyanTimer::touch();
+    if (tmp1 == tmp2) {
+      touchnow = tmp1;
+      break;
+    }
+  }
+  if (touchnow != 0 && touchnow != formertouch && formertouch == 0) {
     batterycount = 0;
+    bool flag = false;
     if (NyanTimer::stat == ' ') {
-      if (lapcount == lapmode - 1) { //when timer stops
+      if (lapcount == lapmode - 1 && touchnow == 1) { //when timer stops
         NyanTimer::stat = 'S';
         NyanTimer::stopTimer();
         String lcdouta = NyanTimer::strTime(NyanTimer::output);
@@ -232,43 +241,44 @@ void timer() {
         }
         ledr = 0;
         ledg = 0;
+        flag = true;
       }
 
-      //lap++
-      lapcount++;
-      lap[lapcount][0] = NyanTimer::minute;
-      lap[lapcount][1] = NyanTimer::second;
-      lap[lapcount][2] = NyanTimer::msecond;
-      for (int i = lapcount - 1; i >= 0; i--) {
-        lap[lapcount][0] -= lap[i][0];
-        lap[lapcount][1] -= lap[i][1];
-        lap[lapcount][2] -= lap[i][2];
-        if (lap[lapcount][1] < 0) {
-          lap[lapcount][1] += 60;
-          lap[lapcount][0]--;
-        }
-        if (lap[lapcount][2] < 0) {
-          if (lap[lapcount][1] == 0) {
+      if (lapcount < lapmode - 1 || flag) { //lap++
+        lapcount++;
+        lap[lapcount][0] = NyanTimer::minute;
+        lap[lapcount][1] = NyanTimer::second;
+        lap[lapcount][2] = NyanTimer::msecond;
+        for (int i = lapcount - 1; i >= 0; i--) {
+          lap[lapcount][0] -= lap[i][0];
+          lap[lapcount][1] -= lap[i][1];
+          lap[lapcount][2] -= lap[i][2];
+          if (lap[lapcount][1] < 0) {
             lap[lapcount][1] += 60;
             lap[lapcount][0]--;
           }
-          lap[lapcount][2] += 1000;
-          lap[lapcount][1]--;
+          if (lap[lapcount][2] < 0) {
+            if (lap[lapcount][1] == 0) {
+              lap[lapcount][1] += 60;
+              lap[lapcount][0]--;
+            }
+            lap[lapcount][2] += 1000;
+            lap[lapcount][1]--;
+          }
+        }
+        int a[7];
+        NyanTimer::calcTime(lap[lapcount][0], lap[lapcount][1], lap[lapcount][2], a);
+        String lcdoutb = NyanTimer::strTime(a);
+        NyanTimer::printLCD(7, 1, lcdoutb);
+        int threshold = 5;
+        int cnt = 0;
+        while (cnt <= threshold) {
+          if (NyanTimer::touch() == touchnow)
+            cnt = 0;
+          else
+            cnt++;
         }
       }
-      int threshold = 10;
-      int cnt = 0;
-      int a[7];
-      NyanTimer::calcTime(lap[lapcount][0], lap[lapcount][1], lap[lapcount][2], a);
-      String lcdoutb = NyanTimer::strTime(a);
-      NyanTimer::printLCD(7, 1, lcdoutb);
-      while (cnt <= threshold) {
-        if (NyanTimer::touch() == touchnow)
-          cnt = 0;
-        else
-          cnt++;
-      }
-
 
 
     } else if (NyanTimer::stat == 'I' && touchnow == 1) { //timer ready to start
