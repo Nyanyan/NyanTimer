@@ -21,9 +21,18 @@ https://youtu.be/ierR8ZPBncU
 
 ## Caution
 
-If you 
+If you break these promises, you might be in an accident.
+
+* Use the timer after reading this manual.
+* Do not shock the timer.
+
+If you disassemble or hack the timer, we won’t take the responsibility.
 
 ## Functions
+
+* Normal stack mat timers’ functions (including signal out)
+* Inspection time measurement (including 8, 12, 15, and 17s call)
+* Lap time measurement (you can measure up to 99 lap times)
 
 ## 概要
 
@@ -43,8 +52,10 @@ https://youtu.be/ierR8ZPBncU
 
 以下の注意を疎かにした場合、重大な事故につながる虞があります。
 
+* 必ず本取扱説明書を読んでから使用すること。
 * 製品に衝撃を与えないこと
-* 
+
+製品の分解・改造について製造者は責任を負いません。
 
 ## 大きな機能
 
