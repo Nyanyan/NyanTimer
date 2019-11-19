@@ -17,9 +17,11 @@ https://twitter.com/nyanyan_cube
 
 The movie of NyanTimer below:
 
-https://www.youtube.com/watch?v=Nj-br9DjQB4&t=30s
+https://youtu.be/ierR8ZPBncU
 
 ## Caution
+
+If you 
 
 ## Functions
 
@@ -33,9 +35,9 @@ https://www.youtube.com/watch?v=Nj-br9DjQB4&t=30s
 
 https://twitter.com/nyanyan_cube
 
-NyanTimerの紹介動画のURLを載せておきます。
+NyanTimerのPVのURLを載せておきます。
 
-https://www.youtube.com/watch?v=Nj-br9DjQB4&t=30s
+https://youtu.be/ierR8ZPBncU
 
 ## 注意
 
