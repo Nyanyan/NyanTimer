@@ -38,6 +38,13 @@ If you disassemble or hack the timer, we won’t take the responsibility.
 
 <img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/nameEN.png" width="500">
 
+### Name of each button
+
+* Upper left: Inspection time button
+* Bottom left: Reset button
+* Upper right: Lap time button (up)
+* Bottom right: Lap time button (down)
+
 ## 概要
 
 このタイマーはキューバー目線をコンセプトに製作したものです。そのため、普通のスタックタイマーにはない2つの大きな追加機能、インスペクションタイム計測とラップタイム計測があります。これらの機能は私がTwitterでキューバーの皆さんに向けて取ったアンケートの結果に基づいてつけた機能です。
