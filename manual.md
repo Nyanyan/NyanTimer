@@ -34,6 +34,10 @@ If you disassemble or hack the timer, we won’t take the responsibility.
 * Inspection time measurement (including 8, 12, 15, and 17s call)
 * Lap time measurement (you can measure up to 99 lap times)
 
+## Name of each part
+
+<img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/nameEN.png" width="500">
+
 ## 概要
 
 このタイマーはキューバー目線をコンセプトに製作したものです。そのため、普通のスタックタイマーにはない2つの大きな追加機能、インスペクションタイム計測とラップタイム計測があります。これらの機能は私がTwitterでキューバーの皆さんに向けて取ったアンケートの結果に基づいてつけた機能です。
