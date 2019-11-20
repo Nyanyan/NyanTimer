@@ -233,8 +233,6 @@ void timer() {
     }
   }
   int touchnow = tmp3;
-  //NyanTimer::printLCD(5, 0, String(int(formertouch)));
-  //NyanTimer::printLCD(6, 0, String(int(touchnow)));
   if (touchnow != 0 && touchnow != formertouch) {
     batterycount = 0;
     bool flag = false;
