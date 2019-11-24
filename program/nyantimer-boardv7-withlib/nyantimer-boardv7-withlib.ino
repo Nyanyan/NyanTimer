@@ -354,7 +354,6 @@ void timer() {
       NyanTimer::startTimer(1, count);
 
       NyanTimer::setLCDclear(1);
-      bool touchflag = true;
       formertouch = 1;
     }
 
