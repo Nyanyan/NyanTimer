@@ -208,10 +208,10 @@ NyanTimerには前提として必要なライブラリがあります。以下�
   https://www.arduinolibraries.info/libraries/timer-one
 * MsTimer2
   https://playground.arduino.cc/Main/MsTimer2/
-* Wire
-  標準ライブラリです。
-* ST7032
-  https://ore-kb.net/archives/195
+* SoftI2CMaster
+  https://github.com/felias-fogg/SoftI2CMaster
+* ST7032_SoftI2CMaster
+  https://ore-kb.net/archives/195 のものを私が改変しました。本GitHub内のprogram/librariesフォルダにあります。
 
 #### 関数で使用する定数と変数
 
