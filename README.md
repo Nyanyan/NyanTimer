@@ -277,9 +277,9 @@ NyanTimerの初期処理関数です。必ずvoid setup()の中で実行して�
 
 LEDを光らせる関数です。LEDにLEDGまたはLEDR、HLにtrue(点灯)またはfalse(消灯)を入力します。
 
-* **void printLCD(int row, int col, String str)**
+* **void printLCD(int row, int col, String / char str)**
 
-LCDになにか文字を表示する関数です。rowで表示する段(0か1)、colで表示開始列(0-15)を選択し、strを表示します。
+LCDになにか文字を表示する関数です。rowで表示する段(0か1)、colで表示開始列(0-15)を選択し、strを表示します。strはchar型でもString型でも動きます。
 
 * **void startTimer(int msec, void function())**
 

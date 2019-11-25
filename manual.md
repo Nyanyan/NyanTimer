@@ -182,10 +182,10 @@ NyanTimerには前提として必要なライブラリがあります。以下�
   https://www.arduinolibraries.info/libraries/timer-one
 * MsTimer2
   https://playground.arduino.cc/Main/MsTimer2/
-* Wire
-  標準ライブラリです。
-* ST7032
-  https://ore-kb.net/archives/195
+* SoftI2CMaster
+  https://github.com/felias-fogg/SoftI2CMaster
+* ST7032_SoftI2CMaster
+  https://ore-kb.net/archives/195 のものを私が改変しました。本GitHub内のprogram/librariesフォルダにあります。
 
 #### 関数で使用する定数と変数
 
@@ -253,7 +253,7 @@ LEDを光らせる関数です。LEDにLEDGまたはLEDR、HLにtrue(点灯)ま�
 
 * **void printLCD(int row, int col, String str)**
 
-LCDになにか文字を表示する関数です。rowで表示する段(0か1)、colで表示開始列(0-15)を選択し、strを表示します。
+LCDになにか文字を表示する関数です。rowで表示する段(0か1)、colで表示開始列(0-15)を選択し、strを表示します。strはchar型でもString型でも動きます。
 
 * **void startTimer(int msec, void function())**
 
