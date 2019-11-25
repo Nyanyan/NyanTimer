@@ -13,7 +13,7 @@ char NyanTimer::statout;
 char NyanTimer::stat;
 int NyanTimer::minute;
 int NyanTimer::second;
-int NyanTimer::msecond;
+volatile int NyanTimer::msecond;
 
 static void signalOut() {
   String serout = String(NyanTimer::statout);
@@ -80,6 +80,11 @@ void NyanTimer::printLCD(int col, int row, String str) {
   lcd.print(str);
 }
 
+void NyanTimer::printLCD(int col, int row, char c) {
+  lcd.setCursor(col, row);
+  lcd.print(c);
+}
+
 void NyanTimer::startTimer(int msec, void (*f)()) {
   MsTimer2::set(msec, f);
   MsTimer2::start();
@@ -90,7 +95,7 @@ void NyanTimer::stopTimer() {
 }
 
 int NyanTimer::touch() {
-  float threshold = 16;
+  float threshold = 25; //16
   float t = 2;
   float k = 0.5;
   float VAL1 = 0;
