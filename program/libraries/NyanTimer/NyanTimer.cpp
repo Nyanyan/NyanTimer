@@ -2,7 +2,7 @@
 #include <MsTimer2.h>
 #include <TimerOne.h>
 #include <Wire.h>
-#include <ST7032.h>
+#include <ST7032_SoftI2CMaster.h>
 
 ST7032 lcd;
 
@@ -56,10 +56,8 @@ void NyanTimer::begin() {
   digitalWrite(PAD2OUT, HIGH);
   lcd.begin(16, 2);
   lcd.setContrast(40);
-  lcd.setCursor(0, 0);
-  lcd.print("NyanTimer       ");
-  lcd.setCursor(0, 1);
-  lcd.print("      by Nyanyan");
+  NyanTimer::printLCD(0, 0, "NyanTimer       ");
+  NyanTimer::printLCD(0, 1, "      by Nyanyan");
   for(int i=0;i<10;i++) {
     delay(100);
     pad1inthreshold = max(pad1inthreshold, analogRead(PAD1IN) * 0.9); //calibration
