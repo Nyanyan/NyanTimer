@@ -35,17 +35,20 @@ void inspection() {
 
 void count() { //every 1 msec
   NyanTimer::msecond++;
-  if (NyanTimer::msecond == 1000) {
-    NyanTimer::msecond = 0;
-    NyanTimer::second++;
-  }
-  if (NyanTimer::second == 60) {
-    NyanTimer::second = 0;
-    NyanTimer::minute++;
-  }
   if (NyanTimer::stat == ' ' && NyanTimer::msecond % 100 == 0) {
     ledg = ledr;
     ledr = !ledr;
+  }
+}
+
+void timing() {
+  if (NyanTimer::msecond >= 1000) {
+    NyanTimer::msecond -= 1000;
+    NyanTimer::second++;
+  }
+  if (NyanTimer::second >= 60) {
+    NyanTimer::second -= 60;
+    NyanTimer::minute++;
   }
   if (NyanTimer::minute >= 100)
     NyanTimer::stopTimer();
@@ -397,6 +400,8 @@ void timer() {
 
 
 void loop() {
+  timing();
+  
   //button unit
   if (NyanTimer::stat != ' ')
     button();
