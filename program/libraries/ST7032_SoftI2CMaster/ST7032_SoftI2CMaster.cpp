@@ -236,7 +236,7 @@ void ST7032::command(uint8_t value) {
       i2c_write(value);
   }
   i2c_stop();
-  delayMicroseconds(30);    // >26.3us 27
+  delayMicroseconds(27);    // >26.3us 27
 }
 
 size_t ST7032::write(uint8_t value) {
@@ -249,7 +249,7 @@ size_t ST7032::write(uint8_t value) {
       i2c_write(value);
   }
   i2c_stop();
-  delayMicroseconds(30);    // >26.3us 27
+  delayMicroseconds(27);    // >26.3us 27
 
   return 1;
 }

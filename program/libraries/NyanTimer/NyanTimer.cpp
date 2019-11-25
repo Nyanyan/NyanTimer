@@ -1,7 +1,7 @@
 #include "NyanTimer.h"
 #include <MsTimer2.h>
+//#include <Wire.h>
 #include <TimerOne.h>
-#include <Wire.h>
 #include <ST7032_SoftI2CMaster.h>
 
 ST7032 lcd;
@@ -14,22 +14,13 @@ char NyanTimer::stat;
 int NyanTimer::minute;
 int NyanTimer::second;
 volatile int NyanTimer::msecond;
+String NyanTimer::serout = "I000000@";
 
 static void signalOut() {
-  String serout = String(NyanTimer::statout);
-  for (int i = 1; i < 7; i++)
-    serout += NyanTimer::output[i];
-  int tmp = 0;
-  for (int i = 1; i < 7; i++) {
-    tmp += NyanTimer::output[i];
-  }
-  char checksum = 64 + tmp;
-  serout += String(checksum);
-  Serial.print(serout);
+  Serial.print(NyanTimer::serout);
   Serial.print(char(13));
   Serial.print(char(10));
 }
-
 
 void NyanTimer::begin() {
   Serial.begin(1200);
@@ -68,6 +59,30 @@ void NyanTimer::begin() {
   Timer1.initialize(125000);
   Timer1.attachInterrupt(signalOut);
   Timer1.start();
+}
+
+
+void NyanTimer::timing() {
+  NyanTimer::serout = String(NyanTimer::statout);
+  int tmp = 0;
+  for (int i = 1; i < 7; i++) {
+    NyanTimer::serout += NyanTimer::output[i];
+    tmp += NyanTimer::output[i];
+  }
+  char checksum = 64 + tmp;
+  NyanTimer::serout += String(checksum);
+
+  if (NyanTimer::msecond >= 1000) {
+    NyanTimer::msecond -= 1000;
+    NyanTimer::second++;
+  }
+  if (NyanTimer::second >= 60) {
+    NyanTimer::second -= 60;
+    NyanTimer::minute++;
+  }
+  if (NyanTimer::minute >= 100)
+    NyanTimer::stopTimer();
+  NyanTimer::calcTime(NyanTimer::minute, NyanTimer::second, NyanTimer::msecond, NyanTimer::output);
 }
 
 void NyanTimer::lightLED(int LED, bool HL) {

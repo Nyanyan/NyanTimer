@@ -14,6 +14,7 @@
 
 namespace NyanTimer {
   void begin();
+  void timing();
   void lightLED(int LED, bool HL);
   void printLCD(int row, int col, String str);
   void printLCD(int col, int row, char c);
@@ -31,4 +32,5 @@ namespace NyanTimer {
   volatile extern int msecond;
   extern int second;
   extern int minute;
+  extern String serout;
 }
