@@ -1,4 +1,5 @@
 #include <NyanTimer.h>
+//#include <MemoryFree.h>
 
 #define maxlap 99
 #define batterythreshold 10000 //1000 per 30s
@@ -36,25 +37,13 @@ void inspection() {
 
 void count() { //every 1 msec
   NyanTimer::msecond++;
-  if (NyanTimer::stat == ' ' && NyanTimer::msecond % 100 == 0) {
+  if (NyanTimer::msecond % 100 == 0) {
     ledg = ledr;
     ledr = !ledr;
   }
 }
 
-void timing() {
-  if (NyanTimer::msecond >= 1000) {
-    NyanTimer::msecond -= 1000;
-    NyanTimer::second++;
-  }
-  if (NyanTimer::second >= 60) {
-    NyanTimer::second -= 60;
-    NyanTimer::minute++;
-  }
-  if (NyanTimer::minute >= 100)
-    NyanTimer::stopTimer();
-  NyanTimer::calcTime(NyanTimer::minute, NyanTimer::second, NyanTimer::msecond, NyanTimer::output);
-}
+
 
 
 
@@ -93,24 +82,8 @@ void convertLCD() {
   NyanTimer::printLCD(0, 1, 'L');
   String lapout = String(int(lapcount / 10)) +  String(lapcount - int(lapcount / 10) * 10) + "/" + String(int(lapmode / 10)) + String(lapmode - int(lapmode / 10) * 10);
   NyanTimer::printLCD(1, 1, lapout);
-  
-  //dispMemory();
+  //Serial.println(freeMemory());
 }
-
-/*
-void dispMemory(){
-  //Serial.print(F("Free memory=")); 
-  Serial.println(freeRam(), DEC);
-  //Serial.println(F("[bytes]"));
-}
-
-int freeRam () {
-  extern int __heap_start, *__brkval;
-  int v;
-  return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
-}
-*/
-
 
 
 void convertLED() {
@@ -229,6 +202,7 @@ void button() {
     }
   } else if (NyanTimer::stat == 'I' || NyanTimer::stat == 'S')
     batterycount++;
+
 }
 
 
@@ -414,9 +388,9 @@ void timer() {
 
 
 void loop() {
-  //timing unit
-  timing();
-  
+  //timing unit, must be done in loop in order to output signal
+  NyanTimer::timing();
+
   //button unit
   if (NyanTimer::stat != ' ')
     button();
