@@ -1,18 +1,19 @@
 #include <NyanTimer.h>
 
+#define maxlap 99
+#define batterythreshold 10000 //1000 per 30s
+
 volatile bool ledr = 0; //red led status
 volatile bool ledg = 0; //green led status
 int inspmode = 0; //0:off 1:sndOFF 2:sndON
 int lapmode = 1;
 int lapcount = 0;
-const int maxlap = 99;
 int lap[maxlap + 1][3];
 int inspstat = 0; //1=during inspstatection time
 int inspstatcount = 16; //inspstatection time count
 bool soundmode = false;
 bool buz = 0;
 long batterycount = 0;
-const long batterythreshold = 2000 * 5; //1000 per 30s
 String inspresult = "";
 int formertouch = 0;
 
@@ -92,7 +93,23 @@ void convertLCD() {
   NyanTimer::printLCD(0, 1, 'L');
   String lapout = String(int(lapcount / 10)) +  String(lapcount - int(lapcount / 10) * 10) + "/" + String(int(lapmode / 10)) + String(lapmode - int(lapmode / 10) * 10);
   NyanTimer::printLCD(1, 1, lapout);
+  
+  //dispMemory();
 }
+
+/*
+void dispMemory(){
+  //Serial.print(F("Free memory=")); 
+  Serial.println(freeRam(), DEC);
+  //Serial.println(F("[bytes]"));
+}
+
+int freeRam () {
+  extern int __heap_start, *__brkval;
+  int v;
+  return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
+}
+*/
 
 
 
@@ -217,7 +234,7 @@ void button() {
 
 
 void timer() {
-  int num = 7;
+  const int num = 7;
   int tmp1[num];
   for (int i = 0; i < num; i++)
     tmp1[i] = NyanTimer::touch();
@@ -397,6 +414,7 @@ void timer() {
 
 
 void loop() {
+  //timing unit
   timing();
   
   //button unit
