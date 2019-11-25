@@ -1,7 +1,7 @@
 #include <NyanTimer.h>
 
-bool ledr = 0; //red led status
-bool ledg = 0; //green led status
+volatile bool ledr = 0; //red led status
+volatile bool ledg = 0; //green led status
 int inspmode = 0; //0:off 1:sndOFF 2:sndON
 int lapmode = 1;
 int lapcount = 0;
