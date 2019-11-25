@@ -79,22 +79,22 @@ void convertLCD() {
 
   if (inspstat == 0) {
     if (inspmode == 1)
-      NyanTimer::printLCD(0, 0, "i");
+      NyanTimer::printLCD(0, 0, 'i');
     else if (inspmode == 2)
-      NyanTimer::printLCD(0, 0, "I");
+      NyanTimer::printLCD(0, 0, 'I');
     else if (inspmode == 0)
-      NyanTimer::printLCD(0, 0, " ");
+      NyanTimer::printLCD(0, 0, ' ');
   }
   if (soundmode)
-    NyanTimer::printLCD(1, 0, "S");
+    NyanTimer::printLCD(1, 0, 'S');
   else
-    NyanTimer::printLCD(1, 0, " ");
-  NyanTimer::printLCD(0, 1, "L");
-  NyanTimer::printLCD(1, 1, String(int(lapcount / 10)));
-  NyanTimer::printLCD(2, 1, String(lapcount - int(lapcount / 10) * 10));
-  NyanTimer::printLCD(3, 1, "/");
-  NyanTimer::printLCD(4, 1, String(int(lapmode / 10)));
-  NyanTimer::printLCD(5, 1, String(lapmode - int(lapmode / 10) * 10));
+    NyanTimer::printLCD(1, 0, ' ');
+  NyanTimer::printLCD(0, 1, 'L');
+  NyanTimer::printLCD(1, 1, char(int(lapcount / 10)));
+  NyanTimer::printLCD(2, 1, char(lapcount - int(lapcount / 10) * 10));
+  NyanTimer::printLCD(3, 1, '/');
+  NyanTimer::printLCD(4, 1, char(int(lapmode / 10)));
+  NyanTimer::printLCD(5, 1, char(lapmode - int(lapmode / 10) * 10));
 }
 
 
@@ -175,9 +175,9 @@ void button() {
     if (a >= t) {
       soundmode = !soundmode;
       if (soundmode)
-        NyanTimer::printLCD(1, 0, "S");
+        NyanTimer::printLCD(1, 0, 'S');
       else
-        NyanTimer::printLCD(1, 0, " ");
+        NyanTimer::printLCD(1, 0, ' ');
       while (NyanTimer::inputButton(BUTTON2));
     } else {
       inspmode += 1;
