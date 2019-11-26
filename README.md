@@ -198,7 +198,7 @@ NyanTimerのハックにあたって必要となるであろう関数をまと�
 
 #### 入手
 
-このGitHub内のNyanTimer/program/library/内の“NyanTimer”がライブラリです。このままダウンロードしてご自身のライブラリフォルダに入れて使ってください。
+このGitHub内のNyanTimer/program/libraries/内の“NyanTimer”がライブラリです。このままダウンロードしてご自身のライブラリフォルダに入れて使ってください。
 
 #### 必要なライブラリ
 
