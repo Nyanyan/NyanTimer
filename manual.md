@@ -172,11 +172,11 @@ NyanTimerのハックにあたって必要となるであろう関数をまと�
 
 #### 入手
 
-このGitHub内のNyanTimer/program/library/内の“NyanTimer”がライブラリです。このままダウンロードしてご自身のライブラリフォルダに入れて使ってください。
+このGitHub内のNyanTimer/program/libraries/内の“NyanTimer”がライブラリです。このままダウンロードしてご自身のライブラリフォルダに入れて使ってください。
 
 #### 必要なライブラリ
 
-NyanTimerには前提として必要なライブラリがあります。以下のライブラリをインストールしておいてください。最近のArduinoライブラリではメニューバーの“スケッチ->ライブラリをインクルード->ライブラリを管理“から大抵のライブラリはインストールできますが、2019/10/13現在ST7032ライブラリのみインターネットから自分で取ってくる必要があります。
+NyanTimerには前提として必要なライブラリがあります。以下のライブラリをインストールしておいてください。最近のArduinoライブラリではメニューバーの“スケッチ->ライブラリをインクルード->ライブラリを管理“から大抵のライブラリはインストールできますが、ST7032_SoftI2CMasterのみ私が改変したライブラリのため、NyanTimerライブラリと同じフォルダにあるライブラリをインストールしてください。
 
 * TimerOne
   https://www.arduinolibraries.info/libraries/timer-one
@@ -243,15 +243,19 @@ NyanTimer::function(argments);
 
 の形で使ってください。
 
-* **void begin()**
+* **void begin(bool signal)**
 
-NyanTimerの初期処理関数です。必ずvoid setup()の中で実行してください。
+NyanTimerの初期処理関数です。必ずvoid setup()の中で実行してください。引数は信号出力の有無(true: あり false: なし)
+
+* **void timing()**
+
+NyanTimerのタイマー処理の中枢です。必ずvoid loop等の定期的なループ内で実行してください。
 
 * **void lightLED(int LED, bool HL)**
 
 LEDを光らせる関数です。LEDにLEDGまたはLEDR、HLにtrue(点灯)またはfalse(消灯)を入力します。
 
-* **void printLCD(int row, int col, String str)**
+* **void printLCD(int row, int col, String / char str)**
 
 LCDになにか文字を表示する関数です。rowで表示する段(0か1)、colで表示開始列(0-15)を選択し、strを表示します。strはchar型でもString型でも動きます。
 
@@ -265,9 +269,19 @@ msecにインターバルをミリ秒で入力し、functionに実行する関�
 
 タイマーをストップします。
 
-* **int touch()**
+* **int touch(int mode)**
 
-タッチパッドの情報を得る関数です。返り値については以下の通りです。
+タッチパッドの情報を得る関数です。modeについて解説します。
+
+**mode == 0**
+
+返す数字が
+
+0: どちらのパッドもタッチされていないまたはお片方のパッドがタッチされている場合
+
+1: 両方のパッドがタッチされた場合
+
+**mode == 1**
 
 0: どちらのパッドもタッチされていない場合
 
@@ -289,8 +303,12 @@ input配列(長さ7)の情報から、LCDに出力する時に使うString文字
 
 ボタンが押されればtrue、押されていなければfalseを返す関数です。
 
-nにBUTTON1などのボタンを入力します。
+nにBUTTON1などを入力します。
 
 * **void setLCDclear(int mode)**
 
 LCDを消去する関数です。mode == 0で上の行、1で下の行、2ですべての行がクリアされます。
+
+* **void powersave()**
+
+主電源を入れたままでパワーセーブモードに入る関数です。
