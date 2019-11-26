@@ -198,3 +198,14 @@ void NyanTimer::setLCDclear(int mode) {
   else if (mode == 2)
     lcd.clear();
 }
+
+void NyanTimer::powersave() {
+  NyanTimer::setLCDclear(2);
+  delay(1000);
+  SMCR |= (1 << SM1);
+  SMCR |= 1;
+  ADCSRA &= ~(1 << ADEN);
+  MCUCR |= (1 << BODSE) | (1 << BODS);
+  MCUCR = (MCUCR & ~(1 << BODSE)) | (1 << BODS);
+  asm("sleep");
+}
