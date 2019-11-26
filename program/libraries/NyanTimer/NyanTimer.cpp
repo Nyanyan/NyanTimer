@@ -9,20 +9,20 @@ ST7032 lcd;
 static int pad1inthreshold = 0;
 static int pad2inthreshold = 0;
 int NyanTimer::output[7] = {0, 0, 0, 0, 0, 0, 0};
-char NyanTimer::statout;
 char NyanTimer::stat;
 int NyanTimer::minute;
 int NyanTimer::second;
 volatile int NyanTimer::msecond;
-String NyanTimer::serout = "I000000@";
+static String serout = "I000000@";
+static char statout;
 
 static void signalOut() {
-  Serial.print(NyanTimer::serout);
+  Serial.print(serout);
   Serial.print(char(13));
   Serial.print(char(10));
 }
 
-void NyanTimer::begin() {
+void NyanTimer::begin(bool signal) {
   Serial.begin(1200);
   pinMode(BUTTON1, INPUT);
   pinMode(BUTTON2, INPUT);
@@ -56,21 +56,30 @@ void NyanTimer::begin() {
   }
   digitalWrite(PAD1OUT, LOW);
   digitalWrite(PAD2OUT, LOW);
-  Timer1.initialize(125000);
-  Timer1.attachInterrupt(signalOut);
-  Timer1.start();
+  if (signal) {
+    Timer1.initialize(125000);
+    Timer1.attachInterrupt(signalOut);
+    Timer1.start();
+  }
 }
 
 
 void NyanTimer::timing() {
-  NyanTimer::serout = String(NyanTimer::statout);
+  if (NyanTimer::stat == 'I' && NyanTimer::touch() == 2)
+    statout = 'R';
+  else if (NyanTimer::stat == 'I' && NyanTimer::touch() == 3)
+    statout = 'L';
+  else
+    statout = NyanTimer::stat;
+
+  serout = String(statout);
   int tmp = 0;
   for (int i = 1; i < 7; i++) {
-    NyanTimer::serout += NyanTimer::output[i];
+    serout += NyanTimer::output[i];
     tmp += NyanTimer::output[i];
   }
   char checksum = 64 + tmp;
-  NyanTimer::serout += String(checksum);
+  serout += String(checksum);
 
   if (NyanTimer::msecond >= 1000) {
     NyanTimer::msecond -= 1000;

@@ -13,7 +13,7 @@
 #define PAD2IN 17
 
 namespace NyanTimer {
-  void begin();
+  void begin(bool signal);
   void timing();
   void lightLED(int LED, bool HL);
   void printLCD(int row, int col, String str);
@@ -27,10 +27,8 @@ namespace NyanTimer {
   void setLCDclear(int mode);
   
   extern int output[7];
-  extern char statout;
   extern char stat;
   volatile extern int msecond;
   extern int second;
   extern int minute;
-  extern String serout;
 }
