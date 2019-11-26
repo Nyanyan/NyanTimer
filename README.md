@@ -275,7 +275,7 @@ NyanTimerの初期処理関数です。必ずvoid setup()の中で実行して�
 
 * **void timing()**
 
-NyanTimerで信号出力処理をする際は必ずvoid loop等の定期的なループ内で実行してください。
+NyanTimerのタイマー処理の中枢です。必ずvoid loop等の定期的なループ内で実行してください。
 
 * **void lightLED(int LED, bool HL)**
 

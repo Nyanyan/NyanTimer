@@ -426,14 +426,6 @@ void loop() {
     ledg = 0;
   }
 
-  //serial out unit
-  if (NyanTimer::stat == 'I' && NyanTimer::touch() == 2)
-    NyanTimer::statout = 'R';
-  else if (NyanTimer::stat == 'I' && NyanTimer::touch() == 3)
-    NyanTimer::statout = 'L';
-  else
-    NyanTimer::statout = NyanTimer::stat;
-
   //convert lcd and led unit
   convertLCD();
   convertLED();
