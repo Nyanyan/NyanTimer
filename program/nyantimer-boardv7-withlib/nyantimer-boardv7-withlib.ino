@@ -1,4 +1,5 @@
 #include <NyanTimer.h>
+#include <EEPROM.h>
 
 #define maxlap 99
 #define batterythreshold 10000 //1000 per 30s
@@ -18,12 +19,17 @@ String inspresult = "";
 int formertouch = 0;
 
 void setup() {
-  resettime();
   NyanTimer::begin(true);
+  resettime();
   NyanTimer::setLCDclear(2);
   lap[0][0] = 0;
   lap[0][1] = 0;
   lap[0][2] = 0;
+  NyanTimer::msecond = EEPROM.read(0) * 100 + EEPROM.read(1);
+  NyanTimer::second = EEPROM.read(2);
+  NyanTimer::minute = EEPROM.read(3);
+  if (NyanTimer::msecond != 0 || NyanTimer::second != 0 || NyanTimer::minute != 0)
+    NyanTimer::stat = 'S';
 }
 
 
@@ -146,6 +152,9 @@ void button() {
       NyanTimer::stopTimer();
       NyanTimer::stat = 'I';
       inspresult = "";
+      for (int i = 0; i < 4; i++)
+        EEPROM.write (i, 0);
+      resettime();
       NyanTimer::printLCD(3, 0, "    ");
     }
   } else if (NyanTimer::inputButton(BUTTON2)) { //inspstatection mode and sound mode
@@ -230,8 +239,6 @@ void timer() {
       if (lapcount == lapmode - 1 && touchnow == 1) { //when timer stops
         NyanTimer::stat = 'S';
         NyanTimer::stopTimer();
-        String lcdouta = NyanTimer::strTime(NyanTimer::output);
-        NyanTimer::printLCD(7, 0, lcdouta);
         if (soundmode) {
           digitalWrite(BUZZER, HIGH);
           delay(1000);
@@ -267,6 +274,13 @@ void timer() {
         NyanTimer::calcTime(lap[lapcount][0], lap[lapcount][1], lap[lapcount][2], a);
         String lcdoutb = NyanTimer::strTime(a);
         NyanTimer::printLCD(7, 1, lcdoutb);
+        if (flag) {
+          NyanTimer::printLCD(7, 0, lcdoutb);
+          EEPROM.write (0, int(NyanTimer::msecond / 100));
+          EEPROM.write (1, NyanTimer::msecond  - int(NyanTimer::msecond / 100) * 100);
+          EEPROM.write (2, NyanTimer::second);
+          EEPROM.write (3, NyanTimer::minute);
+        }
         int threshold = 5;
         int cnt = 0;
         while (cnt <= threshold) {
@@ -395,8 +409,10 @@ void loop() {
     button();
 
   //reset time unit
-  if (NyanTimer::stat == 'I' || NyanTimer::stat == 'A')
+  /*
+    if (NyanTimer::stat == 'I' || NyanTimer::stat == 'A')
     resettime();
+  */
 
   //timer unit
   timer();
