@@ -1,5 +1,4 @@
 #include <NyanTimer.h>
-//#include <MemoryFree.h>
 
 #define maxlap 99
 #define batterythreshold 10000 //1000 per 30s
@@ -82,7 +81,7 @@ void convertLCD() {
   NyanTimer::printLCD(0, 1, 'L');
   String lapout = String(int(lapcount / 10)) +  String(lapcount - int(lapcount / 10) * 10) + "/" + String(int(lapmode / 10)) + String(lapmode - int(lapmode / 10) * 10);
   NyanTimer::printLCD(1, 1, lapout);
-  //Serial.println(freeMemory());
+  NyanTimer::printLCD(3, 0, inspresult);
 }
 
 
@@ -388,7 +387,7 @@ void timer() {
 
 
 void loop() {
-  //timing unit, must be done in loop in order to output signal
+  //timing unit
   NyanTimer::timing();
 
   //button unit
@@ -421,6 +420,4 @@ void loop() {
   //convert lcd and led unit
   convertLCD();
   convertLED();
-  NyanTimer::printLCD(3, 0, inspresult);
-
 }
