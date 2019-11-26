@@ -269,9 +269,13 @@ NyanTimer::function(argments);
 
 の形で使ってください。
 
-* **void begin()**
+* **void begin(bool signal)**
 
-NyanTimerの初期処理関数です。必ずvoid setup()の中で実行してください。
+NyanTimerの初期処理関数です。必ずvoid setup()の中で実行してください。引数は信号出力の有無(true: あり false: なし)
+
+* **void timing()**
+
+NyanTimerで信号出力処理をする際は必ずvoid loop等の定期的なループ内で実行してください。
 
 * **void lightLED(int LED, bool HL)**
 
