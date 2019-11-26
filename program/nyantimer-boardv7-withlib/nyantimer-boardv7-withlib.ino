@@ -20,7 +20,7 @@ int formertouch = 0;
 
 void setup() {
   resettime();
-  NyanTimer::begin();
+  NyanTimer::begin(true);
   NyanTimer::setLCDclear(2);
   lap[0][0] = 0;
   lap[0][1] = 0;
