@@ -130,9 +130,9 @@ We published a library in order you to hack it.
 
 NyanTimer/program/libraries/NyanTimer on this GitHub is it. Download this and unzip it on your libraries folder.
 
-#### 必要なライブラリ
+#### Libraries used in NyanTimer library
 
-NyanTimerには前提として必要なライブラリがあります。以下のライブラリをインストールしておいてください。最近のArduinoライブラリではメニューバーの“スケッチ->ライブラリをインクルード->ライブラリを管理“から大抵のライブラリはインストールできますが、ST7032_SoftI2CMasterのみ私が改変したライブラリのため、NyanTimerライブラリと同じフォルダにあるライブラリをインストールしてください。
+NyanTimer uses some other libraries. Before hacking it, you must install these libraries below: 
 
 * TimerOne
   https://www.arduinolibraries.info/libraries/timer-one
