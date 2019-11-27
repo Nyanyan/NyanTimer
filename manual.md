@@ -1,4 +1,4 @@
-# NyanTimer
+# NyanTimer Manual
 DIY Stackmat Timer for cubing
 
 **日本語は下部にあります。**
@@ -128,7 +128,7 @@ We published a library in order you to hack it.
 
 #### How to get
 
-NyanTimer/program/libraries/NyanTimer on this GitHub is it. Download this and unzip it on your libraries folder.
+program/libraries/NyanTimer on this GitHub is it. Download this and unzip it on your libraries folder.
 
 #### Libraries used in NyanTimer library
 
@@ -141,42 +141,40 @@ NyanTimer uses some other libraries. Before hacking it, you must install these l
 * SoftI2CMaster
   https://github.com/felias-fogg/SoftI2CMaster
 * ST7032_SoftI2CMaster
-  https://ore-kb.net/archives/195 のものを私が改変しました。本GitHub内のprogram/librariesフォルダにあります。
+  I modified this(https://ore-kb.net/archives/195). program/libraries/ST7032_SoftI2CMaster on this GitHub is it.
 
-#### 関数で使用する定数と変数
+#### Constants and variables
 
-関数として使っている定数と変数についての解説です。関数内でstaticになっているものは解説しません。
+Constants and variables used in this library are below:
 
-##### NyanTimerの各ピン
-
-以下のものです
+##### Constants (Pins of NyanTimer)
 
 * **BUTTON1**
-  リセットボタン
+  Reset button
 * **BUTTON2**
-  インスペクションモードボタン
+  Mode button
 * **BUTTON3**
-  ラップのカウントアップボタン
+  Lap time button (up)
 * **BUTTON4**
-  ラップのカウントダウンボタン
+  Lap time button (down)
 * **BUZZER**
-  ブザー(HIGHにするだけで勝手に鳴ります)
+  Buzzer (Sound when the pin is HIGH)
 * **LEDR**
-  赤色LED
+  Red LED
 * **LEDG**
-  緑色LED
+  Green LED
 * **PAD1OUT**
-  右パッドの出力ピン
+  Output pin of right pad
 * **PAD1IN**
-  右パッドの入力ピン
+  Input pin of right pad
 * **PAD2OUT**
-  左パッドのっ出力ピン
+  Output pin of left pad
 * **PAD2IN**
-  左パッドの入力ピン
+  Input pin of left pad
 
-なお、PAD1OUT, PAD1IN, PAD2OUT, PAD2INについて、ユーザが直接触ることはないと思います。
+Users may not use PAD1OUT, PAD1IN, PAD2OUT, PAD2IN
 
-##### 基礎的な変数
+##### Variables
 
 以下のものです。
 
@@ -428,7 +426,7 @@ NyanTimerには前提として必要なライブラリがあります。以下�
 * **BUTTON1**
   リセットボタン
 * **BUTTON2**
-  インスペクションモードボタン
+  モード切替ボタン
 * **BUTTON3**
   ラップのカウントアップボタン
 * **BUTTON4**
@@ -444,7 +442,7 @@ NyanTimerには前提として必要なライブラリがあります。以下�
 * **PAD1IN**
   右パッドの入力ピン
 * **PAD2OUT**
-  左パッドのっ出力ピン
+  左パッドの出力ピン
 * **PAD2IN**
   左パッドの入力ピン
 
