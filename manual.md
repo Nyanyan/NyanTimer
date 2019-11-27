@@ -3,6 +3,58 @@ DIY Stackmat Timer for cubing
 
 **日本語は下部にあります。**
 
+<!-- TOC -->
+
+- [NyanTimer Manual](#nyantimer-manual)
+    - [Abstract](#abstract)
+    - [Caution](#caution)
+    - [Functions](#functions)
+    - [Name of each part](#name-of-each-part)
+        - [Name of each button](#name-of-each-button)
+    - [Powering the timer](#powering-the-timer)
+        - [Batteries](#batteries)
+        - [Powering](#powering)
+    - [Measure the time](#measure-the-time)
+        - [Start & Stop the timer](#start--stop-the-timer)
+        - [Sounding when timer stops](#sounding-when-timer-stops)
+        - [Measuring the inspection time](#measuring-the-inspection-time)
+        - [Measuring lap times](#measuring-lap-times)
+        - [Auto power saving mode](#auto-power-saving-mode)
+    - [Hack](#hack)
+        - [How to hack](#how-to-hack)
+        - [NyanTimer library](#nyantimer-library)
+            - [How to get](#how-to-get)
+            - [Libraries used in NyanTimer library](#libraries-used-in-nyantimer-library)
+            - [Constants and variables](#constants-and-variables)
+                - [Constants (Pins of NyanTimer)](#constants-pins-of-nyantimer)
+                - [Variables](#variables)
+            - [Functions](#functions)
+    - [概要](#概要)
+    - [注意](#注意)
+    - [大きな機能](#大きな機能)
+    - [各部名称](#各部名称)
+        - [ボタン名称](#ボタン名称)
+    - [電源を入れる](#電源を入れる)
+        - [電池](#電池)
+        - [電源](#電源)
+    - [時間を計測する](#時間を計測する)
+        - [タイマースタート・ストップ](#タイマースタート・ストップ)
+        - [計測終了時の音声出力](#計測終了時の音声出力)
+        - [インスペクションタイム計測](#インスペクションタイム計測)
+        - [ラップタイム計測](#ラップタイム計測)
+        - [オートパワーセーブ](#オートパワーセーブ)
+    - [ハック](#ハック)
+        - [やり方](#やり方)
+        - [NyanTimerライブラリ](#nyantimerライブラリ)
+            - [入手](#入手)
+            - [必要なライブラリ](#必要なライブラリ)
+            - [関数で使用する定数と変数](#関数で使用する定数と変数)
+                - [NyanTimerの各ピン](#nyantimerの各ピン)
+                - [基礎的な変数](#基礎的な変数)
+            - [関数の紹介](#関数の紹介)
+
+<!-- /TOC -->
+
 ## Abstract
 
 This timer is made by a cuber for cubers, so it has some functions that ordinal timers don’t have: Measuring the inspection time and lap time. These functions are developped with asking cubers on Twitter.
