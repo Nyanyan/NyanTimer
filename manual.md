@@ -63,7 +63,7 @@ Covering both pads, and the red LED lights. Then wait, and both red and green LE
 
 When you cover the both pads during timing, the timer stops.
 
-If you measure the lap times (when the LCD shows a number of lap except ‘1’), I strongly recmmend not to cover one pad when timing.
+If you measure the lap times (when the LCD shows a number of lap except ‘1’), We strongly recommend not to cover one pad when timing.
 
 ### Sounding when timer stops
 
@@ -82,7 +82,7 @@ If you press mode button, the LCD shows ‘i’, ‘I’, or nothing on the uppe
 
 On ‘i’ or ‘I’ mode, when you cover the both pads and wait about 1 second, the red LED lights. Then when you release, the inspection time starts.
 
-### Masuring lap times
+### Measuring lap times
 
 Press lap time button (up and down) and adjust the count of lap. If you press this button for long, the number will change quickly.
 
@@ -102,15 +102,15 @@ In this timer, ATMEGA328P (Arduino Uno) is used. So you can easily hack it.
 
 ### How to hack
 
-Only people who are familier to embedded technology shold do this. And we will have no responsibility to this.
+Only people who are familiar to embedded technology should do this. And we will have no responsibility to this.
 
 NyanTimer’s program is easy to edit, because of the hardware. You can update the firmware and edit the program with this repository.
 
-First, take all the screws and see the board. On the upper left of the board, there is pins of USB-Serial conversioon.
+First, take all the screws and see the board. On the upper left of the board, there is pins of USB-Serial conversion.
 
 <img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/USB-Serial.jpeg" width="500">
 
-1. Put 0.1uF condensor
+1. Put 0.1uF condenser
 2. Put a 6P pin header
 3. Connect your USB-Serial conversion
 
@@ -176,32 +176,28 @@ Users may not use PAD1OUT, PAD1IN, PAD2OUT, PAD2IN
 
 ##### Variables
 
-以下のものです。
-
 * **int output[7]**
-  シリアル出力をする際に時間情報を格納しておく配列。長さは7
+  An array, the information of time will be in it to output the signal.
 * **char stat**
-  ステータス情報。
+  Status
 * **int minute, second, msecond**
-  時間。分秒ミリ秒
+  Time, minute, second, milli second
 
-#### 関数の紹介
+#### Functions
 
-全ての関数は必ず
+All functions must be used like this:
 
-```Python
+```c++
 NyanTimer::function(argments);
 ```
 
-の形で使ってください。
-
 * **void begin(bool signal)**
 
-NyanTimerの初期処理関数です。必ずvoid setup()の中で実行してください。引数は信号出力の有無(true: あり false: なし)
+Setting of NyanTimer. Must be done in void setup(). Argment is about signal output; true: output, false: no signal output.
 
-* **void timing()**
+**void timing()**
 
-NyanTimerのタイマー処理の中枢です。必ずvoid loop等の定期的なループ内で実行してください。
+This function do timing. Must be done in void loop or something else.
 
 * **void lightLED(int LED, bool HL)**
 
@@ -463,7 +459,7 @@ NyanTimerには前提として必要なライブラリがあります。以下�
 
 全ての関数は必ず
 
-```Python
+```c++
 NyanTimer::function(argments);
 ```
 
