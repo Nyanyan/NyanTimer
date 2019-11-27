@@ -92,9 +92,186 @@ After finishing timing, you can check each lap time with lap time buttons.
 
 Max lap is 99.
 
-### オートパワーセーブ
+### Auto power saving mode
 
-計測をしていない状態で5分程度放置すると自動的に画面が消え、パワーセーブモードに入ります。解除するには電源を入れ直します。
+If you leave this timer for about 5 minutes, it will be in power saving mode. To cancel this, slide the power switch and repower it.
+
+## Hack
+
+### How to hack
+
+Only people who are familier to embedded technology shold do this. And we will have no responsibility to this.
+
+NyanTimer’s program is easy to edit, because of the hardware. You can update the firmware and edit the program with this repository.
+
+First, take all the screws and see the board. On the upper left of the board, there is pins of USB-Serial conversioon.
+
+<img src="https://github.com/Nyanyan/NyanTimer/blob/master/images/USB-Serial.jpeg" width="500">
+
+1. Put 0.1uF condensor
+2. Put a 6P pin header
+3. Connect your USB-Serial conversion
+
+We recommend you to use this one:
+
+https://www.switch-science.com/catalog/1032/
+
+pins are: from pin 1 (left), 
+
+GND-CTS-VCC-TX-RX-DTR
+
+### NyanTimer library
+
+NyanTimerのハックにあたって必要となるであろう関数をまとめてライブラリとして提供しています。
+
+#### 入手
+
+このGitHub内のNyanTimer/program/libraries/内の“NyanTimer”がライブラリです。このままダウンロードしてご自身のライブラリフォルダに入れて使ってください。
+
+#### 必要なライブラリ
+
+NyanTimerには前提として必要なライブラリがあります。以下のライブラリをインストールしておいてください。最近のArduinoライブラリではメニューバーの“スケッチ->ライブラリをインクルード->ライブラリを管理“から大抵のライブラリはインストールできますが、ST7032_SoftI2CMasterのみ私が改変したライブラリのため、NyanTimerライブラリと同じフォルダにあるライブラリをインストールしてください。
+
+* TimerOne
+  https://www.arduinolibraries.info/libraries/timer-one
+* MsTimer2
+  https://playground.arduino.cc/Main/MsTimer2/
+* SoftI2CMaster
+  https://github.com/felias-fogg/SoftI2CMaster
+* ST7032_SoftI2CMaster
+  https://ore-kb.net/archives/195 のものを私が改変しました。本GitHub内のprogram/librariesフォルダにあります。
+
+#### 関数で使用する定数と変数
+
+関数として使っている定数と変数についての解説です。関数内でstaticになっているものは解説しません。
+
+##### NyanTimerの各ピン
+
+以下のものです
+
+* **BUTTON1**
+  リセットボタン
+* **BUTTON2**
+  インスペクションモードボタン
+* **BUTTON3**
+  ラップのカウントアップボタン
+* **BUTTON4**
+  ラップのカウントダウンボタン
+* **BUZZER**
+  ブザー(HIGHにするだけで勝手に鳴ります)
+* **LEDR**
+  赤色LED
+* **LEDG**
+  緑色LED
+* **PAD1OUT**
+  右パッドの出力ピン
+* **PAD1IN**
+  右パッドの入力ピン
+* **PAD2OUT**
+  左パッドのっ出力ピン
+* **PAD2IN**
+  左パッドの入力ピン
+
+なお、PAD1OUT, PAD1IN, PAD2OUT, PAD2INについて、ユーザが直接触ることはないと思います。
+
+##### 基礎的な変数
+
+以下のものです。
+
+* **int output[7]**
+  シリアル出力をする際に時間情報を格納しておく配列。長さは7
+* **char stat**
+  ステータス情報。
+* **int minute, second, msecond**
+  時間。分秒ミリ秒
+
+#### 関数の紹介
+
+全ての関数は必ず
+
+```Python
+NyanTimer::function(argments);
+```
+
+の形で使ってください。
+
+* **void begin(bool signal)**
+
+NyanTimerの初期処理関数です。必ずvoid setup()の中で実行してください。引数は信号出力の有無(true: あり false: なし)
+
+* **void timing()**
+
+NyanTimerのタイマー処理の中枢です。必ずvoid loop等の定期的なループ内で実行してください。
+
+* **void lightLED(int LED, bool HL)**
+
+LEDを光らせる関数です。LEDにLEDGまたはLEDR、HLにtrue(点灯)またはfalse(消灯)を入力します。
+
+* **void printLCD(int row, int col, String / char str)**
+
+LCDになにか文字を表示する関数です。rowで表示する段(0か1)、colで表示開始列(0-15)を選択し、strを表示します。strはchar型でもString型でも動きます。
+
+* **void startTimer(int msec, void function())**
+
+タイマーをスタートさせる関数です。内部はMsTimer2の関数で構成されています。
+
+msecにインターバルをミリ秒で入力し、functionに実行する関数を入力します。この関数を実行すると即座にタイマーがスタートします。
+
+* **void stopTimer()**
+
+タイマーをストップします。
+
+* **int touch(int mode)**
+
+タッチパッドの情報を得る関数です。modeについて解説します。
+
+**mode == 0**
+
+返す数字が
+
+0: どちらのパッドもタッチされていないまたはお片方のパッドがタッチされている場合
+
+1: 両方のパッドがタッチされた場合
+
+**mode == 1**
+
+0: どちらのパッドもタッチされていない場合
+
+1: 両方のパッドがタッチされている場合
+
+2: 右パッドがタッチされている場合
+
+3: 左パッドがタッチされている場合
+
+* **void calcTime(int minute, int second, int msecond, int output)**
+
+minute(分), second(秒), msecond(ミリ秒)の情報から、LCDへの出力に使いやすい時間配列を作ります。なお、output配列(長さ7)の内容を破壊的に変更します。
+
+* **String strTime(int input[])**
+
+input配列(長さ7)の情報から、LCDに出力する時に使うString文字列を作成します。
+
+* **bool inputButton(int n)**
+
+ボタンが押されればtrue、押されていなければfalseを返す関数です。
+
+nにBUTTON1などを入力します。
+
+* **void setLCDclear(int mode)**
+
+LCDを消去する関数です。mode == 0で上の行、1で下の行、2ですべての行がクリアされます。
+
+* **void powersave()**
+
+主電源を入れたままでパワーセーブモードに入る関数です。
+
+
+
+
+
+
+
+
 
 ## 概要
 
@@ -191,13 +368,11 @@ https://youtu.be/ierR8ZPBncU
 
 ## ハック
 
-### ハードウェアのハック
+### やり方
 
-これはある程度組み込み技術に精通した人が行ってください。
+これはある程度組み込み技術に精通した人が行ってください。なお、ハックによる不具合について製造元は保証しません。
 
-NyanTimer board-v7以降のボードではNyanTimerのプログラムを簡単に変更できるようになっています。これを使ってソフトウェアアップデートを実行したり、このGitHubを見つつ自分好みにプログラムを変更できたりします。
-
-なお、構想段階のboard-v8ではUSBシリアル変換を基板に載せることも考えているので、もっと簡単にハックできるかもしれません。
+NyanTimerはプログラムを簡単に変更できるようになっています。これを使ってソフトウェアアップデートを実行したり、このGitHubを見つつ自分好みにプログラムを変更できたりします。
 
 まず裏側のネジを全て取り外し、内部の基板を見ます。基板左上にUSBシリアル変換接続端子があります。
 
