@@ -239,6 +239,14 @@ void timer() {
       if (lapcount == lapmode - 1 && touchnow == 1) { //when timer stops
         NyanTimer::stat = 'S';
         NyanTimer::stopTimer();
+        NyanTimer::timing();
+        EEPROM.write (0, int(NyanTimer::msecond / 100));
+        EEPROM.write (1, NyanTimer::msecond  - int(NyanTimer::msecond / 100) * 100);
+        EEPROM.write (2, NyanTimer::second);
+        EEPROM.write (3, NyanTimer::minute);
+        String lcdoutb = NyanTimer::strTime(NyanTimer::output);
+        NyanTimer::printLCD(7, 0
+        , lcdoutb);
         if (soundmode) {
           digitalWrite(BUZZER, HIGH);
           delay(1000);
@@ -274,13 +282,6 @@ void timer() {
         NyanTimer::calcTime(lap[lapcount][0], lap[lapcount][1], lap[lapcount][2], a);
         String lcdoutb = NyanTimer::strTime(a);
         NyanTimer::printLCD(7, 1, lcdoutb);
-        if (flag) {
-          NyanTimer::printLCD(7, 0, lcdoutb);
-          EEPROM.write (0, int(NyanTimer::msecond / 100));
-          EEPROM.write (1, NyanTimer::msecond  - int(NyanTimer::msecond / 100) * 100);
-          EEPROM.write (2, NyanTimer::second);
-          EEPROM.write (3, NyanTimer::minute);
-        }
         int threshold = 5;
         int cnt = 0;
         while (cnt <= threshold) {
