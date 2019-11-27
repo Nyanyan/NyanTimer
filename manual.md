@@ -98,6 +98,8 @@ If you leave this timer for about 5 minutes, it will be in power saving mode. To
 
 ## Hack
 
+In this timer, ATMEGA328P (Arduino Uno) is used. So you can easily hack it.
+
 ### How to hack
 
 Only people who are familier to embedded technology shold do this. And we will have no responsibility to this.
@@ -122,11 +124,11 @@ GND-CTS-VCC-TX-RX-DTR
 
 ### NyanTimer library
 
-NyanTimerのハックにあたって必要となるであろう関数をまとめてライブラリとして提供しています。
+We published a library in order you to hack it.
 
-#### 入手
+#### How to get
 
-このGitHub内のNyanTimer/program/libraries/内の“NyanTimer”がライブラリです。このままダウンロードしてご自身のライブラリフォルダに入れて使ってください。
+NyanTimer/program/libraries/NyanTimer on this GitHub is it. Download this and unzip it on your libraries folder.
 
 #### 必要なライブラリ
 
@@ -367,6 +369,8 @@ https://youtu.be/ierR8ZPBncU
 計測をしていない状態で5分程度放置すると自動的に画面が消え、パワーセーブモードに入ります。解除するには電源を入れ直します。
 
 ## ハック
+
+このタイマーはCPUにATMEGA328P(Arduino Uno)を使用しています。そのため、簡単にハックすることができます。
 
 ### やり方
 
