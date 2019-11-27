@@ -30,9 +30,9 @@ If you disassemble or hack the timer, we won’t take the responsibility.
 
 ## Functions
 
-* Normal stack mat timers’ functions (including signal out)
+*  Functions of ordinal stack mat timers (including signal out)
 * Inspection time measurement (including 8, 12, 15, and 17s call)
-* Lap time measurement (you can measure up to 99 lap times)
+* Lap time measurement (Max 99 laps)
 
 ## Name of each part
 
@@ -45,11 +45,56 @@ If you disassemble or hack the timer, we won’t take the responsibility.
 * Upper right: Lap time button (up)
 * Bottom right: Lap time button (down)
 
-## Main Functions
+## Powering the timer
 
-* Functions of ordinal stack mat timer
-* Measuring the inspection time (includes 8s, 12s, +2, DNF call)
-* Measuring lap times (max 99 laps)
+### Batteries
+
+Remove the battery covers, then put two CR2450s.
+
+### Powering
+
+Slide the power switch.
+
+## Measure the time
+
+### Start & Stop the timer
+
+Covering both pads, and the red LED lights. Then wait, and both red and green LEDs lights. If you release your hand, then timer starts.
+
+When you cover the both pads during timing, the timer stops.
+
+If you measure the lap times (when the LCD shows a number of lap except ‘1’), I strongly recmmend not to cover one pad when timing.
+
+### Sounding when timer stops
+
+If you want the timer to sound when you stop the timer, press mode button a second. Then the LCD shows ‘S’ or nothing on the upper left.
+
+* ‘ ’: No sound when timer stops
+* ‘S’: Sounds when timer stops
+
+### Measuring the inspection time
+
+If you press mode button, the LCD shows ‘i’, ‘I’, or nothing on the upper left. These messages tells you:
+
+* ‘ ’: Not measure the inspection time
+* ‘i’: Measure the inspection time (no 8s, 12s, +2, DNF calls)
+* ‘I’: Measure the inspection time (with 8s, 12s, +2, DNF calls)
+
+On ‘i’ or ‘I’ mode, when you cover the both pads and wait about 1 second, the red LED lights. Then when you release, the inspection time starts.
+
+### Masuring lap times
+
+Press lap time button (up and down) and adjust the count of lap. If you press this button for long, the number will change quickly.
+
+If you cover one or two pad during timing, lap time will be shown on the bottom right of the LCD.
+
+After finishing timing, you can check each lap time with lap time buttons.
+
+Max lap is 99.
+
+### オートパワーセーブ
+
+計測をしていない状態で5分程度放置すると自動的に画面が消え、パワーセーブモードに入ります。解除するには電源を入れ直します。
 
 ## 概要
 
@@ -113,20 +158,20 @@ https://youtu.be/ierR8ZPBncU
 
 ### 計測終了時の音声出力
 
-インスペクションタイムモード切替ボタンを長押しすると画面に‘S’の文字が出現したり消えたりします。これらの表示について、示す機能は以下です。
+モード切替ボタンを長押しすると画面に‘S’の文字が出現したり消えたりします。これらの表示について、示す機能は以下です。
 
 * ‘ ‘:計測終了時に音が鳴らない
 * ’S’: 計測終了時に音が鳴る
 
 ### インスペクションタイム計測
 
-インスペクションタイム計測モード切り替えボタンを押すと、画面左上に‘i’や‘I’が表示されたり消えたりします。これらの表示について、示す機能は以下です。
+モード切り替えボタンを押すと、画面左上に‘i’や‘I’が表示されたり消えたりします。これらの表示について、示す機能は以下です。
 
 * ‘ ’: インスペクションタイムを計測しない
 * ‘i’: インスペクションタイム計測(8秒、12秒、+2、DNFのコールなし)
 * ‘I’: インスペクションタイム計測(8秒、12秒、+2、DNFで音が鳴る)
 
-両方のパッドを覆って1秒弱すると赤いLEDが点灯します。この状態で手を離すとインスペクションタイムの計測が開始します。‘I’モードでは8秒と12秒で電子音が鳴ります。
+両方のパッドを覆って1秒弱すると赤いLEDが点灯します。この状態で手を離すとインスペクションタイムの計測が開始します。
 
 ### ラップタイム計測
 
