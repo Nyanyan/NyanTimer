@@ -40,10 +40,16 @@ If you disassemble or hack the timer, we won’t take the responsibility.
 
 ### Name of each button
 
-* Upper left: Inspection time button
+* Upper left: Mode button
 * Bottom left: Reset button
 * Upper right: Lap time button (up)
 * Bottom right: Lap time button (down)
+
+## Main Functions
+
+* Functions of ordinal stack mat timer
+* Measuring the inspection time (includes 8s, 12s, +2, DNF call)
+* Measuring lap times (max 99 laps)
 
 ## 概要
 
@@ -80,10 +86,10 @@ https://youtu.be/ierR8ZPBncU
 
 ### ボタン名称
 
-* 左上: インスペクションタイム計測モード切り替え
-* 左下: タイムリセット
-* 右上: ラップ計測回数調整(アップ)
-* 右下: ラップ計測回数調整(ダウン)
+* 左上: モード切り替えボタン
+* 左下: タイムリセットボタン
+* 右上: ラップ計測回数調整(アップ)ボタン
+* 右下: ラップ計測回数調整(ダウン)ボタン
 
 ## 電源を入れる
 
