@@ -145,6 +145,12 @@ NyanTimer uses some other libraries. Before hacking it, you must install these l
 
 #### Constants and variables
 
+All constants and variables must be used like this:
+
+```c++
+NyanTimer::constantsOrVariables
+```
+
 Constants and variables used in this library are below:
 
 ##### Constants (Pins of NyanTimer)
@@ -172,12 +178,12 @@ Constants and variables used in this library are below:
 * **PAD2IN**
   Input pin of left pad
 
-Users may not use PAD1OUT, PAD1IN, PAD2OUT, PAD2IN
+Users might not use PAD1OUT, PAD1IN, PAD2OUT, PAD2IN
 
 ##### Variables
 
 * **int output[7]**
-  An array, the information of time will be in it to output the signal.
+  An array, the information of time will be in it to output the signal and output on the LCD.
 * **char stat**
   Status
 * **int minute, second, msecond**
@@ -201,73 +207,53 @@ This function do timing. Must be done in void loop or something else.
 
 * **void lightLED(int LED, bool HL)**
 
-LEDを光らせる関数です。LEDにLEDGまたはLEDR、HLにtrue(点灯)またはfalse(消灯)を入力します。
+A function to light a LED. In ‘LED’, there will be LEDG or LEDR, in ‘HL’, true (on) or false (off).
 
 * **void printLCD(int row, int col, String / char str)**
 
-LCDになにか文字を表示する関数です。rowで表示する段(0か1)、colで表示開始列(0-15)を選択し、strを表示します。strはchar型でもString型でも動きます。
+A function to show something on the LCD. In ‘row’, select the row (0 or 1), in ‘col’, select the column(0-15). On the LCD, ‘str’ will be written. ‘str’ must be char or String.
 
 * **void startTimer(int msec, void function())**
 
-タイマーをスタートさせる関数です。内部はMsTimer2の関数で構成されています。
+Start the timer. This function is made of MsTimer2.
 
-msecにインターバルをミリ秒で入力し、functionに実行する関数を入力します。この関数を実行すると即座にタイマーがスタートします。
+Input interval (milli second) on ‘msec’, and put the function to execute on ‘function’.
 
 * **void stopTimer()**
 
-タイマーをストップします。
+Stop the timer.
 
-* **int touch(int mode)**
+* **int touch()**
 
-タッチパッドの情報を得る関数です。modeについて解説します。
+Returns the status of touchpad. Returning number means:
 
-**mode == 0**
+0: Neither pad is covered
 
-返す数字が
+1: Both pads are covered
 
-0: どちらのパッドもタッチされていないまたはお片方のパッドがタッチされている場合
+2: Only right pad is covered
 
-1: 両方のパッドがタッチされた場合
-
-**mode == 1**
-
-0: どちらのパッドもタッチされていない場合
-
-1: 両方のパッドがタッチされている場合
-
-2: 右パッドがタッチされている場合
-
-3: 左パッドがタッチされている場合
+3: Only left pad is covered
 
 * **void calcTime(int minute, int second, int msecond, int output)**
 
-minute(分), second(秒), msecond(ミリ秒)の情報から、LCDへの出力に使いやすい時間配列を作ります。なお、output配列(長さ7)の内容を破壊的に変更します。
+From minute, second, msecond, make an array that enable you to output the signal or output on the LCD. This function changes ‘output’ aarray.
 
 * **String strTime(int input[])**
 
-input配列(長さ7)の情報から、LCDに出力する時に使うString文字列を作成します。
+From ‘input’ array, make a string. this string will be used to output on the LCD.
 
-* **bool inputButton(int n)**
+* **bool inputButton(int button)**
 
-ボタンが押されればtrue、押されていなければfalseを返す関数です。
-
-nにBUTTON1などを入力します。
+If ‘button’ is pressed, returns true. 
 
 * **void setLCDclear(int mode)**
 
-LCDを消去する関数です。mode == 0で上の行、1で下の行、2ですべての行がクリアされます。
+Clear the LCD. mode == 0: upper row, mode == 1: lower row, mode ==  2: both row, are cleared.
 
 * **void powersave()**
 
-主電源を入れたままでパワーセーブモードに入る関数です。
-
-
-
-
-
-
-
-
+Power saving function.
 
 ## 概要
 
@@ -413,6 +399,12 @@ NyanTimerには前提として必要なライブラリがあります。以下�
 
 #### 関数で使用する定数と変数
 
+全ての定数と変数は以下のように使ってください。
+
+```c++
+NyanTimer::constantsOrVariables
+```
+
 関数として使っている定数と変数についての解説です。関数内でstaticになっているものは解説しません。
 
 ##### NyanTimerの各ピン
@@ -449,7 +441,7 @@ NyanTimerには前提として必要なライブラリがあります。以下�
 以下のものです。
 
 * **int output[7]**
-  シリアル出力をする際に時間情報を格納しておく配列。長さは7
+  シリアル出力やLCD出力をする際に時間情報を格納しておく配列。長さは7
 * **char stat**
   ステータス情報。
 * **int minute, second, msecond**
@@ -491,19 +483,9 @@ msecにインターバルをミリ秒で入力し、functionに実行する関�
 
 タイマーをストップします。
 
-* **int touch(int mode)**
+* **int touch()**
 
-タッチパッドの情報を得る関数です。modeについて解説します。
-
-**mode == 0**
-
-返す数字が
-
-0: どちらのパッドもタッチされていないまたはお片方のパッドがタッチされている場合
-
-1: 両方のパッドがタッチされた場合
-
-**mode == 1**
+タッチパッドの情報を得る関数です。
 
 0: どちらのパッドもタッチされていない場合
 
@@ -521,11 +503,11 @@ minute(分), second(秒), msecond(ミリ秒)の情報から、LCDへの出力に
 
 input配列(長さ7)の情報から、LCDに出力する時に使うString文字列を作成します。
 
-* **bool inputButton(int n)**
+* **bool inputButton(int button)**
 
 ボタンが押されればtrue、押されていなければfalseを返す関数です。
 
-nにBUTTON1などを入力します。
+‘button’にBUTTON1などを入力します。
 
 * **void setLCDclear(int mode)**
 
