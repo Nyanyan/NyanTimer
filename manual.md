@@ -77,8 +77,8 @@ If you break these promises, you might be in an accident.
 
 * Use the timer after reading this manual.
 * Do not shock the timer.
-
-If you disassemble or hack the timer, we won’t take the responsibility.
+* This timer can cause a trouble after about 50000 measurement because of the micro controller.
+* If you disassemble or hack the timer, we won’t take the responsibility.
 
 ## Functions
 
@@ -335,8 +335,8 @@ https://youtu.be/ierR8ZPBncU
 
 * 必ず本取扱説明書を読んでから使用すること。
 * 製品に衝撃を与えないこと
-
-製品の分解・改造について製造者は責任を負いません。
+* 本製品はマイコンの仕様上、約50000回の計測で不具合を起こす可能性があります。
+* 製品の分解・改造について製造者は責任を負いません。
 
 ## 大きな機能
 
