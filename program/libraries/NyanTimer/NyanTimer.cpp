@@ -3,6 +3,7 @@
 //#include <Wire.h>
 #include <TimerOne.h>
 #include <ST7032_SoftI2CMaster.h>
+#include <math.h>
 
 ST7032 lcd;
 
@@ -15,11 +16,24 @@ int NyanTimer::second;
 volatile int NyanTimer::msecond;
 static String serout = "I000000@";
 static char statout;
+static float gamma1, gamma2;
+float threshold1, threshold2;
 
 static void signalOut() {
   Serial.print(serout);
   Serial.print(char(13));
   Serial.print(char(10));
+}
+
+void isort(float *a, int n) {
+  for (int i = 1; i < n; ++i) {
+    int j = a[i];
+    int k;
+    for (k = i - 1; (k >= 0) && (j < a[k]); k--) {
+      a[k + 1] = a[k];
+    }
+    a[k + 1] = j;
+  }
 }
 
 void NyanTimer::begin(bool signal) {
@@ -43,28 +57,62 @@ void NyanTimer::begin(bool signal) {
   NyanTimer::second = 0;
   NyanTimer::msecond = 0;
 
-  digitalWrite(PAD1OUT, HIGH);
-  digitalWrite(PAD2OUT, HIGH);
   lcd.begin(16, 2);
   lcd.setContrast(40);
   NyanTimer::printLCD(0, 0, "NyanTimer       ");
   NyanTimer::printLCD(0, 1, "      by Nyanyan");
-  for(int i=0;i<10;i++) {
-    delay(100);
+  digitalWrite(PAD1OUT, HIGH);
+  digitalWrite(PAD2OUT, HIGH);
+  Timer1.initialize(125000);
+  Timer1.attachInterrupt(signalOut);
+  Timer1.start();
+  for (int i=0;i<10;i++) {
+    delay(10);
     pad1inthreshold = max(pad1inthreshold, analogRead(PAD1IN) * 0.9); //calibration
     pad2inthreshold = max(pad2inthreshold, analogRead(PAD2IN) * 0.9);
   }
   digitalWrite(PAD1OUT, LOW);
   digitalWrite(PAD2OUT, LOW);
-  if (signal) {
-    Timer1.initialize(125000);
-    Timer1.attachInterrupt(signalOut);
-    Timer1.start();
+  delay(100);
+  unsigned long  tmp;
+  gamma1 = 0;
+  gamma2 = 0;
+  for (int i = 0;i < 10;i++) {
+    tmp = micros();
+    digitalWrite(PAD1OUT, HIGH);
+    while (analogRead(PAD1IN) < pad1inthreshold);
+    gamma1 += -log(1 - 0.9) / (micros() - tmp);
+    digitalWrite(PAD1OUT, LOW);
+    digitalWrite(PAD2OUT, HIGH);
+    tmp = micros();
+    while (analogRead(PAD2IN) < pad2inthreshold);
+    gamma2 += -log(1 - 0.9) / (micros() - tmp);
+    digitalWrite(PAD2OUT, LOW);
+    delay(10);
   }
+  gamma1 /= 10;
+  gamma2 /= 10;
+  if (gamma1 * 1000 > 4) gamma1 /= 6;
+  if (gamma2 * 1000 > 4) gamma2 /= 6;
+  threshold1 = -1 / gamma1 * log(1 - 0.9999);
+  threshold2 = -1 / gamma2 * log(1 - 0.9999);
+  delay(700);
 }
 
 
 void NyanTimer::timing() {
+  if (NyanTimer::msecond >= 1000) {
+    NyanTimer::msecond -= 1000;
+    NyanTimer::second++;
+  }
+  if (NyanTimer::second >= 60) {
+    NyanTimer::second -= 60;
+    NyanTimer::minute++;
+  }
+  if (NyanTimer::minute >= 100)
+    NyanTimer::stopTimer();
+  NyanTimer::calcTime(NyanTimer::minute, NyanTimer::second, NyanTimer::msecond, NyanTimer::output);
+  
   if (NyanTimer::stat == 'I' && NyanTimer::touch() == 2)
     statout = 'R';
   else if (NyanTimer::stat == 'I' && NyanTimer::touch() == 3)
@@ -80,18 +128,6 @@ void NyanTimer::timing() {
   }
   char checksum = 64 + tmp;
   serout += String(checksum);
-
-  if (NyanTimer::msecond >= 1000) {
-    NyanTimer::msecond -= 1000;
-    NyanTimer::second++;
-  }
-  if (NyanTimer::second >= 60) {
-    NyanTimer::second -= 60;
-    NyanTimer::minute++;
-  }
-  if (NyanTimer::minute >= 100)
-    NyanTimer::stopTimer();
-  NyanTimer::calcTime(NyanTimer::minute, NyanTimer::second, NyanTimer::msecond, NyanTimer::output);
 }
 
 void NyanTimer::lightLED(int LED, bool HL) {
@@ -119,7 +155,6 @@ void NyanTimer::stopTimer() {
 }
 
 int NyanTimer::touch() {
-  float threshold = 25; //16
   float t = 2;
   float k = 0.5;
   float VAL1 = 0;
@@ -128,20 +163,21 @@ int NyanTimer::touch() {
   for (int i = 0; i < t; i++) {
     float val1 = 0;
     float val2 = 0;
+    unsigned long tmp;
     digitalWrite(PAD1OUT, HIGH);
+    tmp = micros();
     while (analogRead(PAD1IN) < pad1inthreshold) {
-      val1++;
-      if (val1 > threshold)
+      val1 = micros() - tmp;
+      if (val1 > threshold1)
         break;
-      delayMicroseconds(1);
     }
     digitalWrite(PAD1OUT, LOW);
     digitalWrite(PAD2OUT, HIGH);
+    tmp = micros();
     while (analogRead(PAD2IN) < pad2inthreshold) {
-      val2++;
-      if (val2 > threshold)
+      val2 = micros() - tmp;
+      if (val2 > threshold2)
         break;
-      delayMicroseconds(1);
     }
     digitalWrite(PAD2OUT, LOW);
 
@@ -153,12 +189,11 @@ int NyanTimer::touch() {
 
     delayMicroseconds(5);
   }
-
-  if (VAL1 >= threshold * t * k && VAL2 >= threshold * t * k)
+  if (VAL1 >= threshold1 * t * k && VAL2 >= threshold2 * t * k)
     return 1;
-  else if (VAL1 >= threshold * t * k && VAL2 < threshold * t * k)
+  else if (VAL1 >= threshold1 * t * k && VAL2 < threshold2 * t * k)
     return 2;
-  else if (VAL1 < threshold * t * k && VAL2 >= threshold * t * k)
+  else if (VAL1 < threshold1 * t * k && VAL2 >= threshold2 * t * k)
     return 3;
   else
     return 0;
