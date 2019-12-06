@@ -19,7 +19,7 @@ String inspresult = "";
 int formertouch = 0;
 
 void setup() {
-  NyanTimer::begin(true);
+  NyanTimer::begin();
   resettime();
   NyanTimer::setLCDclear(2);
   lap[0][0] = 0;
@@ -216,7 +216,7 @@ void button() {
 
 
 void timer() {
-  const int num = 7;
+  const int num = 3;
   int tmp1[num];
   for (int i = 0; i < num; i++)
     tmp1[i] = NyanTimer::touch();
@@ -224,14 +224,13 @@ void timer() {
   for (int i = 0; i < num; i++)
     tmp2[tmp1[i]]++;
   int m = 0;
-  int tmp3 = 0;
+  int touchnow = 0;
   for (int i = 0; i < 4; i++) {
     if (tmp2[i] > m) {
       m = tmp2[i];
-      tmp3 = i;
+      touchnow = i;
     }
   }
-  int touchnow = tmp3;
   if (touchnow != 0 && touchnow != formertouch) {
     batterycount = 0;
     bool flag = false;
@@ -298,7 +297,7 @@ void timer() {
         ledr = 1;
         ledg = 0;
         convertLED();
-        int waitingthreshold = 20;
+        int waitingthreshold = 10;
         int i = 0;
         while (NyanTimer::touch() == 1 && i < waitingthreshold) { //wait about 0.55sec
           i++;
@@ -435,6 +434,6 @@ void loop() {
   }
 
   //convert lcd and led unit
-  convertLCD();
+  //convertLCD();
   convertLED();
 }
