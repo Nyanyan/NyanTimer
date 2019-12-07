@@ -434,6 +434,6 @@ void loop() {
   }
 
   //convert lcd and led unit
-  //convertLCD();
+  convertLCD();
   convertLED();
 }
