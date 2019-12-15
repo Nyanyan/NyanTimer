@@ -64,7 +64,7 @@ void NyanTimer::begin() {
   NyanTimer::printLCD(0, 1, "      by Nyanyan");
   digitalWrite(PAD1OUT, HIGH);
   digitalWrite(PAD2OUT, HIGH);
-  Timer1.initialize(125000);
+  Timer1.initialize(111111);
   Timer1.attachInterrupt(signalOut);
   Timer1.start();
   for (int i=0;i<10;i++) {
