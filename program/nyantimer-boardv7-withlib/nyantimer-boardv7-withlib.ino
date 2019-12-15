@@ -216,6 +216,7 @@ void button() {
 
 
 void timer() {
+  /*
   const int num = 3;
   int tmp1[num];
   for (int i = 0; i < num; i++)
@@ -231,6 +232,8 @@ void timer() {
       touchnow = i;
     }
   }
+  */
+  int touchnow = NyanTimer::touch();
   if (touchnow != 0 && touchnow != formertouch) {
     batterycount = 0;
     bool flag = false;
@@ -297,7 +300,7 @@ void timer() {
         ledr = 1;
         ledg = 0;
         convertLED();
-        int waitingthreshold = 10;
+        int waitingthreshold = 5;
         int i = 0;
         while (NyanTimer::touch() == 1 && i < waitingthreshold) { //wait about 0.55sec
           i++;
@@ -407,12 +410,6 @@ void loop() {
   //button unit
   if (NyanTimer::stat != ' ')
     button();
-
-  //reset time unit
-  /*
-    if (NyanTimer::stat == 'I' || NyanTimer::stat == 'A')
-    resettime();
-  */
 
   //timer unit
   timer();

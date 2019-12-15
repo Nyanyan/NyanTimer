@@ -23,6 +23,20 @@ static void signalOut() {
   Serial.print(char(10));
 }
 
+static void swap(double* a, double* b) {
+  double c = *a;
+  *a = *b;
+  *b = c;
+}
+
+static void sort(double* array) {
+  int size = sizeof(array) / sizeof(double);
+  for(int i = 0;i < size;i++)
+    for(int j = size - 1;j > i; j--)
+      if(array[j] < array[j - 1])
+        swap(&array[j], &array[j - 1]);
+}
+
 void NyanTimer::begin() {
   Serial.begin(1200);
   pinMode(BUTTON1, INPUT);
@@ -119,15 +133,16 @@ void NyanTimer::stopTimer() {
 }
 
 int NyanTimer::touch() {
-  float touchthreshold = 1000;
-  float t = 3;
-  float VAL1 = 0;
-  float VAL2 = 0;
-  float breakthreshold = 500;
+  float touchthreshold = 500;
+  const int t = 20;
+  double VAL1[t];
+  double VAL2[t];
+  float breakthreshold = 50;
+  const float exceptratio = 0.2;
 
   for (int i = 0; i < t; i++) {
-    float val1 = 0;
-    float val2 = 0;
+    double val1 = 0;
+    double val2 = 0;
     unsigned long tmp;
     digitalWrite(PAD1OUT, HIGH);
     tmp = micros();
@@ -158,22 +173,32 @@ int NyanTimer::touch() {
     digitalWrite(PAD2OUT, LOW);
 
     if (val1 > 0 && val2 > 0) {
-      VAL1 += val1;
-      VAL2 += val2;
+      VAL1[i] = val1;
+      VAL2[i] = val2;
     } else
       i--;
 
     delayMicroseconds(100);
   }
-  //NyanTimer::printLCD(0,0,String(VAL1 / t));
-  //NyanTimer::printLCD(0,1,String(VAL2 / t));
+  sort(VAL1);
+  sort(VAL2);
+  int except = t * exceptratio;
+  int tmp = t - 2 * except;
+  float VAL1sum = 0;
+  float VAL2sum = 0;
+  for(int i = except; i < t - except; i++) {
+    VAL1sum += VAL1[i];
+    VAL2sum += VAL2[i];
+  }
+  //NyanTimer::printLCD(0,0,String(VAL1sum / tmp));
+  //NyanTimer::printLCD(0,1,String(VAL2sum / tmp));
   //NyanTimer::printLCD(7,0,String(threshold1));
   //NyanTimer::printLCD(7,1,String(threshold2));
-  if (VAL1 >= touchthreshold * t && VAL2 >= touchthreshold * t)
+  if (VAL1sum >= touchthreshold * tmp && VAL2sum >= touchthreshold * tmp)
     return 1;
-  else if (VAL1 >= touchthreshold * t && VAL2 < touchthreshold * t)
+  else if (VAL1sum >= touchthreshold * tmp && VAL2sum < touchthreshold * tmp)
     return 2;
-  else if (VAL1 < touchthreshold * t && VAL2 >= touchthreshold * t)
+  else if (VAL1sum < touchthreshold * tmp && VAL2sum >= touchthreshold * tmp)
     return 3;
   else
     return 0;
