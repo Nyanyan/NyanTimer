@@ -430,7 +430,6 @@ void loop() {
   }
 
   //convert lcd and led unit
-  //convertLCD();
-  NyanTimer::printLCD(0, 0, String(NyanTimer::batterycount));
+  convertLCD();
   convertLED();
 }
