@@ -89,8 +89,10 @@ void NyanTimer::timing() {
     NyanTimer::second -= 60;
     NyanTimer::minute++;
   }
-  if (NyanTimer::minute >= 100)
+  if (NyanTimer::minute >= 100) {
     NyanTimer::stopTimer();
+    NyanTimer::stat = 'S';
+  }
   NyanTimer::calcTime(NyanTimer::minute, NyanTimer::second, NyanTimer::msecond, NyanTimer::output);
   
   if (NyanTimer::stat == 'I' && NyanTimer::touch() == 2)
