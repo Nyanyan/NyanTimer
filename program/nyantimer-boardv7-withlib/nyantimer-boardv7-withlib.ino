@@ -2,7 +2,7 @@
 #include <EEPROM.h>
 
 #define maxlap 99
-#define batterythreshold 10000 //1000 per 30s
+#define batterythreshold 2700 //1000 per 30s
 
 volatile bool ledr = 0; //red led status
 volatile bool ledg = 0; //green led status
@@ -14,7 +14,6 @@ int inspstat = 0; //1=during inspstatection time
 int inspstatcount = 16; //inspstatection time count
 bool soundmode = false;
 bool buz = 0;
-long batterycount = 0;
 String inspresult = "";
 int formertouch = 0;
 
@@ -88,6 +87,7 @@ void convertLCD() {
   String lapout = String(int(lapcount / 10)) +  String(lapcount - int(lapcount / 10) * 10) + "/" + String(int(lapmode / 10)) + String(lapmode - int(lapmode / 10) * 10);
   NyanTimer::printLCD(1, 1, lapout);
   NyanTimer::printLCD(3, 0, inspresult);
+
 }
 
 
@@ -139,7 +139,7 @@ void lapDOWN() {
 
 void button() {
   if (NyanTimer::inputButton(BUTTON1)) {//reset
-    batterycount = 0;
+    NyanTimer::batterycount = 0;
     int a = 0;
     int t = 500;
     while (NyanTimer::inputButton(BUTTON1)) {
@@ -158,7 +158,7 @@ void button() {
       NyanTimer::printLCD(3, 0, "    ");
     }
   } else if (NyanTimer::inputButton(BUTTON2)) { //inspstatection mode and sound mode
-    batterycount = 0;
+    NyanTimer::batterycount = 0;
     int a = 0;
     int t = 500;
     while (NyanTimer::inputButton(BUTTON2)) {
@@ -181,7 +181,7 @@ void button() {
       while (NyanTimer::inputButton(BUTTON2));
     }
   } else if (NyanTimer::inputButton(BUTTON3)) { //lap mode up
-    batterycount = 0;
+    NyanTimer::batterycount = 0;
     lapUP();
     convertLCD();
     for (int i = 0; i < 1000; i++) {
@@ -195,7 +195,7 @@ void button() {
       convertLCD();
     }
   } else if (NyanTimer::inputButton(BUTTON4)) { //lap mode down
-    batterycount = 0;
+    NyanTimer::batterycount = 0;
     lapDOWN();
     convertLCD();
     for (int i = 0; i < 1000; i++) {
@@ -208,9 +208,7 @@ void button() {
       delay(100);
       convertLCD();
     }
-  } else if (NyanTimer::stat == 'I' || NyanTimer::stat == 'S')
-    batterycount++;
-
+  }
 }
 
 
@@ -235,7 +233,6 @@ void timer() {
   */
   int touchnow = NyanTimer::touch();
   if (touchnow != 0 && touchnow != formertouch) {
-    batterycount = 0;
     bool flag = false;
     if (NyanTimer::stat == ' ') {
       if (lapcount == lapmode - 1 && touchnow == 1) { //when timer stops
@@ -410,12 +407,14 @@ void loop() {
   //button unit
   if (NyanTimer::stat != ' ')
     button();
+  else
+    NyanTimer::batterycount = 0;
 
   //timer unit
   timer();
 
   //auto power off unit
-  if (batterycount >= batterythreshold)
+  if (NyanTimer::batterycount >= batterythreshold)
     NyanTimer::powersave();
 
   //led unit
@@ -431,6 +430,7 @@ void loop() {
   }
 
   //convert lcd and led unit
-  convertLCD();
+  //convertLCD();
+  NyanTimer::printLCD(0, 0, String(NyanTimer::batterycount));
   convertLED();
 }

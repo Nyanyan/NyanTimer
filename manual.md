@@ -240,6 +240,8 @@ Users might not use PAD1OUT, PAD1IN, PAD2OUT, PAD2IN
   Status
 * **int minute, second, msecond**
   Time, minute, second, milli second
+* **batterycount**
+  A variable for auto power saving 
 
 #### Functions
 
@@ -506,6 +508,8 @@ NyanTimer::constantsOrVariables
   ステータス情報。
 * **int minute, second, msecond**
   時間。分秒ミリ秒
+* **batterycount**
+  自動バッテリー節約モードへの以降をするときに使う変数。
 
 #### 関数の紹介
 

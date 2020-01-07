@@ -32,4 +32,5 @@ namespace NyanTimer {
   volatile extern int msecond;
   extern int second;
   extern int minute;
+  volatile extern int batterycount;
 }

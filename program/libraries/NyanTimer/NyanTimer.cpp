@@ -13,14 +13,16 @@ int NyanTimer::output[7] = {0, 0, 0, 0, 0, 0, 0};
 char NyanTimer::stat;
 int NyanTimer::minute;
 int NyanTimer::second;
+volatile extern int NyanTimer::batterycount = 0;
 volatile int NyanTimer::msecond;
 static String serout = "I000000@";
 static char statout;
 
 static void signalOut() {
   Serial.print(serout);
-  Serial.print(char(13));
   Serial.print(char(10));
+  Serial.print(char(13));
+  NyanTimer::batterycount++;
 }
 
 static void swap(double* a, double* b) {
@@ -133,7 +135,7 @@ void NyanTimer::stopTimer() {
 }
 
 int NyanTimer::touch() {
-  float touchthreshold = 500;
+  float touchthreshold = 400;
   const int t = 20;
   double VAL1[t];
   double VAL2[t];
