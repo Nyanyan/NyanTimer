@@ -1,5 +1,5 @@
 import tkinter as tk
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 import random
 
 def changesession():
@@ -21,8 +21,6 @@ for i in range(scramblenums[session]):
     add = adds[random.randint(0, 2)]
     scramble += rot + add + ' '
 print(scramble)
-
-scramblevar = tk.StringVar(master=root, value=scramble)
 
 sessionbutton = tk.Button(root, text='Session', command=changesession)
 sessionbutton.grid(row=0, column=0, padx=5, pady=5)
@@ -55,6 +53,11 @@ timenumlabel.grid(row=2, column=1, padx=5, pady=5)
 ao12num = tk.StringVar(master=root,value="-.---")
 ao12numlabel = tk.Label(root, textvariable=ao12num)
 ao12numlabel.grid(row=2, column=2, padx=5, pady=5)
+
+
+scramblevar = tk.StringVar(master=root, value=scramble)
+scramblelabel = tk.Label(root, textvariable=scramblevar)
+scramblelabel.grid(row=3, column=0, padx=5, pady=5, sticky=tk.W+tk.E)
 
 root.columnconfigure(0, weight=1, uniform='group1')
 root.columnconfigure(1, weight=1, uniform='group1')
