@@ -1,6 +1,7 @@
 import tkinter as tk
 #import RPi.GPIO as GPIO
 import random
+import time
 
 def changesession():
     sessionOKbutton.grid(row=0, column=0, padx=5, pady=0)
@@ -34,7 +35,7 @@ def closechangesession():
     deletebutton.grid(row=5, column=0, padx=5, pady=10)
     statbutton.grid(row=5, column=1, padx=5, pady=10)
     nextbutton.grid(row=5, column=2, padx=5, pady=10)
-    startbutton.grid(row=5, column=1, padx=5, pady=10)
+    startbutton.grid(row=6, column=1, padx=5, pady=10)
 
 def delete():
     return 0
@@ -71,6 +72,10 @@ def next():
     scramblevar2.set(scramble2)
 
 def timing():
+    global starttime
+    starttime = time.time()
+    print(starttime)
+
     sessionbutton.grid_forget()
     sessionlabel.grid_forget()
     ao5label.grid_forget()
@@ -89,6 +94,10 @@ def timing():
     stopbutton.grid(row=6, column=1, padx=5, pady=10)
 
 def stoptiming():
+    stoptime = time.time()
+    print(stoptime)
+    timenum.set(str(round(stoptime - starttime, 3)))
+
     sessionOKbutton.grid_forget()
     sessionbutton.grid(row=0, column=0, padx=5, pady=0)
     sessionlabel.grid(row=0, column=1, padx=5, pady=0)
@@ -118,6 +127,8 @@ scramble1 = ""
 scramble2 = ""
 
 
+starttime = 0.00
+
 
 
 sessionbutton = tk.Button(root, text='Session', command=changesession)
@@ -133,8 +144,8 @@ ao5 = tk.StringVar(master=root,value="Ao5")
 ao5label = tk.Label(root, textvariable=ao5)
 ao5label.grid(row=1, column=0, padx=5, pady=0)
 
-time = tk.StringVar(master=root,value="Time")
-timelabel = tk.Label(root, textvariable=time)
+timenum = tk.StringVar(master=root,value="Time")
+timelabel = tk.Label(root, textvariable=timenum)
 timelabel.grid(row=1, column=1, padx=5, pady=0)
 
 ao12 = tk.StringVar(master=root,value="Ao12")
@@ -163,9 +174,6 @@ scramblevar2 = tk.StringVar(master=root, value=scramble2)
 scramblelabel2 = tk.Label(root, textvariable=scramblevar2)
 scramblelabel2.grid(row=4, column=0, columnspan=3, padx=5, pady=0)
 
-root.columnconfigure(0, weight=1, uniform='group1')
-root.columnconfigure(1, weight=1, uniform='group1')
-root.columnconfigure(2, weight=1, uniform='group1')
 
 deletebutton = tk.Button(root, text='  Delete  ', command=delete)
 deletebutton.grid(row=5, column=0, padx=5, pady=10)
@@ -176,10 +184,17 @@ statbutton.grid(row=5, column=1, padx=5, pady=10)
 nextbutton = tk.Button(root, text='   Next   ', command=next)
 nextbutton.grid(row=5, column=2, padx=5, pady=10)
 
+
 startbutton = tk.Button(root, text='  Start  ', command=timing)
 startbutton.grid(row=6, column=1, padx=5, pady=10)
 
 stopbutton = tk.Button(root, text='  Stop  ', command=stoptiming)
+
+
+root.columnconfigure(0, weight=1, uniform='group1')
+root.columnconfigure(1, weight=1, uniform='group1')
+root.columnconfigure(2, weight=1, uniform='group1')
+
 
 
 root.mainloop()
