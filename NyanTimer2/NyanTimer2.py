@@ -5,6 +5,7 @@ import time
 import csv
 import numpy
 import math
+import os
 
 def changesession():
     sessionOKbutton.grid(row=0, column=0, padx=5, pady=0)
@@ -398,6 +399,10 @@ root.geometry('320x240')
 sessions = ['3x3', '2x2', '4x4', '5x5', '6x6', '7x7', '3BLD', '3OH', 'Clock', 'Megaminx', 'Pyraminx', 'Skewb', 'Square-1', '4BLD', '5BLD']
 scramblenums = [25]
 session = 0
+
+for s in sessions:
+    if not os.path.isfile('data' + s + '.csv'):
+        open('data' + s + '.csv', mode='x')
 
 scramble1 = ""
 scramble2 = ""
