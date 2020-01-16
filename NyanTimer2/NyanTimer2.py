@@ -44,7 +44,39 @@ def delete():
     return 0
 
 def stat():
-    return 0
+    sessionbutton.grid_forget()
+    scramblelabel1.grid_forget()
+    scramblelabel2.grid_forget()
+    deletebutton.grid_forget()
+    statbutton.grid_forget()
+    nextbutton.grid_forget()
+    startbutton.grid_forget()
+
+    statbackbutton.grid(row=0, column=0, padx=5, pady=0)
+
+    bestao5label.grid(row=3, column=0, padx=5, pady=0)
+    besttimelabel.grid(row=3, column=1, padx=5, pady=0)
+    bestao12label.grid(row=3, column=2, padx=5, pady=0)
+    bestao5numlabel.grid(row=4, column=0, padx=5, pady=0)
+    besttimenumlabel.grid(row=4, column=1, padx=5, pady=0)
+    bestao12numlabel.grid(row=4, column=2, padx=5, pady=0)
+
+def statback():
+    statbackbutton.grid_forget()
+    sessionbutton.grid(row=0, column=0, padx=5, pady=0)
+    scramblelabel1.grid(row=3, column=0, columnspan=3, padx=5, pady=0)
+    scramblelabel2.grid(row=4, column=0, columnspan=3, padx=5, pady=0)
+    deletebutton.grid(row=5, column=0, padx=5, pady=10)
+    statbutton.grid(row=5, column=1, padx=5, pady=10)
+    nextbutton.grid(row=5, column=2, padx=5, pady=10)
+    startbutton.grid(row=6, column=1, padx=5, pady=10)
+
+    bestao5label.grid_forget()
+    besttimelabel.grid_forget()
+    bestao12label.grid_forget()
+    bestao5numlabel.grid_forget()
+    besttimenumlabel.grid_forget()
+    bestao12numlabel.grid_forget()
 
 def next():
     global scramblevar1, scramblevar2
@@ -148,18 +180,38 @@ def stoptiming():
                     ao12 = math.floor(ao12 / 3 * pow(10, 3)) / pow(10, 3)
                     ao12num.set(ao12)
                     if number == 11:
-                        writer.writerow([number+1, tmp, min(tmp, row1[2]), ao5, min(ao5, rows5[3][4]), ao12, ao12])
+                        bsingle = min(tmp, row1[2])
+                        bao5 = min(ao5, rows5[3][4])
+                        writer.writerow([number+1, tmp, bsingle, ao5, bao5, ao12, ao12])
+                        besttimenum.set(bsingle)
+                        bestao5num.set(bao5)
                     else:
-                        writer.writerow([number+1, tmp, min(tmp, row1[2]), ao5, min(ao5, rows5[3][3]), ao12, min(ao12, rows12[10][5])])
+                        bsingle = min(tmp, row1[2])
+                        bao5 = min(ao5, rows5[3][4])
+                        bao12 = min(ao12, rows12[10][5])
+                        writer.writerow([number+1, tmp, bsingle, ao5, bao5, ao12, bao12])
+                        besttimenum.set(bsingle)
+                        bestao5num.set(bao5)
+                        bestao12num.set(bao12)
                 else:
                     if number == 4:
-                        writer.writerow([number+1, tmp, min(tmp, row1[2]), ao5, ao5, 0, 0])
+                        bsingle = min(tmp, row1[2])
+                        writer.writerow([number+1, tmp, bsingle, ao5, ao5, 0, 0])
+                        besttimenum.set(bsingle)
+                        bestao5num.set(ao5)
                     else:
-                        writer.writerow([number+1, tmp, min(tmp, row1[2]), ao5, min(ao5, rows5[3][3]), 0, 0])
+                        bsingle = min(tmp, row1[2])
+                        bao5 = min(ao5, rows5[3][4])
+                        writer.writerow([number+1, tmp, bsingle, ao5, bao5, 0, 0])
+                        besttimenum.set(bsingle)
+                        bestao5num.set(bao5)
             else:
-                writer.writerow([number+1, tmp, min(tmp, row1[2]), 0, 0, 0, 0])
+                bsingle = min(tmp, row1[2])
+                writer.writerow([number+1, tmp, bsingle, 0, 0, 0, 0])
+                besttimenum.set(bsingle)
         else:
             writer.writerow([number+1, tmp, tmp, 0, 0, 0, 0])
+            besttimenum.set(tmp)
 
 
 
@@ -206,16 +258,13 @@ sessionvar = tk.StringVar(master=root,value=sessions[session])
 sessionlabel = tk.Label(root, textvariable=sessionvar)
 sessionlabel.grid(row=0, column=1, padx=5, pady=0)
 
-ao5 = tk.StringVar(master=root,value="Ao5")
-ao5label = tk.Label(root, textvariable=ao5)
+ao5label = tk.Label(root, text="Ao5")
 ao5label.grid(row=1, column=0, padx=5, pady=0)
 
-timenum = tk.StringVar(master=root,value="Time")
-timelabel = tk.Label(root, textvariable=timenum)
+timelabel = tk.Label(root, text="Single")
 timelabel.grid(row=1, column=1, padx=5, pady=0)
 
-ao12 = tk.StringVar(master=root,value="Ao12")
-ao12label = tk.Label(root, textvariable=ao12)
+ao12label = tk.Label(root, text="Ao12")
 ao12label.grid(row=1, column=2, padx=5, pady=0)
 
 
@@ -232,6 +281,23 @@ ao12numlabel = tk.Label(root, textvariable=ao12num)
 ao12numlabel.grid(row=2, column=2, padx=5, pady=0)
 
 
+bestao5label = tk.Label(root, text="Best Ao5")
+
+besttimelabel = tk.Label(root, text="Best Single")
+
+bestao12label = tk.Label(root, text="Best Ao12")
+
+
+bestao5num = tk.StringVar(master=root,value="-.---")
+bestao5numlabel = tk.Label(root, textvariable=bestao5num)
+
+besttimenum = tk.StringVar(master=root,value="-.---")
+besttimenumlabel = tk.Label(root, textvariable=besttimenum)
+
+bestao12num = tk.StringVar(master=root,value="-.---")
+bestao12numlabel = tk.Label(root, textvariable=bestao12num)
+
+
 scramblevar1 = tk.StringVar(master=root, value=scramble1)
 scramblelabel1 = tk.Label(root, textvariable=scramblevar1)
 scramblelabel1.grid(row=3, column=0, columnspan=3, padx=5, pady=0)
@@ -246,6 +312,8 @@ deletebutton.grid(row=5, column=0, padx=5, pady=10)
 
 statbutton = tk.Button(root, text='  Status  ', command=stat)
 statbutton.grid(row=5, column=1, padx=5, pady=10)
+
+statbackbutton = tk.Button(root, text='   Back   ', command=statback)
 
 nextbutton = tk.Button(root, text='   Next   ', command=next)
 nextbutton.grid(row=5, column=2, padx=5, pady=10)
