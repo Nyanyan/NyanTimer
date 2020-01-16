@@ -14,6 +14,10 @@ def changesession():
     ao12numlabel.grid_forget()
     scramblelabel1.grid_forget()
     scramblelabel2.grid_forget()
+    deletebutton.grid_forget()
+    statbutton.grid_forget()
+    nextbutton.grid_forget()
+    startbutton.grid_forget()
 
 def closechangesession():
     sessionOKbutton.grid_forget()
@@ -27,6 +31,10 @@ def closechangesession():
     ao12numlabel.grid(row=2, column=2, padx=5, pady=0)
     scramblelabel1.grid(row=3, column=0, columnspan=3, padx=5, pady=0)
     scramblelabel2.grid(row=4, column=0, columnspan=3, padx=5, pady=0)
+    deletebutton.grid(row=5, column=0, padx=5, pady=10)
+    statbutton.grid(row=5, column=1, padx=5, pady=10)
+    nextbutton.grid(row=5, column=2, padx=5, pady=10)
+    startbutton.grid(row=5, column=1, padx=5, pady=10)
 
 def delete():
     return 0
@@ -61,6 +69,43 @@ def next():
         scramble2 = ""
     scramblevar1.set(scramble1)
     scramblevar2.set(scramble2)
+
+def timing():
+    sessionbutton.grid_forget()
+    sessionlabel.grid_forget()
+    ao5label.grid_forget()
+    timelabel.grid_forget()
+    ao12label.grid_forget()
+    ao5numlabel.grid_forget()
+    timenumlabel.grid_forget()
+    ao12numlabel.grid_forget()
+    scramblelabel1.grid_forget()
+    scramblelabel2.grid_forget()
+    deletebutton.grid_forget()
+    statbutton.grid_forget()
+    nextbutton.grid_forget()
+    startbutton.grid_forget()
+
+    stopbutton.grid(row=6, column=1, padx=5, pady=10)
+
+def stoptiming():
+    sessionOKbutton.grid_forget()
+    sessionbutton.grid(row=0, column=0, padx=5, pady=0)
+    sessionlabel.grid(row=0, column=1, padx=5, pady=0)
+    ao5label.grid(row=1, column=0, padx=5, pady=0)
+    timelabel.grid(row=1, column=1, padx=5, pady=0)
+    ao12label.grid(row=1, column=2, padx=5, pady=0)
+    ao5numlabel.grid(row=2, column=0, padx=5, pady=0)
+    timenumlabel.grid(row=2, column=1, padx=5, pady=0)
+    ao12numlabel.grid(row=2, column=2, padx=5, pady=0)
+    scramblelabel1.grid(row=3, column=0, columnspan=3, padx=5, pady=0)
+    scramblelabel2.grid(row=4, column=0, columnspan=3, padx=5, pady=0)
+    deletebutton.grid(row=5, column=0, padx=5, pady=10)
+    statbutton.grid(row=5, column=1, padx=5, pady=10)
+    nextbutton.grid(row=5, column=2, padx=5, pady=10)
+    startbutton.grid(row=6, column=1, padx=5, pady=10)
+
+    stopbutton.grid_forget()
 
 root= tk.Tk()
 root.geometry('320x240')
@@ -130,6 +175,11 @@ statbutton.grid(row=5, column=1, padx=5, pady=10)
 
 nextbutton = tk.Button(root, text='   Next   ', command=next)
 nextbutton.grid(row=5, column=2, padx=5, pady=10)
+
+startbutton = tk.Button(root, text='  Start  ', command=timing)
+startbutton.grid(row=6, column=1, padx=5, pady=10)
+
+stopbutton = tk.Button(root, text='  Stop  ', command=stoptiming)
 
 
 root.mainloop()
