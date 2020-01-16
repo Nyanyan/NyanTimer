@@ -226,9 +226,10 @@ def stoptiming():
                             times50.append(rows50[i][1])
                         times50.append(tmp)
                         times50.sort()
-                        for i in range(1, 49):
+                        ex = 3
+                        for i in range(ex, 50 - ex):
                             ao50 += times50[i]
-                        ao50 = math.floor(ao50 / 48 * pow(10, 3)) / pow(10, 3)
+                        ao50 = math.floor(ao50 / (50 - 2 * ex) * pow(10, 3)) / pow(10, 3)
                         ao50num.set(ao50)
 
                         if number >= 99:
@@ -238,9 +239,10 @@ def stoptiming():
                                 times100.append(rows100[i][1])
                             times100.append(tmp)
                             times100.sort()
-                            for i in range(1, 99):
+                            ex = 5
+                            for i in range(ex, 100 - ex):
                                 ao100 += times100[i]
-                            ao100 = math.floor(ao100 / 98 * pow(10, 3)) / pow(10, 3)
+                            ao100 = math.floor(ao100 / (100 - ex * 2) * pow(10, 3)) / pow(10, 3)
                             ao100num.set(ao100)
 
                             if number >= 999:
@@ -250,9 +252,10 @@ def stoptiming():
                                     times1000.append(rows1000[i][1])
                                 times1000.append(tmp)
                                 times1000.sort()
-                                for i in range(1, 999):
+                                ex = 50
+                                for i in range(ex, 1000 - ex):
                                     ao1000 += times1000[i]
-                                ao1000 = math.floor(ao1000 / 998 * pow(10, 3)) / pow(10, 3)
+                                ao1000 = math.floor(ao1000 / (1000 - ex * 2) * pow(10, 3)) / pow(10, 3)
                                 ao1000num.set(ao1000)
 
                                 if number == 999:
@@ -336,6 +339,7 @@ def stoptiming():
                             writer.writerow([number+1, tmp, bsingle, ao5, bao5, ao12, ao12, 0, 0, 0, 0, 0, 0])
                             besttimenum.set(bsingle)
                             bestao5num.set(bao5)
+                            bestao12num.set(ao12)
                         else:
                             bsingle = min(tmp, row1[2])
                             bao5 = min(ao5, row1[4])
