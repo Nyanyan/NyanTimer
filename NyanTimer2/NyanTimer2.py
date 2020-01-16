@@ -52,6 +52,7 @@ def delete():
         writer = csv.writer(f, lineterminator='\n')
         for i in range(len(rows) - 1):
             writer.writerow(rows[i])
+    calctime()
 
 def stat():
     sessionbutton.grid_forget()
@@ -181,7 +182,7 @@ def stoptiming():
     rows1000 = []
     rows = numpy.asarray(pd.read_csv('data'+sessions[session] + '.csv', header=0))
     number = len(rows)
-    print(number)
+    #print(number)
     if number >= 1:
         #f = open('data'+sessions[session] + '.csv', 'r')
         #f.close()
@@ -396,6 +397,32 @@ def stoptiming():
     startbutton.grid(row=6, column=1, padx=5, pady=10)
 
     stopbutton.grid_forget()
+    next()
+
+def calctime():
+    rows = numpy.asarray(pd.read_csv('data'+sessions[session] + '.csv', header=0))
+    number = len(rows)
+    if number > 0:
+        row = rows[number - 1]
+        for i in range(number):
+            row[i] = round(row[i], 3)
+        timenum.set(row[1])
+        besttimenum.set(row[2])
+        if row[3] != 0:
+            ao5num.set(row[3])
+            bestao5num.set(row[4])
+        if row[5] != 0:
+            ao12num.set(row[5])
+            bestao12num.set(row[6])
+        if row[7] != 0:
+            ao50num.set(row[7])
+            bestao50num.set(row[8])
+        if row[9] != 0:
+            ao100num.set(row[9])
+            bestao100num.set(row[10])
+        if row[11] != 0:
+            ao1000num.set(row[11])
+            bestao1000num.set(row[12])
 
 root= tk.Tk()
 root.geometry('320x240')
@@ -523,6 +550,10 @@ startbutton = tk.Button(root, text='  Start  ', command=timing)
 startbutton.grid(row=6, column=1, padx=5, pady=10)
 
 stopbutton = tk.Button(root, text='  Stop  ', command=stoptiming)
+
+
+next()
+calctime()
 
 
 root.columnconfigure(0, weight=1, uniform='group1')
