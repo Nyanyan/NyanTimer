@@ -104,53 +104,62 @@ def stoptiming():
     timenum.set(str(tmp))
     
     number = 0
+    row1 = []
     rows5 = []
     rows12 = []
-    with open('data.csv', mode='r') as f:
+    with open('data'+sessions[session] + '.csv', mode='r') as f:
         number = sum([1 for _ in f])
-    if number >= 4:
-        f = open('data.csv', 'r')
+    if number >= 1:
+        f = open('data'+sessions[session] + '.csv', 'r')
         rows = numpy.loadtxt(f, delimiter=',')
+        #print(rows)
         f.close()
-        rows5 = rows[number - 4:]
-        if number >= 11:
-            rows12 = rows[number - 11:]
-    #print(rows)
-    with open('data.csv', mode='a') as f:
-        writer = csv.writer(f, lineterminator='\n')
-        if number >= 4:
-            ao5 = 0
-            times5 = []
-            for i in range(4):
-                times5.append(rows5[i][1])
-            times5.append(tmp)
-            times5.sort()
-            for i in range(1, 4):
-                ao5 += times5[i]
-            ao5 = math.floor(ao5 / 3 * pow(10, 3)) / pow(10, 3)
-            ao5num.set(ao5)
-            if number >= 11:
-                ao12 = 0
-                times12 = []
-                for i in range(4):
-                    times12.append(rows12[i][1])
-                times12.append(tmp)
-                times12.sort()
-                for i in range(1, 4):
-                    ao12 += times12[i]
-                ao12 = math.floor(ao12 / 3 * pow(10, 3)) / pow(10, 3)
-                ao12num.set(ao12)
-                if number == 11:
-                    writer.writerow([number+1, tmp, ao5, min(ao5, rows5[3][3]), ao12, ao12])
-                else:
-                    writer.writerow([number+1, tmp, ao5, min(ao5, rows5[3][3]), ao12, min(ao12, rows12[10][5])])
-            else:
-                if number == 4:
-                    writer.writerow([number+1, tmp, ao5, ao5, 0, 0])
-                else:
-                    writer.writerow([number+1, tmp, ao5, min(ao5, rows5[3][3]), 0, 0])
+        if number == 1:
+            row1 = [rows]
         else:
-            writer.writerow([number+1, tmp, 0, 0, 0, 0])
+            row1 = rows[number - 1]
+        if number >= 4:
+            rows5 = rows[number - 4:]
+            if number >= 11:
+                rows12 = rows[number - 11:]
+    with open('data'+sessions[session] + '.csv', mode='a') as f:
+        writer = csv.writer(f, lineterminator='\n')
+        if number >= 1:
+            if number >= 4:
+                ao5 = 0
+                times5 = []
+                for i in range(4):
+                    times5.append(rows5[i][1])
+                times5.append(tmp)
+                times5.sort()
+                for i in range(1, 4):
+                    ao5 += times5[i]
+                ao5 = math.floor(ao5 / 3 * pow(10, 3)) / pow(10, 3)
+                ao5num.set(ao5)
+                if number >= 11:
+                    ao12 = 0
+                    times12 = []
+                    for i in range(4):
+                        times12.append(rows12[i][1])
+                    times12.append(tmp)
+                    times12.sort()
+                    for i in range(1, 4):
+                        ao12 += times12[i]
+                    ao12 = math.floor(ao12 / 3 * pow(10, 3)) / pow(10, 3)
+                    ao12num.set(ao12)
+                    if number == 11:
+                        writer.writerow([number+1, tmp, min(tmp, row1[2]), ao5, min(ao5, rows5[3][4]), ao12, ao12])
+                    else:
+                        writer.writerow([number+1, tmp, min(tmp, row1[2]), ao5, min(ao5, rows5[3][3]), ao12, min(ao12, rows12[10][5])])
+                else:
+                    if number == 4:
+                        writer.writerow([number+1, tmp, min(tmp, row1[2]), ao5, ao5, 0, 0])
+                    else:
+                        writer.writerow([number+1, tmp, min(tmp, row1[2]), ao5, min(ao5, rows5[3][3]), 0, 0])
+            else:
+                writer.writerow([number+1, tmp, min(tmp, row1[2]), 0, 0, 0, 0])
+        else:
+            writer.writerow([number+1, tmp, tmp, 0, 0, 0, 0])
 
 
 
