@@ -2,6 +2,7 @@ import tkinter as tk
 #import RPi.GPIO as GPIO
 import random
 import time
+import csv
 
 def changesession():
     sessionOKbutton.grid(row=0, column=0, padx=5, pady=0)
@@ -96,7 +97,16 @@ def timing():
 def stoptiming():
     stoptime = time.time()
     print(stoptime)
-    timenum.set(str(round(stoptime - starttime, 3)))
+    tmp = round(stoptime - starttime, 3)
+    timenum.set(str(tmp))
+    
+    with open('data.csv', mode='r') as f:
+        number = sum([1 for _ in f]) + 1
+        f.close()
+    with open('data.csv', mode='w') as f:
+        writer = csv.writer(f)
+        writer.writerow([number, tmp])
+        f.close()
 
     sessionOKbutton.grid_forget()
     sessionbutton.grid(row=0, column=0, padx=5, pady=0)
