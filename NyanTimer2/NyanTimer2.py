@@ -3,7 +3,30 @@ import tkinter as tk
 import random
 
 def changesession():
-    return 0
+    sessionOKbutton.grid(row=0, column=0, padx=5, pady=0)
+    sessionbutton.grid_forget()
+    sessionlabel.grid_forget()
+    ao5label.grid_forget()
+    timelabel.grid_forget()
+    ao12label.grid_forget()
+    ao5numlabel.grid_forget()
+    timenumlabel.grid_forget()
+    ao12numlabel.grid_forget()
+    scramblelabel1.grid_forget()
+    scramblelabel2.grid_forget()
+
+def closechangesession():
+    sessionOKbutton.grid_forget()
+    sessionbutton.grid(row=0, column=0, padx=5, pady=0)
+    sessionlabel.grid(row=0, column=1, padx=5, pady=0)
+    ao5label.grid(row=1, column=0, padx=5, pady=0)
+    timelabel.grid(row=1, column=1, padx=5, pady=0)
+    ao12label.grid(row=1, column=2, padx=5, pady=0)
+    ao5numlabel.grid(row=2, column=0, padx=5, pady=0)
+    timenumlabel.grid(row=2, column=1, padx=5, pady=0)
+    ao12numlabel.grid(row=2, column=2, padx=5, pady=0)
+    scramblelabel1.grid(row=3, column=0, columnspan=3, padx=5, pady=0)
+    scramblelabel2.grid(row=4, column=0, columnspan=3, padx=5, pady=0)
 
 root= tk.Tk()
 root.geometry('320x240')
@@ -24,7 +47,6 @@ for i in range(scramblenums[session]):
     add = adds[random.randint(0, 2)]
     scramble += rot + add + ' '
     pre = rot
-print(scramble)
 if len(scramble) > 50:
     scramble1 = scramble[:50]
     scramble2 = scramble[50:]
@@ -36,6 +58,8 @@ else:
 
 sessionbutton = tk.Button(root, text='Session', command=changesession)
 sessionbutton.grid(row=0, column=0, padx=5, pady=0)
+
+sessionOKbutton = tk.Button(root, text='  OK  ', command=closechangesession)
 
 sessionvar = tk.StringVar(master=root,value=sessions[session])
 sessionlabel = tk.Label(root, textvariable=sessionvar)
