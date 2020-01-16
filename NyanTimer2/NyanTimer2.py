@@ -28,6 +28,37 @@ def closechangesession():
     scramblelabel1.grid(row=3, column=0, columnspan=3, padx=5, pady=0)
     scramblelabel2.grid(row=4, column=0, columnspan=3, padx=5, pady=0)
 
+def delete():
+    return 0
+
+def stat():
+    return 0
+
+def next():
+    global scramblevar1, scramblevar2
+    scramble = ""
+    scramble1 = ""
+    scramble2 = ""
+    pre = ""
+    rotation = 0
+    rotations = [['R', 'L', 'U', 'D', 'F', 'B'], ['R', 'L', 'U', 'D', 'F', 'B', 'Rw', 'Lw', 'Uw', 'Dw', 'Fw', 'Bw']]
+    adds = ['', '\'', '2']
+    for i in range(scramblenums[session]):
+        rot = rotations[rotation][random.randint(0, len(rotations[rotation]) - 1)]
+        while pre == rot:
+            rot = rotations[rotation][random.randint(0, len(rotations[rotation]) - 1)]
+        add = adds[random.randint(0, 2)]
+        scramble += rot + add + ' '
+        pre = rot
+    if len(scramble) > 40:
+        scramble1 = scramble[:40]
+        scramble2 = scramble[40:]
+    else:
+        scramble1 = scramble
+        scramble2 = ""
+    scramblevar1.set(scramble1)
+    scramblevar2.set(scramble2)
+
 root= tk.Tk()
 root.geometry('320x240')
 
@@ -35,24 +66,9 @@ sessions = ['3x3', '2x2', '4x4', '5x5', '6x6', '7x7', '3BLD', '3OH', 'Clock', 'M
 scramblenums = [25]
 session = 0
 
-scramble = ""
-pre = ""
-rotation = 0
-rotations = [['R', 'L', 'U', 'D', 'F', 'B'], ['R', 'L', 'U', 'D', 'F', 'B', 'Rw', 'Lw', 'Uw', 'Dw', 'Fw', 'Bw']]
-adds = ['', '\'', '2']
-for i in range(scramblenums[session]):
-    rot = rotations[rotation][random.randint(0, len(rotations[rotation]) - 1)]
-    while pre == rot:
-        rot = rotations[rotation][random.randint(0, len(rotations[rotation]) - 1)]
-    add = adds[random.randint(0, 2)]
-    scramble += rot + add + ' '
-    pre = rot
-if len(scramble) > 50:
-    scramble1 = scramble[:50]
-    scramble2 = scramble[50:]
-else:
-    scramble1 = scramble
-    scramble2 = ""
+scramble1 = ""
+scramble2 = ""
+
 
 
 
@@ -102,6 +118,15 @@ scramblelabel2.grid(row=4, column=0, columnspan=3, padx=5, pady=0)
 root.columnconfigure(0, weight=1, uniform='group1')
 root.columnconfigure(1, weight=1, uniform='group1')
 root.columnconfigure(2, weight=1, uniform='group1')
+
+deletebutton = tk.Button(root, text='  Delete  ', command=delete)
+deletebutton.grid(row=5, column=0, padx=5, pady=10)
+
+statbutton = tk.Button(root, text='  Status  ', command=stat)
+statbutton.grid(row=5, column=1, padx=5, pady=10)
+
+nextbutton = tk.Button(root, text='   Next   ', command=next)
+nextbutton.grid(row=5, column=2, padx=5, pady=10)
 
 
 root.mainloop()
