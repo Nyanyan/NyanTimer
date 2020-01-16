@@ -3,6 +3,7 @@ import tkinter as tk
 import random
 import time
 import csv
+import numpy
 
 def changesession():
     sessionOKbutton.grid(row=0, column=0, padx=5, pady=0)
@@ -100,13 +101,33 @@ def stoptiming():
     tmp = round(stoptime - starttime, 3)
     timenum.set(str(tmp))
     
+    avg = 10000000000
+    bestavg = 10000000000
+    number = 0
+    rows = []
     with open('data.csv', mode='r') as f:
-        number = sum([1 for _ in f]) + 1
+        number = sum([1 for _ in f])
+    if number >= 4:
+        f = open('data.csv', 'r')
+        rows = numpy.loadtxt(f, delimiter=',')[number - 4:]
         f.close()
-    with open('data.csv', mode='w') as f:
-        writer = csv.writer(f)
-        writer.writerow([number, tmp])
-        f.close()
+    print(rows)
+    with open('data.csv', mode='a') as f:
+        writer = csv.writer(f, lineterminator='\n')
+        if number <= 3:
+            writer.writerow([number+1, tmp, 0, 0])
+        else:
+            avg = 0
+            for i in range(4):
+                avg += rows[i][1]
+            avg += tmp
+            avg = round(avg / 5, 3)
+            if number == 4:
+                writer.writerow([number+1, tmp, avg, avg])
+            else:
+                writer.writerow([number+1, tmp, avg, min(avg, rows[3][3])])
+
+
 
     sessionOKbutton.grid_forget()
     sessionbutton.grid(row=0, column=0, padx=5, pady=0)
