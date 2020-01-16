@@ -167,6 +167,9 @@ def stoptiming():
     row1 = []
     rows5 = []
     rows12 = []
+    rows50 = []
+    rows100 = []
+    rows1000 = []
     with open('data'+sessions[session] + '.csv', mode='r') as f:
         number = sum([1 for _ in f])
     if number >= 1:
@@ -175,16 +178,23 @@ def stoptiming():
         #print(rows)
         f.close()
         if number == 1:
-            row1 = [rows]
+            row1 = rows
         else:
             row1 = rows[number - 1]
         if number >= 4:
             rows5 = rows[number - 4:]
             if number >= 11:
                 rows12 = rows[number - 11:]
+                if number >= 49:
+                    rows50 = rows[number - 49:]
+                    if number >= 99:
+                        rows100 = rows[number - 99:]
+                        if number >= 999:
+                            rows1000 = rows[number - 999:]
     with open('data'+sessions[session] + '.csv', mode='a') as f:
         writer = csv.writer(f, lineterminator='\n')
         if number >= 1:
+
             if number >= 4:
                 ao5 = 0
                 times5 = []
@@ -196,49 +206,165 @@ def stoptiming():
                     ao5 += times5[i]
                 ao5 = math.floor(ao5 / 3 * pow(10, 3)) / pow(10, 3)
                 ao5num.set(ao5)
+
                 if number >= 11:
                     ao12 = 0
                     times12 = []
-                    for i in range(4):
+                    for i in range(11):
                         times12.append(rows12[i][1])
                     times12.append(tmp)
                     times12.sort()
-                    for i in range(1, 4):
+                    for i in range(1, 11):
                         ao12 += times12[i]
-                    ao12 = math.floor(ao12 / 3 * pow(10, 3)) / pow(10, 3)
+                    ao12 = math.floor(ao12 / 10 * pow(10, 3)) / pow(10, 3)
                     ao12num.set(ao12)
-                    if number == 11:
-                        bsingle = min(tmp, row1[2])
-                        bao5 = min(ao5, rows5[3][4])
-                        writer.writerow([number+1, tmp, bsingle, ao5, bao5, ao12, ao12])
-                        besttimenum.set(bsingle)
-                        bestao5num.set(bao5)
+
+                    if number >= 49:
+                        ao50 = 0
+                        times50 = []
+                        for i in range(49):
+                            times50.append(rows50[i][1])
+                        times50.append(tmp)
+                        times50.sort()
+                        for i in range(1, 49):
+                            ao50 += times50[i]
+                        ao50 = math.floor(ao50 / 48 * pow(10, 3)) / pow(10, 3)
+                        ao50num.set(ao50)
+
+                        if number >= 99:
+                            ao100 = 0
+                            times100 = []
+                            for i in range(99):
+                                times100.append(rows100[i][1])
+                            times100.append(tmp)
+                            times100.sort()
+                            for i in range(1, 99):
+                                ao100 += times100[i]
+                            ao100 = math.floor(ao100 / 98 * pow(10, 3)) / pow(10, 3)
+                            ao100num.set(ao100)
+
+                            if number >= 999:
+                                ao1000 = 0
+                                times1000 = []
+                                for i in range(999):
+                                    times1000.append(rows1000[i][1])
+                                times1000.append(tmp)
+                                times1000.sort()
+                                for i in range(1, 999):
+                                    ao1000 += times1000[i]
+                                ao1000 = math.floor(ao1000 / 998 * pow(10, 3)) / pow(10, 3)
+                                ao1000num.set(ao1000)
+
+                                if number == 999:
+                                    bsingle = min(tmp, row1[2])
+                                    bao5 = min(ao5, row1[4])
+                                    bao12 = min(ao12, row1[6])
+                                    bao50 = min(ao50, row1[8])
+                                    bao100 = min(ao100, row1[10])
+                                    writer.writerow([number+1, tmp, bsingle, ao5, bao5, ao12, bao12, ao50, bao50, ao100, bao100, ao1000, ao1000])
+                                    besttimenum.set(bsingle)
+                                    bestao5num.set(bao5)
+                                    bestao12num.set(bao12)
+                                    bestao50num.set(bao50)
+                                    bestao100num.set(bao100)
+                                    bestao1000num.set(ao1000)
+                                else:
+                                    bsingle = min(tmp, row1[2])
+                                    bao5 = min(ao5, row1[4])
+                                    bao12 = min(ao12, row1[6])
+                                    bao50 = min(ao50, row1[8])
+                                    bao100 = min(ao100, row1[10])
+                                    bao1000 = min(ao1000, row1[12])
+                                    writer.writerow([number+1, tmp, bsingle, ao5, bao5, ao12, bao12, ao50, bao50, ao100, bao100, ao1000, bao1000])
+                                    besttimenum.set(bsingle)
+                                    bestao5num.set(bao5)
+                                    bestao12num.set(bao12)
+                                    bestao50num.set(bao50)
+                                    bestao100num.set(bao100)
+                                    bestao1000num.set(bao1000)
+                        
+                            else:
+                                if number == 99:
+                                    bsingle = min(tmp, row1[2])
+                                    bao5 = min(ao5, row1[4])
+                                    bao12 = min(ao12, row1[6])
+                                    bao50 = min(ao50, row1[8])
+                                    writer.writerow([number+1, tmp, bsingle, ao5, bao5, ao12, bao12, ao50, bao50, ao100, ao100, 0, 0])
+                                    besttimenum.set(bsingle)
+                                    bestao5num.set(bao5)
+                                    bestao12num.set(bao12)
+                                    bestao50num.set(bao50)
+                                    bestao100num.set(ao100)
+                                else:
+                                    bsingle = min(tmp, row1[2])
+                                    bao5 = min(ao5, row1[4])
+                                    bao12 = min(ao12, row1[6])
+                                    bao50 = min(ao50, row1[8])
+                                    bao100 = min(ao100, row1[10])
+                                    writer.writerow([number+1, tmp, bsingle, ao5, bao5, ao12, bao12, ao50, bao50, ao100, bao100, 0, 0])
+                                    besttimenum.set(bsingle)
+                                    bestao5num.set(bao5)
+                                    bestao12num.set(bao12)
+                                    bestao50num.set(bao50)
+                                    bestao100num.set(bao100)
+
+                        else:
+                            if number == 49:
+                                bsingle = min(tmp, row1[2])
+                                bao5 = min(ao5, row1[4])
+                                bao12 = min(ao12, row1[6])
+                                writer.writerow([number+1, tmp, bsingle, ao5, bao5, ao12, bao12, ao50, ao50, 0, 0, 0, 0])
+                                besttimenum.set(bsingle)
+                                bestao5num.set(bao5)
+                                bestao12num.set(bao12)
+                                bestao50num.set(ao50)
+                            else:
+                                bsingle = min(tmp, row1[2])
+                                bao5 = min(ao5, row1[4])
+                                bao12 = min(ao12, row1[6])
+                                bao50 = min(ao50, row1[8])
+                                writer.writerow([number+1, tmp, bsingle, ao5, bao5, ao12, bao12, ao50, bao50, 0, 0, 0, 0])
+                                besttimenum.set(bsingle)
+                                bestao5num.set(bao5)
+                                bestao12num.set(bao12)
+                                bestao50num.set(bao50)
+
                     else:
-                        bsingle = min(tmp, row1[2])
-                        bao5 = min(ao5, rows5[3][4])
-                        bao12 = min(ao12, rows12[10][5])
-                        writer.writerow([number+1, tmp, bsingle, ao5, bao5, ao12, bao12])
-                        besttimenum.set(bsingle)
-                        bestao5num.set(bao5)
-                        bestao12num.set(bao12)
+                        if number == 11:
+                            bsingle = min(tmp, row1[2])
+                            bao5 = min(ao5, row1[4])
+                            writer.writerow([number+1, tmp, bsingle, ao5, bao5, ao12, ao12, 0, 0, 0, 0, 0, 0])
+                            besttimenum.set(bsingle)
+                            bestao5num.set(bao5)
+                        else:
+                            bsingle = min(tmp, row1[2])
+                            bao5 = min(ao5, row1[4])
+                            bao12 = min(ao12, row1[6])
+                            writer.writerow([number+1, tmp, bsingle, ao5, bao5, ao12, bao12, 0, 0, 0, 0, 0, 0])
+                            besttimenum.set(bsingle)
+                            bestao5num.set(bao5)
+                            bestao12num.set(bao12)
+
                 else:
                     if number == 4:
                         bsingle = min(tmp, row1[2])
-                        writer.writerow([number+1, tmp, bsingle, ao5, ao5, 0, 0])
+                        writer.writerow([number+1, tmp, bsingle, ao5, ao5, 0, 0, 0, 0, 0, 0, 0, 0])
                         besttimenum.set(bsingle)
                         bestao5num.set(ao5)
                     else:
                         bsingle = min(tmp, row1[2])
                         bao5 = min(ao5, rows5[3][4])
-                        writer.writerow([number+1, tmp, bsingle, ao5, bao5, 0, 0])
+                        writer.writerow([number+1, tmp, bsingle, ao5, bao5, 0, 0, 0, 0, 0, 0, 0, 0])
                         besttimenum.set(bsingle)
                         bestao5num.set(bao5)
+
             else:
                 bsingle = min(tmp, row1[2])
-                writer.writerow([number+1, tmp, bsingle, 0, 0, 0, 0])
+                writer.writerow([number+1, tmp, bsingle, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
                 besttimenum.set(bsingle)
+
         else:
-            writer.writerow([number+1, tmp, tmp, 0, 0, 0, 0])
+            writer.writerow([number+1, tmp, tmp, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
             besttimenum.set(tmp)
 
 
