@@ -4,6 +4,7 @@ import random
 import time
 import csv
 import numpy
+import math
 
 def changesession():
     sessionOKbutton.grid(row=0, column=0, padx=5, pady=0)
@@ -76,7 +77,7 @@ def next():
 def timing():
     global starttime
     starttime = time.time()
-    print(starttime)
+    #print(starttime)
 
     sessionbutton.grid_forget()
     sessionlabel.grid_forget()
@@ -97,35 +98,62 @@ def timing():
 
 def stoptiming():
     stoptime = time.time()
-    print(stoptime)
-    tmp = round(stoptime - starttime, 3)
+    #print(stoptime)
+    tmp = math.floor((stoptime - starttime) * pow(10,3)) / pow(10, 3)
+    print(tmp)
     timenum.set(str(tmp))
     
     avg = 10000000000
     bestavg = 10000000000
     number = 0
-    rows = []
+    rows5 = []
+    rows12 = []
     with open('data.csv', mode='r') as f:
         number = sum([1 for _ in f])
     if number >= 4:
         f = open('data.csv', 'r')
-        rows = numpy.loadtxt(f, delimiter=',')[number - 4:]
+        rows = numpy.loadtxt(f, delimiter=',')
         f.close()
-    print(rows)
+        rows5 = rows[number - 4:]
+        if number >= 11:
+            rows12 = rows[number - 11:]
+    #print(rows)
     with open('data.csv', mode='a') as f:
         writer = csv.writer(f, lineterminator='\n')
-        if number <= 3:
-            writer.writerow([number+1, tmp, 0, 0])
-        else:
-            avg = 0
+        if number >= 4:
+            ao5 = 0
+            times5 = []
             for i in range(4):
-                avg += rows[i][1]
-            avg += tmp
-            avg = round(avg / 5, 3)
-            if number == 4:
-                writer.writerow([number+1, tmp, avg, avg])
+                times5.append(rows5[i][1])
+            times5.append(tmp)
+            times5.sort()
+            for i in range(1, 4):
+                ao5 += times5[i]
+            ao5 = math.floor(ao5 / 3 * pow(10, 3)) / pow(10, 3)
+            ao5num.set(ao5)
+            if number >= 11:
+                ao12 = 0
+                times12 = []
+                for i in range(4):
+                    times12.append(rows12[i][1])
+                times12.append(tmp)
+                times12.sort()
+                for i in range(1, 4):
+                    ao12 += times12[i]
+                ao12 = math.floor(ao12 / 3 * pow(10, 3)) / pow(10, 3)
+                ao12num.set(ao12)
+                if number == 11:
+                    writer.writerow([number+1, tmp, ao5, min(ao5, rows5[3][3]), ao12, ao12])
+                else:
+                    writer.writerow([number+1, tmp, ao5, min(ao5, rows5[3][3]), ao12, min(ao12, rows12[10][5])])
             else:
-                writer.writerow([number+1, tmp, avg, min(avg, rows[3][3])])
+                if number == 4:
+                    writer.writerow([number+1, tmp, ao5, ao5, 0, 0])
+                else:
+                    writer.writerow([number+1, tmp, ao5, min(ao5, rows5[3][3]), 0, 0])
+        else:
+            writer.writerow([number+1, tmp, 0, 0, 0, 0])
+
 
 
 
