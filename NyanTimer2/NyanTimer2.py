@@ -103,8 +103,6 @@ def stoptiming():
     print(tmp)
     timenum.set(str(tmp))
     
-    avg = 10000000000
-    bestavg = 10000000000
     number = 0
     rows5 = []
     rows12 = []
