@@ -54,12 +54,26 @@ def stat():
 
     statbackbutton.grid(row=0, column=0, padx=5, pady=0)
 
-    bestao5label.grid(row=3, column=0, padx=5, pady=0)
-    besttimelabel.grid(row=3, column=1, padx=5, pady=0)
-    bestao12label.grid(row=3, column=2, padx=5, pady=0)
-    bestao5numlabel.grid(row=4, column=0, padx=5, pady=0)
-    besttimenumlabel.grid(row=4, column=1, padx=5, pady=0)
-    bestao12numlabel.grid(row=4, column=2, padx=5, pady=0)
+    ao50label.grid(row=3, column=0, padx=5, pady=0)
+    ao100label.grid(row=3, column=1, padx=5, pady=0)
+    ao1000label.grid(row=3, column=2, padx=5, pady=0)
+    ao50numlabel.grid(row=4, column=0, padx=5, pady=0)
+    ao100numlabel.grid(row=4, column=1, padx=5, pady=0)
+    ao1000numlabel.grid(row=4, column=2, padx=5, pady=0)
+
+    bestao5label.grid(row=5, column=0, padx=5, pady=0)
+    besttimelabel.grid(row=5, column=1, padx=5, pady=0)
+    bestao12label.grid(row=5, column=2, padx=5, pady=0)
+    bestao5numlabel.grid(row=6, column=0, padx=5, pady=0)
+    besttimenumlabel.grid(row=6, column=1, padx=5, pady=0)
+    bestao12numlabel.grid(row=6, column=2, padx=5, pady=0)
+
+    bestao50label.grid(row=7, column=0, padx=5, pady=0)
+    bestao100label.grid(row=7, column=1, padx=5, pady=0)
+    bestao1000label.grid(row=7, column=2, padx=5, pady=0)
+    bestao50numlabel.grid(row=8, column=0, padx=5, pady=0)
+    bestao100numlabel.grid(row=8, column=1, padx=5, pady=0)
+    bestao1000numlabel.grid(row=8, column=2, padx=5, pady=0)
 
 def statback():
     statbackbutton.grid_forget()
@@ -71,12 +85,26 @@ def statback():
     nextbutton.grid(row=5, column=2, padx=5, pady=10)
     startbutton.grid(row=6, column=1, padx=5, pady=10)
 
+    ao50label.grid_forget()
+    ao100label.grid_forget()
+    ao1000label.grid_forget()
+    ao50numlabel.grid_forget()
+    ao100numlabel.grid_forget()
+    ao1000numlabel.grid_forget()
+
     bestao5label.grid_forget()
     besttimelabel.grid_forget()
     bestao12label.grid_forget()
     bestao5numlabel.grid_forget()
     besttimenumlabel.grid_forget()
     bestao12numlabel.grid_forget()
+
+    bestao50label.grid_forget()
+    bestao100label.grid_forget()
+    bestao1000label.grid_forget()
+    bestao50numlabel.grid_forget()
+    bestao100numlabel.grid_forget()
+    bestao1000numlabel.grid_forget()
 
 def next():
     global scramblevar1, scramblevar2
@@ -267,6 +295,12 @@ timelabel.grid(row=1, column=1, padx=5, pady=0)
 ao12label = tk.Label(root, text="Ao12")
 ao12label.grid(row=1, column=2, padx=5, pady=0)
 
+ao50label = tk.Label(root, text="Ao50")
+
+ao100label = tk.Label(root, text="Ao100")
+
+ao1000label = tk.Label(root, text="Ao1000")
+
 
 ao5num = tk.StringVar(master=root,value="-.---")
 ao5numlabel = tk.Label(root, textvariable=ao5num)
@@ -280,12 +314,27 @@ ao12num = tk.StringVar(master=root,value="-.---")
 ao12numlabel = tk.Label(root, textvariable=ao12num)
 ao12numlabel.grid(row=2, column=2, padx=5, pady=0)
 
+ao50num = tk.StringVar(master=root,value="-.---")
+ao50numlabel = tk.Label(root, textvariable=ao50num)
+
+ao100num = tk.StringVar(master=root,value="-.---")
+ao100numlabel = tk.Label(root, textvariable=ao100num)
+
+ao1000num = tk.StringVar(master=root,value="-.---")
+ao1000numlabel = tk.Label(root, textvariable=ao1000num)
+
 
 bestao5label = tk.Label(root, text="Best Ao5")
 
 besttimelabel = tk.Label(root, text="Best Single")
 
 bestao12label = tk.Label(root, text="Best Ao12")
+
+bestao50label = tk.Label(root, text="Best Ao50")
+
+bestao100label = tk.Label(root, text="Best Ao100")
+
+bestao1000label = tk.Label(root, text="Best Ao1000")
 
 
 bestao5num = tk.StringVar(master=root,value="-.---")
@@ -296,6 +345,15 @@ besttimenumlabel = tk.Label(root, textvariable=besttimenum)
 
 bestao12num = tk.StringVar(master=root,value="-.---")
 bestao12numlabel = tk.Label(root, textvariable=bestao12num)
+
+bestao50num = tk.StringVar(master=root,value="-.---")
+bestao50numlabel = tk.Label(root, textvariable=bestao50num)
+
+bestao100num = tk.StringVar(master=root,value="-.---")
+bestao100numlabel = tk.Label(root, textvariable=bestao100num)
+
+bestao1000num = tk.StringVar(master=root,value="-.---")
+bestao1000numlabel = tk.Label(root, textvariable=bestao1000num)
 
 
 scramblevar1 = tk.StringVar(master=root, value=scramble1)
