@@ -6,6 +6,7 @@ import csv
 import numpy
 import math
 import os
+import pandas as pd
 
 def changesession():
     sessionOKbutton.grid(row=0, column=0, padx=5, pady=0)
@@ -42,7 +43,15 @@ def closechangesession():
     startbutton.grid(row=6, column=1, padx=5, pady=10)
 
 def delete():
-    return 0
+    rows = numpy.asarray(pd.read_csv('data'+sessions[session] + '.csv',header=0))
+    print(rows)
+    with open('data'+sessions[session] + '.csv', mode='w') as f:
+        writer = csv.writer(f, lineterminator='\n')
+        writer.writerow(['Number', 'Single', 'Best Single', 'Ao5', 'Best Ao5', 'Ao12', 'Best Ao12', 'Ao50', 'Best Ao50', 'Ao100', 'Best Ao100', 'Ao1000', 'Best'])
+    with open('data'+sessions[session] + '.csv', mode='a') as f:
+        writer = csv.writer(f, lineterminator='\n')
+        for i in range(len(rows) - 1):
+            writer.writerow(rows[i])
 
 def stat():
     sessionbutton.grid_forget()
@@ -163,23 +172,21 @@ def stoptiming():
     tmp = math.floor((stoptime - starttime) * pow(10,3)) / pow(10, 3)
     print(tmp)
     timenum.set(str(tmp))
-    
-    number = 0
+
     row1 = []
     rows5 = []
     rows12 = []
     rows50 = []
     rows100 = []
     rows1000 = []
-    with open('data'+sessions[session] + '.csv', mode='r') as f:
-        number = sum([1 for _ in f])
+    rows = numpy.asarray(pd.read_csv('data'+sessions[session] + '.csv', header=0))
+    number = len(rows)
+    print(number)
     if number >= 1:
-        f = open('data'+sessions[session] + '.csv', 'r')
-        rows = numpy.loadtxt(f, delimiter=',')
-        #print(rows)
-        f.close()
+        #f = open('data'+sessions[session] + '.csv', 'r')
+        #f.close()
         if number == 1:
-            row1 = rows
+            row1 = rows[0]
         else:
             row1 = rows[number - 1]
         if number >= 4:
@@ -371,10 +378,7 @@ def stoptiming():
         else:
             writer.writerow([number+1, tmp, tmp, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
             besttimenum.set(tmp)
-
-
-
-
+    
     sessionOKbutton.grid_forget()
     sessionbutton.grid(row=0, column=0, padx=5, pady=0)
     sessionlabel.grid(row=0, column=1, padx=5, pady=0)
@@ -402,7 +406,10 @@ session = 0
 
 for s in sessions:
     if not os.path.isfile('data' + s + '.csv'):
-        open('data' + s + '.csv', mode='x')
+        with open('data' + s + '.csv', mode='x') as f:
+            writer = csv.writer(f, lineterminator='\n')
+            writer.writerow(['Number', 'Single', 'Best Single', 'Ao5', 'Best Ao5', 'Ao12', 'Best Ao12', 'Ao50', 'Best Ao50', 'Ao100', 'Best Ao100', 'Ao1000', 'Best'])
+
 
 scramble1 = ""
 scramble2 = ""
