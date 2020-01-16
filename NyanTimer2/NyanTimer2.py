@@ -44,7 +44,7 @@ def closechangesession():
 
 def delete():
     rows = numpy.asarray(pd.read_csv('data'+sessions[session] + '.csv',header=0))
-    print(rows)
+    #print(rows)
     with open('data'+sessions[session] + '.csv', mode='w') as f:
         writer = csv.writer(f, lineterminator='\n')
         writer.writerow(['Number', 'Single', 'Best Single', 'Ao5', 'Best Ao5', 'Ao12', 'Best Ao12', 'Ao50', 'Best Ao50', 'Ao100', 'Best Ao100', 'Ao1000', 'Best'])
