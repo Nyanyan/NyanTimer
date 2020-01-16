@@ -51,8 +51,11 @@ def next():
         scramble += rot + add + ' '
         pre = rot
     if len(scramble) > 40:
-        scramble1 = scramble[:40]
-        scramble2 = scramble[40:]
+        i = 40
+        while scramble[i] in adds:
+            i += 1
+        scramble1 = scramble[:i]
+        scramble2 = scramble[i:]
     else:
         scramble1 = scramble
         scramble2 = ""
