@@ -20,6 +20,8 @@ def changesession():
     ao12numlabel.grid_forget()
     scramblelabel1.grid_forget()
     scramblelabel2.grid_forget()
+    scramblelabel3.grid_forget()
+    scramblelabel4.grid_forget()
     deletebutton.grid_forget()
     statbutton.grid_forget()
     nextbutton.grid_forget()
