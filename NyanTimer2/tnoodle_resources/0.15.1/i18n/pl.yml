@@ -1,0 +1,54 @@
+pl:
+    fmc:
+        #original_hash: 9e60b9f
+        scrambleXofY: 'Sekwencja mieszająca %{scrambleIndex} z %{scrambleCount}'
+        #original_hash: b7126cd
+        scramble: Sekwencja mieszająca
+        #original_hash: ec7b598
+        round: Runda
+        #original_hash: 43d44fe
+        attempt: Próba
+        #original_hash: 4705687
+        competitor: Zawodnik
+        #original_hash: 220a57b
+        warning: 'NIE WYPEŁNIAJ TEGO, JEŻELI JESTEŚ ZAWODNIKIEM.'
+        #original_hash: 0263083
+        event: Najmniejsza liczba ruchów
+        #original_hash: 960085a
+        graded: Ocenione przez
+        #original_hash: 5faa59d
+        result: Rezultat
+        #original_hash: 1917f4f
+        competition: Zawody
+        #original_hash: 49debdc
+        rule1: Masz 60 minut na znalezienie i zapisanie rozwiązania.
+        #original_hash: 8b6b48b
+        rule2: >-
+            Zapisz każdy ruch nad osobną kreską. W celu usunięcia ruchu wyraźnie
+            go zamaluj.
+        #original_hash: 7822590
+        rule3: >-
+            Twoje rozwiązanie nie może pochodzić bezpośrednio od żadnej części
+            algorytmu mieszającego.
+        #original_hash: 45551a7
+        rule4: >-
+            Twoje rozwiązanie może składać się z co najwyżej %{maxMoves} ruchów,
+            łącznie z rotacjami.
+        #original_hash: 1ba5f27
+        rule5: Twój rezultat zostanie obliczony zgodnie z OBTM.
+        #original_hash: 42e1a95
+        rule6: >-
+            Używaj wyłącznie notacji z Artykułu 12 Regulaminu WCA. Jeżeli nie
+            jesteś pewien, używaj tylko ruchów wypisanych tutaj:
+        #original_hash: dd22ec2
+        faceMoves: Ruchy ścianami
+        #original_hash: 57e9da1
+        rotations: Rotacje
+        #original_hash: c75ac6f
+        clockwise: Zgodnie z ruchem wskazówek zegara
+        #original_hash: 80fe739
+        counterClockwise: Przeciwnie do ruchu wskazówek zegara
+        #original_hash: 8158159
+        double: Podwójne
+        #original_hash: e014b51
+        scrambleOnSeparateSheet: Sekwencja mieszająca znajduje się na osobnym arkuszu.

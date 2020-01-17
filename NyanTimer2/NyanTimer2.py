@@ -7,9 +7,9 @@ import numpy
 import math
 import os
 import pandas as pd
+import subprocess
 
 def changesession():
-    sessionOKbutton.grid(row=0, column=0, padx=5, pady=0)
     sessionbutton.grid_forget()
     sessionlabel.grid_forget()
     ao5label.grid_forget()
@@ -47,9 +47,6 @@ def switchsession(num):
     session = num
     sessionvar.set(sessions[session])
 
-
-def closechangesession():
-    sessionOKbutton.grid_forget()
     sessionbutton.grid(row=0, column=0, padx=5, pady=0)
     sessionlabel.grid(row=0, column=1, padx=5, pady=0)
     ao5label.grid(row=1, column=0, padx=5, pady=0)
@@ -80,6 +77,8 @@ def closechangesession():
     buttonSquare.grid_forget()
     button4BLD.grid_forget()
     button5BLD.grid_forget()
+
+    next()
     
 
 def delete():
@@ -158,6 +157,7 @@ def statback():
     bestao1000numlabel.grid_forget()
 
 def next():
+    '''
     global scramblevar1, scramblevar2
     scramble = ""
     scramble1 = ""
@@ -186,6 +186,30 @@ def next():
         scramble2 = ""
     scramblevar1.set(scramble1)
     scramblevar2.set(scramble2)
+    '''
+    #res = subprocess.call('java -jar TNoodle-WCA-0.15.1.jar')
+    #print(res)
+    string = ['333', '222', '444', '555', '666', '777', '333ni', '333', 'clock', 'minx', 'pyram', 'skewb', 'sq1', '444ni', '555ni']
+    scramble = subprocess.check_output('curl "http://localhost:2014/scramble/.txt?e=' + string[session]).decode('utf8', 'ignore').rstrip(os.linesep)
+    print(scramble)
+    l = 0
+    j = 0
+    scrambles = ['','','','']
+    while l < len(scramble) and j < 4:
+        i = 45 * (j + 1)
+        adds = ['', '\'', '2']
+        if i <= len(scramble)-1:
+            while scramble[i] in adds:
+                i += 1
+        scrambles[j] = scramble[l:i]
+        print(scrambles)
+        j += 1
+        l = i
+    scramblevar1.set(scrambles[0])
+    scramblevar2.set(scrambles[1])
+    scramblevar3.set(scrambles[2])
+    scramblevar4.set(scrambles[3])
+
 
 def timing():
     global starttime
@@ -422,7 +446,6 @@ def stoptiming():
             writer.writerow([number+1, tmp, tmp, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
             besttimenum.set(tmp)
     
-    sessionOKbutton.grid_forget()
     sessionbutton.grid(row=0, column=0, padx=5, pady=0)
     sessionlabel.grid(row=0, column=1, padx=5, pady=0)
     ao5label.grid(row=1, column=0, padx=5, pady=0)
@@ -490,7 +513,6 @@ starttime = 0.00
 sessionbutton = tk.Button(root, text='Session', command=changesession)
 sessionbutton.grid(row=0, column=0, padx=5, pady=0)
 
-sessionOKbutton = tk.Button(root, text='  OK  ', command=closechangesession)
 
 sessionvar = tk.StringVar(master=root,value=sessions[session])
 sessionlabel = tk.Label(root, textvariable=sessionvar)
@@ -566,29 +588,37 @@ bestao1000num = tk.StringVar(master=root,value="-.---")
 bestao1000numlabel = tk.Label(root, textvariable=bestao1000num)
 
 
-scramblevar1 = tk.StringVar(master=root, value=scramble1)
+scramblevar1 = tk.StringVar(master=root, value='')
 scramblelabel1 = tk.Label(root, textvariable=scramblevar1)
-scramblelabel1.grid(row=3, column=0, columnspan=3, padx=5, pady=0)
+scramblelabel1.grid(row=3, column=0, columnspan=3, padx=0, pady=0)
 
-scramblevar2 = tk.StringVar(master=root, value=scramble2)
+scramblevar2 = tk.StringVar(master=root, value='')
 scramblelabel2 = tk.Label(root, textvariable=scramblevar2)
-scramblelabel2.grid(row=4, column=0, columnspan=3, padx=5, pady=0)
+scramblelabel2.grid(row=4, column=0, columnspan=3, padx=0, pady=0)
+
+scramblevar3 = tk.StringVar(master=root, value='')
+scramblelabel3 = tk.Label(root, textvariable=scramblevar3)
+scramblelabel3.grid(row=5, column=0, columnspan=3, padx=0, pady=0)
+
+scramblevar4 = tk.StringVar(master=root, value='')
+scramblelabel4 = tk.Label(root, textvariable=scramblevar4)
+scramblelabel4.grid(row=6, column=0, columnspan=3, padx=0, pady=0)
 
 
 deletebutton = tk.Button(root, text='  Delete  ', command=delete)
-deletebutton.grid(row=5, column=0, padx=5, pady=10)
+deletebutton.grid(row=7, column=0, padx=5, pady=10)
 
 statbutton = tk.Button(root, text='  Status  ', command=stat)
-statbutton.grid(row=5, column=1, padx=5, pady=10)
+statbutton.grid(row=7, column=1, padx=5, pady=10)
 
 statbackbutton = tk.Button(root, text='   Back   ', command=statback)
 
 nextbutton = tk.Button(root, text='   Next   ', command=next)
-nextbutton.grid(row=5, column=2, padx=5, pady=10)
+nextbutton.grid(row=7, column=2, padx=5, pady=10)
 
 
 startbutton = tk.Button(root, text='  Start  ', command=timing)
-startbutton.grid(row=6, column=1, padx=5, pady=10)
+startbutton.grid(row=8, column=1, padx=5, pady=10)
 
 stopbutton = tk.Button(root, text='  Stop  ', command=stoptiming)
 

@@ -1,0 +1,28 @@
+INFO 1 1579235086443 net.gnehzr.tnoodle.utils.Launcher:wrapMain Detected os: Windows 10 
+WARNING 1 1579235086444 net.gnehzr.tnoodle.utils.Launcher:wrapMain C:\Program Files (x86)\Java\jre1.8.0_231\temp-launcher is not a directory. 
+INFO 1 1579235086444 net.gnehzr.tnoodle.utils.Launcher:wrapMain needsReExecing: true 
+INFO 1 1579235086444 net.gnehzr.tnoodle.utils.Launcher:wrapMain Re-execing with [java, -Xmx512m, -classpath, C:\Users\TakutoYamana\OneDrive\home\NyanTimer\NyanTimer2\TNoodle-WCA-0.15.1.jar, net.gnehzr.tnoodle.server.TNoodleServer, --noReexec] 
+INFO 1 1579235094032 net.gnehzr.tnoodle.utils.Launcher:wrapMain Detected os: Windows 10 
+WARNING 1 1579235094033 net.gnehzr.tnoodle.utils.Launcher:wrapMain C:\Program Files (x86)\Java\jre1.8.0_231\temp-launcher is not a directory. 
+INFO 1 1579235094033 net.gnehzr.tnoodle.utils.Launcher:wrapMain needsReExecing: true 
+INFO 1 1579235094033 net.gnehzr.tnoodle.utils.Launcher:wrapMain Re-execing with [java, -Xmx512m, -classpath, C:\Users\TakutoYamana\OneDrive\home\NyanTimer\NyanTimer2\TNoodle-WCA-0.15.1.jar, net.gnehzr.tnoodle.server.TNoodleServer, --noReexec] 
+INFO 1 1579235222799 net.gnehzr.tnoodle.utils.Launcher:wrapMain Detected os: Windows 10 
+WARNING 1 1579235222799 net.gnehzr.tnoodle.utils.Launcher:wrapMain C:\Program Files (x86)\Java\jre1.8.0_231\temp-launcher is not a directory. 
+INFO 1 1579235222799 net.gnehzr.tnoodle.utils.Launcher:wrapMain needsReExecing: true 
+INFO 1 1579235222799 net.gnehzr.tnoodle.utils.Launcher:wrapMain Re-execing with [java, -Xmx512m, -classpath, TNoodle-WCA-0.15.1.jar, net.gnehzr.tnoodle.server.TNoodleServer, --noReexec] 
+INFO 1 1579235255281 net.gnehzr.tnoodle.utils.Launcher:wrapMain Detected os: Windows 10 
+WARNING 1 1579235255281 net.gnehzr.tnoodle.utils.Launcher:wrapMain C:\Program Files (x86)\Java\jre1.8.0_231\temp-launcher is not a directory. 
+INFO 1 1579235255282 net.gnehzr.tnoodle.utils.Launcher:wrapMain needsReExecing: true 
+INFO 1 1579235255282 net.gnehzr.tnoodle.utils.Launcher:wrapMain Re-execing with [java, -Xmx512m, -classpath, TNoodle-WCA-0.15.1.jar, net.gnehzr.tnoodle.server.TNoodleServer, --noReexec] 
+INFO 1 1579235404970 net.gnehzr.tnoodle.utils.Launcher:wrapMain Detected os: Windows 10 
+WARNING 1 1579235404971 net.gnehzr.tnoodle.utils.Launcher:wrapMain C:\Program Files (x86)\Java\jre1.8.0_231\temp-launcher is not a directory. 
+INFO 1 1579235404973 net.gnehzr.tnoodle.utils.Launcher:wrapMain needsReExecing: true 
+INFO 1 1579235404974 net.gnehzr.tnoodle.utils.Launcher:wrapMain Re-execing with [java, -Xmx512m, -classpath, TNoodle-WCA-0.15.1.jar, net.gnehzr.tnoodle.server.TNoodleServer, --noReexec] 
+INFO 1 1579235449255 net.gnehzr.tnoodle.utils.Launcher:wrapMain Detected os: Windows 10 
+WARNING 1 1579235449256 net.gnehzr.tnoodle.utils.Launcher:wrapMain C:\Program Files (x86)\Java\jre1.8.0_231\temp-launcher is not a directory. 
+INFO 1 1579235449257 net.gnehzr.tnoodle.utils.Launcher:wrapMain needsReExecing: true 
+INFO 1 1579235449257 net.gnehzr.tnoodle.utils.Launcher:wrapMain Re-execing with [java, -Xmx512m, -classpath, TNoodle-WCA-0.15.1.jar, net.gnehzr.tnoodle.server.TNoodleServer, --noReexec] 
+INFO 1 1579235476251 net.gnehzr.tnoodle.utils.Launcher:wrapMain Detected os: Windows 10 
+WARNING 1 1579235476251 net.gnehzr.tnoodle.utils.Launcher:wrapMain C:\Program Files (x86)\Java\jre1.8.0_231\temp-launcher is not a directory. 
+INFO 1 1579235476251 net.gnehzr.tnoodle.utils.Launcher:wrapMain needsReExecing: true 
+INFO 1 1579235476251 net.gnehzr.tnoodle.utils.Launcher:wrapMain Re-execing with [java, -Xmx512m, -classpath, C:\Users\TakutoYamana\OneDrive\home\NyanTimer\NyanTimer2\TNoodle-WCA-0.15.1.jar, net.gnehzr.tnoodle.server.TNoodleServer, --noReexec] 
