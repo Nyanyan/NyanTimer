@@ -9,7 +9,6 @@ import os
 import pandas as pd
 
 def changesession():
-    global sessions, session, button
     sessionOKbutton.grid(row=0, column=0, padx=5, pady=0)
     sessionbutton.grid_forget()
     sessionlabel.grid_forget()
@@ -42,6 +41,11 @@ def changesession():
     button4BLD.grid(row=5, column=1, padx=5, pady=5)
     button5BLD.grid(row=5, column=2, padx=5, pady=5)
 
+
+def switchsession(num):
+    global session
+    session = num
+    sessionvar.set(sessions[session])
 
 
 def closechangesession():
@@ -159,7 +163,9 @@ def next():
     scramble1 = ""
     scramble2 = ""
     pre = ""
-    rotation = 0
+    scramblenums = [25, 10, 40]
+    rotationnum = [0,0,1]
+    rotation = rotationnum[session]
     rotations = [['R', 'L', 'U', 'D', 'F', 'B'], ['R', 'L', 'U', 'D', 'F', 'B', 'Rw', 'Lw', 'Uw', 'Dw', 'Fw', 'Bw']]
     adds = ['', '\'', '2']
     for i in range(scramblenums[session]):
@@ -464,7 +470,6 @@ root= tk.Tk()
 root.geometry('320x240')
 
 sessions = ['3x3', '2x2', '4x4', '5x5', '6x6', '7x7', '3BLD', '3OH', 'Clock', 'Megaminx', 'Pyraminx', 'Skewb', 'Square-1', '4BLD', '5BLD']
-scramblenums = [25]
 session = 0
 
 for s in sessions:
