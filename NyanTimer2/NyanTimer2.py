@@ -9,6 +9,7 @@ import os
 import pandas as pd
 
 def changesession():
+    global sessions, session, button
     sessionOKbutton.grid(row=0, column=0, padx=5, pady=0)
     sessionbutton.grid_forget()
     sessionlabel.grid_forget()
@@ -24,6 +25,24 @@ def changesession():
     statbutton.grid_forget()
     nextbutton.grid_forget()
     startbutton.grid_forget()
+
+    button3x3.grid(row=1, column=0, padx=5, pady=5)
+    button2x2.grid(row=1, column=1, padx=5, pady=5)
+    button4x4.grid(row=1, column=2, padx=5, pady=5)
+    button5x5.grid(row=2, column=0, padx=5, pady=5)
+    button6x6.grid(row=2, column=1, padx=5, pady=5)
+    button7x7.grid(row=2, column=2, padx=5, pady=5)
+    button3BLD.grid(row=3, column=0, padx=5, pady=5)
+    button3OH.grid(row=3, column=1, padx=5, pady=5)
+    buttonClock.grid(row=3, column=2, padx=5, pady=5)
+    buttonMega.grid(row=4, column=0, padx=5, pady=5)
+    buttonPyra.grid(row=4, column=1, padx=5, pady=5)
+    buttonSkewb.grid(row=4, column=2, padx=5, pady=5)
+    buttonSquare.grid(row=5, column=0, padx=5, pady=5)
+    button4BLD.grid(row=5, column=1, padx=5, pady=5)
+    button5BLD.grid(row=5, column=2, padx=5, pady=5)
+
+
 
 def closechangesession():
     sessionOKbutton.grid_forget()
@@ -41,6 +60,23 @@ def closechangesession():
     statbutton.grid(row=5, column=1, padx=5, pady=10)
     nextbutton.grid(row=5, column=2, padx=5, pady=10)
     startbutton.grid(row=6, column=1, padx=5, pady=10)
+
+    button3x3.grid_forget()
+    button2x2.grid_forget()
+    button4x4.grid_forget()
+    button5x5.grid_forget()
+    button6x6.grid_forget()
+    button7x7.grid_forget()
+    button3BLD.grid_forget()
+    button3OH.grid_forget()
+    buttonClock.grid_forget()
+    buttonMega.grid_forget()
+    buttonPyra.grid_forget()
+    buttonSkewb.grid_forget()
+    buttonSquare.grid_forget()
+    button4BLD.grid_forget()
+    button5BLD.grid_forget()
+    
 
 def delete():
     rows = numpy.asarray(pd.read_csv('data'+sessions[session] + '.csv',header=0))
@@ -550,6 +586,23 @@ startbutton = tk.Button(root, text='  Start  ', command=timing)
 startbutton.grid(row=6, column=1, padx=5, pady=10)
 
 stopbutton = tk.Button(root, text='  Stop  ', command=stoptiming)
+
+
+button3x3 = tk.Button(root, text='3x3', command=lambda :switchsession(0))
+button2x2 = tk.Button(root, text='2x2', command=lambda :switchsession(1))
+button4x4 = tk.Button(root, text='4x4', command=lambda :switchsession(2))
+button5x5 = tk.Button(root, text='5x5', command=lambda :switchsession(3))
+button6x6 = tk.Button(root, text='6x6', command=lambda :switchsession(4))
+button7x7 = tk.Button(root, text='7x7', command=lambda :switchsession(5))
+button3BLD = tk.Button(root, text='3BLD', command=lambda :switchsession(6))
+button3OH = tk.Button(root, text='3OH', command=lambda :switchsession(7))
+buttonClock = tk.Button(root, text='Clock', command=lambda :switchsession(8))
+buttonMega = tk.Button(root, text='Megaminx', command=lambda :switchsession(9))
+buttonPyra = tk.Button(root, text='Pyraminx', command=lambda :switchsession(10))
+buttonSkewb = tk.Button(root, text='Skewb', command=lambda :switchsession(11))
+buttonSquare = tk.Button(root, text='Square-1', command=lambda :switchsession(12))
+button4BLD = tk.Button(root, text='4BLD', command=lambda :switchsession(13))
+button5BLD = tk.Button(root, text='5BLD', command=lambda :switchsession(14))
 
 
 next()
