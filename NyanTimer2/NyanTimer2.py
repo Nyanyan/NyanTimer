@@ -81,7 +81,7 @@ def switchsession(num):
     button5BLD.grid_forget()
 
     next()
-    
+    calctime()
 
 def delete():
     rows = numpy.asarray(pd.read_csv('data'+sessions[session] + '.csv',header=0))
@@ -99,6 +99,8 @@ def stat():
     sessionbutton.grid_forget()
     scramblelabel1.grid_forget()
     scramblelabel2.grid_forget()
+    scramblelabel3.grid_forget()
+    scramblelabel4.grid_forget()
     deletebutton.grid_forget()
     statbutton.grid_forget()
     nextbutton.grid_forget()
@@ -205,7 +207,6 @@ def next():
             while scramble[i] != ' ':
                 i += 1
         scrambles[j] = scramble[l:i]
-        print(scrambles)
         j += 1
         l = i
     scramblevar1.set(scrambles[0])
@@ -229,6 +230,8 @@ def timing():
     ao12numlabel.grid_forget()
     scramblelabel1.grid_forget()
     scramblelabel2.grid_forget()
+    scramblelabel3.grid_forget()
+    scramblelabel4.grid_forget()
     deletebutton.grid_forget()
     statbutton.grid_forget()
     nextbutton.grid_forget()
@@ -495,6 +498,7 @@ def calctime():
             bestao1000num.set(row[12])
     else:
         timenum.set('--.---')
+        besttimenum.set('--:---')
         ao5num.set('--.---')
         bestao5num.set('--.---')
         ao12num.set('--.---')
