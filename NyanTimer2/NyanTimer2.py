@@ -57,10 +57,12 @@ def switchsession(num):
     ao12numlabel.grid(row=2, column=2, padx=5, pady=0)
     scramblelabel1.grid(row=3, column=0, columnspan=3, padx=5, pady=0)
     scramblelabel2.grid(row=4, column=0, columnspan=3, padx=5, pady=0)
-    deletebutton.grid(row=5, column=0, padx=5, pady=10)
-    statbutton.grid(row=5, column=1, padx=5, pady=10)
-    nextbutton.grid(row=5, column=2, padx=5, pady=10)
-    startbutton.grid(row=6, column=1, padx=5, pady=10)
+    scramblelabel3.grid(row=5, column=0, columnspan=3, padx=5, pady=0)
+    scramblelabel4.grid(row=6, column=0, columnspan=3, padx=5, pady=0)
+    deletebutton.grid(row=7, column=0, padx=5, pady=10)
+    statbutton.grid(row=7, column=1, padx=5, pady=10)
+    nextbutton.grid(row=7, column=2, padx=5, pady=10)
+    startbutton.grid(row=8, column=1, padx=5, pady=10)
 
     button3x3.grid_forget()
     button2x2.grid_forget()
@@ -130,10 +132,12 @@ def statback():
     sessionbutton.grid(row=0, column=0, padx=5, pady=0)
     scramblelabel1.grid(row=3, column=0, columnspan=3, padx=5, pady=0)
     scramblelabel2.grid(row=4, column=0, columnspan=3, padx=5, pady=0)
-    deletebutton.grid(row=5, column=0, padx=5, pady=10)
-    statbutton.grid(row=5, column=1, padx=5, pady=10)
-    nextbutton.grid(row=5, column=2, padx=5, pady=10)
-    startbutton.grid(row=6, column=1, padx=5, pady=10)
+    scramblelabel3.grid(row=5, column=0, columnspan=3, padx=5, pady=0)
+    scramblelabel4.grid(row=6, column=0, columnspan=3, padx=5, pady=0)
+    deletebutton.grid(row=7, column=0, padx=5, pady=10)
+    statbutton.grid(row=7, column=1, padx=5, pady=10)
+    nextbutton.grid(row=7, column=2, padx=5, pady=10)
+    startbutton.grid(row=8, column=1, padx=5, pady=10)
 
     ao50label.grid_forget()
     ao100label.grid_forget()
@@ -197,9 +201,8 @@ def next():
     scrambles = ['','','','']
     while l < len(scramble) and j < 4:
         i = 45 * (j + 1)
-        adds = ['', '\'', '2']
         if i <= len(scramble)-1:
-            while scramble[i] in adds:
+            while scramble[i] != ' ':
                 i += 1
         scrambles[j] = scramble[l:i]
         print(scrambles)
@@ -456,10 +459,12 @@ def stoptiming():
     ao12numlabel.grid(row=2, column=2, padx=5, pady=0)
     scramblelabel1.grid(row=3, column=0, columnspan=3, padx=5, pady=0)
     scramblelabel2.grid(row=4, column=0, columnspan=3, padx=5, pady=0)
-    deletebutton.grid(row=5, column=0, padx=5, pady=10)
-    statbutton.grid(row=5, column=1, padx=5, pady=10)
-    nextbutton.grid(row=5, column=2, padx=5, pady=10)
-    startbutton.grid(row=6, column=1, padx=5, pady=10)
+    scramblelabel3.grid(row=5, column=0, columnspan=3, padx=5, pady=0)
+    scramblelabel4.grid(row=6, column=0, columnspan=3, padx=5, pady=0)
+    deletebutton.grid(row=7, column=0, padx=5, pady=10)
+    statbutton.grid(row=7, column=1, padx=5, pady=10)
+    nextbutton.grid(row=7, column=2, padx=5, pady=10)
+    startbutton.grid(row=8, column=1, padx=5, pady=10)
 
     stopbutton.grid_forget()
     next()
@@ -488,6 +493,18 @@ def calctime():
         if row[11] != 0:
             ao1000num.set(row[11])
             bestao1000num.set(row[12])
+    else:
+        timenum.set('--.---')
+        ao5num.set('--.---')
+        bestao5num.set('--.---')
+        ao12num.set('--.---')
+        bestao12num.set('--.---')
+        ao50num.set('--.---')
+        bestao50num.set('--.---')
+        ao100num.set('--.---')
+        bestao100num.set('--.---')
+        ao1000num.set('--.---')
+        bestao1000num.set('--.---')
 
 root= tk.Tk()
 root.geometry('320x240')
