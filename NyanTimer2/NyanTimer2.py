@@ -198,7 +198,7 @@ def next():
     #res = subprocess.call('java -jar TNoodle-WCA-0.15.1.jar')
     #print(res)
     string = ['333', '222', '444', '555', '666', '777', '333ni', '333', 'clock', 'minx', 'pyram', 'skewb', 'sq1', '444ni', '555ni']
-    scramble = subprocess.check_output('curl "http://localhost:2014/scramble/.txt?e=' + string[session]).decode('utf8', 'ignore').rstrip(os.linesep)
+    scramble = subprocess.check_output('curl "http://localhost:2014/scramble/.txt?e=' + string[session] + '"', shell=True).decode('utf8', 'ignore').rstrip(os.linesep)
     print(scramble)
     l = 0
     j = 0
@@ -207,7 +207,7 @@ def next():
         i = 45 * (j + 1)
         if i <= len(scramble)-1:
             while scramble[i] != ' ':
-                i += 1
+                i -= 1
         scrambles[j] = scramble[l:i]
         j += 1
         l = i
