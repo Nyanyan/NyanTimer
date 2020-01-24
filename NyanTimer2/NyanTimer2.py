@@ -293,19 +293,23 @@ def stoptiming():
                             rows1000 = rows[number - 999:]
         '''
         avg = []
-        for i in range(1, len(avgnum)):
-            times = []
-            for j in range(avgnum[i] - 1):
-                times.append(rowavg[i][j][1])
-            times.append(single)
-            times.sort()
-            exceptnum = math.ceil(avgnum[i] * exceptpercentage / 100)
+        for i in range(len(avgnum) - 1):
             aox = 0
-            for j in range(exceptnum, avgnum[i] - exceptnum):
-                aox += times[j]
-            aox /= avgnum[i] - 2 * exceptnum
+            if len(rowavg[i]) == avgnum[i + 1] - 1:
+                times = []
+                for j in range(avgnum[i + 1] - 1):
+                    times.append(rowavg[i][j][1])
+                times.append(single)
+                times.sort()
+                #print(times, avgnum[i + 1])
+                exceptnum = math.ceil(avgnum[i + 1] * exceptpercentage / 100)
+                for j in range(exceptnum, avgnum[i + 1] - exceptnum):
+                    aox += times[j]
+                aox /= avgnum[i + 1] - 2 * exceptnum
+                aox = math.floor(aox * 1000) / 1000
+                timestatus[i + 1].set(str(round(aox, 3)))
             avg.append(aox)
-            timestatus[i].set(str(aox))
+        #print(avg)
         with open('data'+sessions[session] + '.csv', mode='a') as f:
             writer = csv.writer(f, lineterminator='\n')
             newrow = [number + 1, single, min(single, row1[2])]
@@ -314,7 +318,9 @@ def stoptiming():
                 tmp = min(avg[i - 1], row1[2 * i + 2])
                 if tmp == 0:
                     tmp = avg[i - 1]
+                tmp = round(tmp, 3)
                 newrow.append(tmp)
+            print(newrow)
             writer.writerow(newrow)
     else:
         with open('data'+sessions[session] + '.csv', mode='a') as f:
