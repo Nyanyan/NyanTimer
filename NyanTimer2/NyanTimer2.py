@@ -242,24 +242,31 @@ def timing():
     stopbutton.grid(row=6, column=1, padx=5, pady=10)
 
 def stoptiming():
+    exceptpercentage = 5
     stoptime = time.time()
     #print(stoptime)
-    tmp = math.floor((stoptime - starttime) * pow(10,3)) / pow(10, 3)
+    single = math.floor((stoptime - starttime) * pow(10,3)) / pow(10, 3)
     print(tmp)
     timenum.set(str(tmp))
-
+    '''
     row1 = []
     rows5 = []
     rows12 = []
     rows50 = []
     rows100 = []
     rows1000 = []
+    '''
     rows = numpy.asarray(pd.read_csv('data'+sessions[session] + '.csv', header=0))
     number = len(rows)
     #print(number)
     if number >= 1:
         #f = open('data'+sessions[session] + '.csv', 'r')
         #f.close()
+        rowavg = []
+        avgnum = [5, 11, 50, 100, 1000]
+        for i in avgnum:
+            rowavg.append(rows[max(0, number - i + 1):])
+        '''
         if number == 1:
             row1 = rows[0]
         else:
@@ -274,6 +281,24 @@ def stoptiming():
                         rows100 = rows[number - 99:]
                         if number >= 999:
                             rows1000 = rows[number - 999:]
+        '''
+        with open('data'+sessions[session] + '.csv', mode='a') as f:
+            writer = csv.writer(f, lineterminator='\n')
+            avg = []
+            for i in range(len(avgnum)):
+                times = []
+                for j in range(avgnum[i] - 1):
+                    times.append(rowavg[i][j][1])
+                times.append(single)
+                times.sort()
+                exceptnum = math.ceil(avgnum[i] * exceptpercentage / 100)
+                aox = 0
+                for j in range(exceptnum, avgnum[i] - exceptnum):
+                    aox += times[j]
+                aox /= avgnum[i] - 2 * exceptnum
+                avg.append(aox)
+
+    '''        
     with open('data'+sessions[session] + '.csv', mode='a') as f:
         writer = csv.writer(f, lineterminator='\n')
         if number >= 1:
@@ -453,7 +478,7 @@ def stoptiming():
         else:
             writer.writerow([number+1, tmp, tmp, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
             besttimenum.set(tmp)
-    
+    '''
     sessionbutton.grid(row=0, column=0, padx=5, pady=0)
     sessionlabel.grid(row=0, column=1, padx=5, pady=0)
     ao5label.grid(row=1, column=0, padx=5, pady=0)
@@ -512,6 +537,7 @@ def calctime():
         ao1000num.set('--.---')
         bestao1000num.set('--.---')
 
+
 root= tk.Tk()
 root.geometry('320x240')
 
@@ -527,10 +553,6 @@ for s in sessions:
 
 scramble1 = ""
 scramble2 = ""
-
-
-starttime = 0.00
-
 
 
 sessionbutton = tk.Button(root, text='Session', command=changesession)
@@ -670,7 +692,6 @@ calctime()
 root.columnconfigure(0, weight=1, uniform='group1')
 root.columnconfigure(1, weight=1, uniform='group1')
 root.columnconfigure(2, weight=1, uniform='group1')
-
 
 
 root.mainloop()

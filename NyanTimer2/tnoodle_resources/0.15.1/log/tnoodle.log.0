@@ -38,3 +38,9 @@ INFO 1 1579514508617 net.gnehzr.tnoodle.utils.Launcher:wrapMain Detected os: Win
 INFO 1 1579514508625 net.gnehzr.tnoodle.utils.Launcher:wrapMain Successfully copied C:\Program Files (x86)\Java\jre1.8.0_231\bin\java.exe -> C:\Program Files (x86)\Java\jre1.8.0_231\temp-launcher\TNoodle-WCA-0.15.1.exe 
 INFO 1 1579514508625 net.gnehzr.tnoodle.utils.Launcher:wrapMain needsReExecing: true 
 INFO 1 1579514508626 net.gnehzr.tnoodle.utils.Launcher:wrapMain Re-execing with ["C:\Program Files (x86)\Java\jre1.8.0_231\temp-launcher\TNoodle-WCA-0.15.1.exe", -Xmx512m, -classpath, TNoodle-WCA-0.15.1.jar, net.gnehzr.tnoodle.server.TNoodleServer, --noReexec] 
+INFO 1 1579656596240 net.gnehzr.tnoodle.utils.Launcher:wrapMain Detected os: Windows 10 
+INFO 1 1579656596241 net.gnehzr.tnoodle.utils.Launcher:wrapMain needsReExecing: true 
+INFO 1 1579656596241 net.gnehzr.tnoodle.utils.Launcher:wrapMain Re-execing with ["C:\Program Files (x86)\Java\jre1.8.0_231\temp-launcher\TNoodle-WCA-0.15.1.exe", -Xmx512m, -classpath, TNoodle-WCA-0.15.1.jar, net.gnehzr.tnoodle.server.TNoodleServer, --noReexec] 
+INFO 1 1579878015828 net.gnehzr.tnoodle.utils.Launcher:wrapMain Detected os: Windows 10 
+WARNING 1 1579878015832 net.gnehzr.tnoodle.utils.Launcher:wrapMain C:\Program Files (x86)\Java\jdk13.0.2\temp-launcher is not a directory. 
+INFO 1 1579878015833 net.gnehzr.tnoodle.utils.Launcher:wrapMain needsReExecing: false 
