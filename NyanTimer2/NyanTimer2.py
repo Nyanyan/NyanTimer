@@ -224,12 +224,20 @@ def timing():
 
     sessionbutton.grid_forget()
     sessionlabel.grid_forget()
+    guiavgstatus[1][0].grid_forget()
+    guiavgstatus[1][1].grid_forget()
+    guiavgstatus[0][0].grid_forget()
+    guiavgstatus[0][1].grid_forget()
+    guiavgstatus[2][0].grid_forget()
+    guiavgstatus[2][1].grid_forget()
+    '''
     ao5label.grid_forget()
     timelabel.grid_forget()
     ao12label.grid_forget()
     ao5numlabel.grid_forget()
     timenumlabel.grid_forget()
     ao12numlabel.grid_forget()
+    '''
     scramblelabel1.grid_forget()
     scramblelabel2.grid_forget()
     scramblelabel3.grid_forget()
@@ -242,12 +250,14 @@ def timing():
     stopbutton.grid(row=6, column=1, padx=5, pady=10)
 
 def stoptiming():
+    global avgnum
     exceptpercentage = 5
     stoptime = time.time()
     #print(stoptime)
     single = math.floor((stoptime - starttime) * pow(10,3)) / pow(10, 3)
-    print(tmp)
-    timenum.set(str(tmp))
+    print(single)
+    #timenum.set(str(tmp))
+    timestatus[0].set(str(single))
     '''
     row1 = []
     rows5 = []
@@ -262,9 +272,9 @@ def stoptiming():
     if number >= 1:
         #f = open('data'+sessions[session] + '.csv', 'r')
         #f.close()
+        row1 = rows[number - 1]
         rowavg = []
-        avgnum = [5, 11, 50, 100, 1000]
-        for i in avgnum:
+        for i in avgnum[1:]:
             rowavg.append(rows[max(0, number - i + 1):])
         '''
         if number == 1:
@@ -282,22 +292,38 @@ def stoptiming():
                         if number >= 999:
                             rows1000 = rows[number - 999:]
         '''
+        avg = []
+        for i in range(1, len(avgnum)):
+            times = []
+            for j in range(avgnum[i] - 1):
+                times.append(rowavg[i][j][1])
+            times.append(single)
+            times.sort()
+            exceptnum = math.ceil(avgnum[i] * exceptpercentage / 100)
+            aox = 0
+            for j in range(exceptnum, avgnum[i] - exceptnum):
+                aox += times[j]
+            aox /= avgnum[i] - 2 * exceptnum
+            avg.append(aox)
+            timestatus[i].set(str(aox))
         with open('data'+sessions[session] + '.csv', mode='a') as f:
             writer = csv.writer(f, lineterminator='\n')
-            avg = []
-            for i in range(len(avgnum)):
-                times = []
-                for j in range(avgnum[i] - 1):
-                    times.append(rowavg[i][j][1])
-                times.append(single)
-                times.sort()
-                exceptnum = math.ceil(avgnum[i] * exceptpercentage / 100)
-                aox = 0
-                for j in range(exceptnum, avgnum[i] - exceptnum):
-                    aox += times[j]
-                aox /= avgnum[i] - 2 * exceptnum
-                avg.append(aox)
-
+            newrow = [number + 1, single, min(single, row1[2])]
+            for i in range(1, len(avgnum)):
+                newrow.append(avg[i - 1])
+                tmp = min(avg[i - 1], row1[2 * i + 2])
+                if tmp == 0:
+                    tmp = avg[i - 1]
+                newrow.append(tmp)
+            writer.writerow(newrow)
+    else:
+        with open('data'+sessions[session] + '.csv', mode='a') as f:
+            writer = csv.writer(f, lineterminator='\n')
+            newrow = [number + 1, single, single]
+            for i in range(1, len(avgnum)):
+                for j in range(2):
+                    newrow.append(0)
+            writer.writerow(newrow)
     '''        
     with open('data'+sessions[session] + '.csv', mode='a') as f:
         writer = csv.writer(f, lineterminator='\n')
@@ -481,12 +507,21 @@ def stoptiming():
     '''
     sessionbutton.grid(row=0, column=0, padx=5, pady=0)
     sessionlabel.grid(row=0, column=1, padx=5, pady=0)
+    '''
     ao5label.grid(row=1, column=0, padx=5, pady=0)
     timelabel.grid(row=1, column=1, padx=5, pady=0)
     ao12label.grid(row=1, column=2, padx=5, pady=0)
     ao5numlabel.grid(row=2, column=0, padx=5, pady=0)
     timenumlabel.grid(row=2, column=1, padx=5, pady=0)
     ao12numlabel.grid(row=2, column=2, padx=5, pady=0)
+    '''
+    guiavgstatus[1][0].grid(row=1, column=0, padx=5, pady=0)
+    guiavgstatus[1][1].grid(row=2, column=0, padx=5, pady=0)
+    guiavgstatus[0][0].grid(row=1, column=1, padx=5, pady=0)
+    guiavgstatus[0][1].grid(row=2, column=1, padx=5, pady=0)
+    guiavgstatus[2][0].grid(row=1, column=2, padx=5, pady=0)
+    guiavgstatus[2][1].grid(row=2, column=2, padx=5, pady=0)
+
     scramblelabel1.grid(row=3, column=0, columnspan=3, padx=5, pady=0)
     scramblelabel2.grid(row=4, column=0, columnspan=3, padx=5, pady=0)
     scramblelabel3.grid(row=5, column=0, columnspan=3, padx=5, pady=0)
@@ -538,11 +573,15 @@ def calctime():
         bestao1000num.set('--.---')
 
 
+def viewtime(num):
+    return 0
+
 root= tk.Tk()
 root.geometry('320x240')
 
 sessions = ['3x3', '2x2', '4x4', '5x5', '6x6', '7x7', '3BLD', '3OH', 'Clock', 'Megaminx', 'Pyraminx', 'Skewb', 'Square-1', '4BLD', '5BLD']
 session = 0
+avgnum = [1, 5, 12, 50, 100, 1000]
 
 for s in sessions:
     if not os.path.isfile('data' + s + '.csv'):
@@ -563,6 +602,25 @@ sessionvar = tk.StringVar(master=root,value=sessions[session])
 sessionlabel = tk.Label(root, textvariable=sessionvar)
 sessionlabel.grid(row=0, column=1, padx=5, pady=0)
 
+timestatus = []
+guiavgstatus = []
+for i in range(len(avgnum)):
+    timestatus.append(tk.StringVar(master=root,value="--.---"))
+    if i > 0:
+        guiavgstatus.append([tk.Label(root, text="Ao"+str(avgnum[i])), tk.Button(root, textvariable=timestatus[i], command=lambda: viewtime(i))])
+    if i == 0:
+        guiavgstatus.append([tk.Label(root, text="Single"), tk.Button(root, textvariable=timestatus[i], command=lambda: viewtime(i))])
+
+guiavgstatus[1][0].grid(row=1, column=0, padx=5, pady=0)
+guiavgstatus[1][1].grid(row=2, column=0, padx=5, pady=0)
+
+guiavgstatus[0][0].grid(row=1, column=1, padx=5, pady=0)
+guiavgstatus[0][1].grid(row=2, column=1, padx=5, pady=0)
+
+guiavgstatus[2][0].grid(row=1, column=2, padx=5, pady=0)
+guiavgstatus[2][1].grid(row=2, column=2, padx=5, pady=0)
+
+'''
 ao5label = tk.Label(root, text="Ao5")
 ao5label.grid(row=1, column=0, padx=5, pady=0)
 
@@ -631,7 +689,7 @@ bestao100numlabel = tk.Label(root, textvariable=bestao100num)
 
 bestao1000num = tk.StringVar(master=root,value="-.---")
 bestao1000numlabel = tk.Label(root, textvariable=bestao1000num)
-
+'''
 
 scramblevar1 = tk.StringVar(master=root, value='')
 scramblelabel1 = tk.Label(root, textvariable=scramblevar1)
@@ -686,7 +744,7 @@ button5BLD = tk.Button(root, text='5BLD', command=lambda :switchsession(14))
 
 
 next()
-calctime()
+#calctime()
 
 
 root.columnconfigure(0, weight=1, uniform='group1')
