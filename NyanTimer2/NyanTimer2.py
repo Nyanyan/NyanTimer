@@ -330,6 +330,7 @@ def viewbtime(num):
 
 root= tk.Tk()
 root.geometry('320x240')
+#root.attributes("-fullscreen", True)
 
 sessions = ['3x3', '2x2', '4x4', '5x5', '6x6', '7x7', '3BLD', '3OH', 'Clock', 'Megaminx', 'Pyraminx', 'Skewb', 'Square-1', '4BLD', '5BLD']
 session = 0
@@ -363,18 +364,18 @@ guiavgstatus = []
 for i in range(len(avgnum)):
     timestatus.append(tk.StringVar(master=root,value="--.---"))
     if i > 0:
-        guiavgstatus.append([tk.Label(root, text="Ao"+str(avgnum[i])), tk.Button(root, textvariable=timestatus[i], command=viewtime(i))])
+        guiavgstatus.append([tk.Label(root, text="Ao"+str(avgnum[i]), font=("",7)), tk.Button(root, textvariable=timestatus[i], command=viewtime(i), font=("",7))])
     if i == 0:
-        guiavgstatus.append([tk.Label(root, text="Single"), tk.Button(root, textvariable=timestatus[i], command=viewtime(i))])
+        guiavgstatus.append([tk.Label(root, text="Single", font=("",7)), tk.Button(root, textvariable=timestatus[i], command=viewtime(i), font=("",7))])
 
 btimestatus = []
 guibavgstatus = []
 for i in range(len(avgnum)):
     btimestatus.append(tk.StringVar(master=root,value="--.---"))
     if i > 0:
-        guibavgstatus.append([tk.Label(root, text="Best Ao"+str(avgnum[i])), tk.Button(root, textvariable=btimestatus[i], command=viewbtime(i))])
+        guibavgstatus.append([tk.Label(root, text="Best Ao"+str(avgnum[i]), font=("",7)), tk.Button(root, textvariable=btimestatus[i], command=viewbtime(i), font=("",7))])
     if i == 0:
-        guibavgstatus.append([tk.Label(root, text="Best Single"), tk.Button(root, textvariable=btimestatus[i], command=viewbtime(i))])
+        guibavgstatus.append([tk.Label(root, text="Best Single", font=("",7)), tk.Button(root, textvariable=btimestatus[i], command=viewbtime(i), font=("",7))])
 
 timesstatus = []
 for i in range(len(avgnum)):
@@ -392,13 +393,13 @@ timesstatuslabels = []
 for i in range(len(avgnum)):
     timesstatuslabels.append([])
     for j in range(avgnum[i]):
-        timesstatuslabels[i].append([tk.Label(root, textvariable=timesstatus[i][j][0]), tk.Label(root, textvariable=timesstatus[i][j][1])])
+        timesstatuslabels[i].append([tk.Label(root, textvariable=timesstatus[i][j][0], font=("",7)), tk.Label(root, textvariable=timesstatus[i][j][1], font=("",7))])
 
 btimesstatuslabels = []
 for i in range(len(avgnum)):
     btimesstatuslabels.append([])
     for j in range(avgnum[i]):
-        btimesstatuslabels[i].append([tk.Label(root, textvariable=btimesstatus[i][j][0]), tk.Label(root, textvariable=btimesstatus[i][j][1])])
+        btimesstatuslabels[i].append([tk.Label(root, textvariable=btimesstatus[i][j][0], font=("",7)), tk.Label(root, textvariable=btimesstatus[i][j][1], font=("",7))])
 
 guiavgstatus[1][0].grid(row=1, column=0, padx=5, pady=0)
 guiavgstatus[1][1].grid(row=2, column=0, padx=5, pady=0)
