@@ -16,10 +16,8 @@ def changesession():
     for i in range(3):
         for j in range(2):
             guiavgstatus[i][j].grid_forget()
-    scramblelabel1.grid_forget()
-    scramblelabel2.grid_forget()
-    scramblelabel3.grid_forget()
-    scramblelabel4.grid_forget()
+    for i in range(scramblerows):
+        scramblelabels[i].grid_forget()
     deletebutton.grid_forget()
     statbutton.grid_forget()
     nextbutton.grid_forget()
@@ -44,14 +42,12 @@ def switchsession(num):
             for j in range(2):
                 guiavgstatus[arr[i]][j].grid(row=j + 1, column=i, padx=5, pady=0)
         
-        scramblelabel1.grid(row=3, column=0, columnspan=3, padx=5, pady=0)
-        scramblelabel2.grid(row=4, column=0, columnspan=3, padx=5, pady=0)
-        scramblelabel3.grid(row=5, column=0, columnspan=3, padx=5, pady=0)
-        scramblelabel4.grid(row=6, column=0, columnspan=3, padx=5, pady=0)
-        deletebutton.grid(row=7, column=0, padx=5, pady=10)
-        statbutton.grid(row=7, column=1, padx=5, pady=10)
-        nextbutton.grid(row=7, column=2, padx=5, pady=10)
-        startbutton.grid(row=8, column=1, padx=5, pady=10)
+        for i in range(scramblerows):
+            scramblelabels[i].grid(row=3+i, column=0, columnspan=3, padx=0, pady=0)
+        deletebutton.grid(row=9, column=0, padx=5, pady=10)
+        statbutton.grid(row=9, column=1, padx=5, pady=10)
+        nextbutton.grid(row=9, column=2, padx=5, pady=10)
+        startbutton.grid(row=10, column=1, padx=5, pady=10)
 
         for i in range(len(sessions)):
             sessionbuttons[i].grid_forget()
@@ -75,10 +71,8 @@ def delete():
 def stat():
     calctime()
     sessionbutton.grid_forget()
-    scramblelabel1.grid_forget()
-    scramblelabel2.grid_forget()
-    scramblelabel3.grid_forget()
-    scramblelabel4.grid_forget()
+    for i in range(scramblerows):
+        scramblelabels[i].grid_forget()
     deletebutton.grid_forget()
     statbutton.grid_forget()
     nextbutton.grid_forget()
@@ -98,14 +92,12 @@ def stat():
 def statback():
     statbackbutton.grid_forget()
     sessionbutton.grid(row=0, column=0, padx=5, pady=0)
-    scramblelabel1.grid(row=3, column=0, columnspan=3, padx=5, pady=0)
-    scramblelabel2.grid(row=4, column=0, columnspan=3, padx=5, pady=0)
-    scramblelabel3.grid(row=5, column=0, columnspan=3, padx=5, pady=0)
-    scramblelabel4.grid(row=6, column=0, columnspan=3, padx=5, pady=0)
-    deletebutton.grid(row=7, column=0, padx=5, pady=10)
-    statbutton.grid(row=7, column=1, padx=5, pady=10)
-    nextbutton.grid(row=7, column=2, padx=5, pady=10)
-    startbutton.grid(row=8, column=1, padx=5, pady=10)
+    for i in range(scramblerows):
+        scramblelabels[i].grid(row=3+i, column=0, columnspan=3, padx=0, pady=0)
+    deletebutton.grid(row=9, column=0, padx=5, pady=10)
+    statbutton.grid(row=9, column=1, padx=5, pady=10)
+    nextbutton.grid(row=9, column=2, padx=5, pady=10)
+    startbutton.grid(row=10, column=1, padx=5, pady=10)
 
     for i in range(3, len(avgnum)):
         for j in range(2):
@@ -156,19 +148,19 @@ def nextscramble():
     print(scramble)
     l = 0
     j = 0
-    scrambles = ['','','','']
-    while l < len(scramble) and j < 4:
-        i = 45 * (j + 1)
+    scrambles = []
+    for i in range(scramblerows):
+        scrambles.append('')
+    while l < len(scramble) and j < scramblerows:
+        i = 65 * (j + 1)
         if i <= len(scramble)-1:
             while scramble[i] != ' ':
                 i -= 1
         scrambles[j] = scramble[l:i]
         j += 1
         l = i
-    scramblevar1.set(scrambles[0])
-    scramblevar2.set(scrambles[1])
-    scramblevar3.set(scrambles[2])
-    scramblevar4.set(scrambles[3])
+    for i in range(scramblerows):
+        scramblevars[i].set(scrambles[i])
 
 
 def timing():
@@ -264,14 +256,12 @@ def stoptiming():
     for i in range(3):
         for j in range(2):
             guiavgstatus[arr[i]][j].grid(row=j + 1, column=i, padx=5, pady=0)
-    scramblelabel1.grid(row=3, column=0, columnspan=3, padx=5, pady=0)
-    scramblelabel2.grid(row=4, column=0, columnspan=3, padx=5, pady=0)
-    scramblelabel3.grid(row=5, column=0, columnspan=3, padx=5, pady=0)
-    scramblelabel4.grid(row=6, column=0, columnspan=3, padx=5, pady=0)
-    deletebutton.grid(row=7, column=0, padx=5, pady=10)
-    statbutton.grid(row=7, column=1, padx=5, pady=10)
-    nextbutton.grid(row=7, column=2, padx=5, pady=10)
-    startbutton.grid(row=8, column=1, padx=5, pady=10)
+    for i in range(scramblerows):
+        scramblelabels[i].grid(row=3+i, column=0, columnspan=3, padx=0, pady=0)
+    deletebutton.grid(row=9, column=0, padx=5, pady=10)
+    statbutton.grid(row=9, column=1, padx=5, pady=10)
+    nextbutton.grid(row=9, column=2, padx=5, pady=10)
+    startbutton.grid(row=10, column=1, padx=5, pady=10)
 
     stopbutton.grid_forget()
     nextscramble()
@@ -316,10 +306,8 @@ def viewtime(num):
         for i in range(3):
             for j in range(2):
                 guiavgstatus[i][j].grid_forget()
-        scramblelabel1.grid_forget()
-        scramblelabel2.grid_forget()
-        scramblelabel3.grid_forget()
-        scramblelabel4.grid_forget()
+        for i in range(scramblerows):
+            scramblelabels[i].grid_forget()
         deletebutton.grid_forget()
         statbutton.grid_forget()
         nextbutton.grid_forget()
@@ -413,37 +401,30 @@ guiavgstatus[0][1].grid(row=2, column=1, padx=5, pady=0)
 guiavgstatus[2][0].grid(row=1, column=2, padx=5, pady=0)
 guiavgstatus[2][1].grid(row=2, column=2, padx=5, pady=0)
 
-scramblevar1 = tk.StringVar(master=root, value='')
-scramblelabel1 = tk.Label(root, textvariable=scramblevar1)
-scramblelabel1.grid(row=3, column=0, columnspan=3, padx=0, pady=0)
+scramblerows = 6
+scramblevars = []
+for i in range(scramblerows):
+    scramblevars.append(tk.StringVar(master=root, value=''))
 
-scramblevar2 = tk.StringVar(master=root, value='')
-scramblelabel2 = tk.Label(root, textvariable=scramblevar2)
-scramblelabel2.grid(row=4, column=0, columnspan=3, padx=0, pady=0)
-
-scramblevar3 = tk.StringVar(master=root, value='')
-scramblelabel3 = tk.Label(root, textvariable=scramblevar3)
-scramblelabel3.grid(row=5, column=0, columnspan=3, padx=0, pady=0)
-
-scramblevar4 = tk.StringVar(master=root, value='')
-scramblelabel4 = tk.Label(root, textvariable=scramblevar4)
-scramblelabel4.grid(row=6, column=0, columnspan=3, padx=0, pady=0)
-
+scramblelabels = []
+for i in range(scramblerows):
+    scramblelabels.append(tk.Label(root, textvariable=scramblevars[i], font=("",7)))
+    scramblelabels[i].grid(row=3+i, column=0, columnspan=3, padx=0, pady=0)
 
 deletebutton = tk.Button(root, text='  Delete  ', command=delete)
-deletebutton.grid(row=7, column=0, padx=5, pady=10)
+deletebutton.grid(row=9, column=0, padx=5, pady=10)
 
 statbutton = tk.Button(root, text='  Status  ', command=stat)
-statbutton.grid(row=7, column=1, padx=5, pady=10)
+statbutton.grid(row=9, column=1, padx=5, pady=10)
 
 statbackbutton = tk.Button(root, text='   Back   ', command=statback)
 
 nextbutton = tk.Button(root, text='   Next   ', command=nextscramble)
-nextbutton.grid(row=7, column=2, padx=5, pady=10)
+nextbutton.grid(row=9, column=2, padx=5, pady=10)
 
 
 startbutton = tk.Button(root, text='  Start  ', command=timing)
-startbutton.grid(row=8, column=1, padx=5, pady=10)
+startbutton.grid(row=10, column=1, padx=5, pady=10)
 
 stopbutton = tk.Button(root, text='  Stop  ', command=stoptiming)
 
