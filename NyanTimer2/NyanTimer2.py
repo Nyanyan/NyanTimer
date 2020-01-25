@@ -12,12 +12,17 @@ import subprocess
 def changesession():
     sessionbutton.grid_forget()
     sessionlabel.grid_forget()
+    '''
     ao5label.grid_forget()
     timelabel.grid_forget()
     ao12label.grid_forget()
     ao5numlabel.grid_forget()
     timenumlabel.grid_forget()
     ao12numlabel.grid_forget()
+    '''
+    for i in range(3):
+        for j in range(2):
+            guiavgstatus[i][j].grid_forget()
     scramblelabel1.grid_forget()
     scramblelabel2.grid_forget()
     scramblelabel3.grid_forget()
@@ -27,6 +32,9 @@ def changesession():
     nextbutton.grid_forget()
     startbutton.grid_forget()
 
+    for i in range(len(sessions)):
+        sessionbuttons[i].grid(row=i // 3 + 1, column=i % 3, padx=5, pady=5)
+    '''
     button3x3.grid(row=1, column=0, padx=5, pady=5)
     button2x2.grid(row=1, column=1, padx=5, pady=5)
     button4x4.grid(row=1, column=2, padx=5, pady=5)
@@ -42,6 +50,7 @@ def changesession():
     buttonSquare.grid(row=5, column=0, padx=5, pady=5)
     button4BLD.grid(row=5, column=1, padx=5, pady=5)
     button5BLD.grid(row=5, column=2, padx=5, pady=5)
+    '''
 
 
 def switchsession(num):
@@ -51,12 +60,18 @@ def switchsession(num):
 
     sessionbutton.grid(row=0, column=0, padx=5, pady=0)
     sessionlabel.grid(row=0, column=1, padx=5, pady=0)
+    '''
     ao5label.grid(row=1, column=0, padx=5, pady=0)
     timelabel.grid(row=1, column=1, padx=5, pady=0)
     ao12label.grid(row=1, column=2, padx=5, pady=0)
     ao5numlabel.grid(row=2, column=0, padx=5, pady=0)
     timenumlabel.grid(row=2, column=1, padx=5, pady=0)
     ao12numlabel.grid(row=2, column=2, padx=5, pady=0)
+    '''
+    arr = [1, 0, 2]
+    for i in range(3):
+        for j in range(2):
+            guiavgstatus[arr[i]][j].grid(row=j + 1, column=i, padx=5, pady=0)
     scramblelabel1.grid(row=3, column=0, columnspan=3, padx=5, pady=0)
     scramblelabel2.grid(row=4, column=0, columnspan=3, padx=5, pady=0)
     scramblelabel3.grid(row=5, column=0, columnspan=3, padx=5, pady=0)
@@ -66,6 +81,9 @@ def switchsession(num):
     nextbutton.grid(row=7, column=2, padx=5, pady=10)
     startbutton.grid(row=8, column=1, padx=5, pady=10)
 
+    for i in range(len(sessions)):
+        sessionbuttons[i].grid_forget()
+    '''
     button3x3.grid_forget()
     button2x2.grid_forget()
     button4x4.grid_forget()
@@ -81,8 +99,9 @@ def switchsession(num):
     buttonSquare.grid_forget()
     button4BLD.grid_forget()
     button5BLD.grid_forget()
+    '''
 
-    next()
+    nextscramble()
     calctime()
 
 def delete():
@@ -110,6 +129,15 @@ def stat():
 
     statbackbutton.grid(row=0, column=0, padx=5, pady=0)
 
+    for i in range(3, len(avgnum)):
+        for j in range(2):
+            guiavgstatus[i][j].grid(row=j + 3, column=i - 3, padx=5, pady=0)
+
+    arr = [1, 0, 2, 3, 4, 5]
+    for i in range(len(avgnum)):
+        for j in range(2):
+            guibavgstatus[arr[i]][j].grid(row=j + 5 + 2 * (i // 3), column=i % 3, padx=5, pady=0)
+    '''
     ao50label.grid(row=3, column=0, padx=5, pady=0)
     ao100label.grid(row=3, column=1, padx=5, pady=0)
     ao1000label.grid(row=3, column=2, padx=5, pady=0)
@@ -130,7 +158,7 @@ def stat():
     bestao50numlabel.grid(row=8, column=0, padx=5, pady=0)
     bestao100numlabel.grid(row=8, column=1, padx=5, pady=0)
     bestao1000numlabel.grid(row=8, column=2, padx=5, pady=0)
-
+    '''
 def statback():
     statbackbutton.grid_forget()
     sessionbutton.grid(row=0, column=0, padx=5, pady=0)
@@ -143,6 +171,13 @@ def statback():
     nextbutton.grid(row=7, column=2, padx=5, pady=10)
     startbutton.grid(row=8, column=1, padx=5, pady=10)
 
+    for i in range(3, len(avgnum)):
+        for j in range(2):
+            guiavgstatus[i][j].grid_forget()
+    for i in range(len(avgnum)):
+        for j in range(2):
+            guibavgstatus[i][j].grid_forget()
+    '''
     ao50label.grid_forget()
     ao100label.grid_forget()
     ao1000label.grid_forget()
@@ -163,8 +198,9 @@ def statback():
     bestao50numlabel.grid_forget()
     bestao100numlabel.grid_forget()
     bestao1000numlabel.grid_forget()
-
-def next():
+    '''
+    
+def nextscramble():
     '''
     global scramblevar1, scramblevar2
     scramble = ""
@@ -224,12 +260,9 @@ def timing():
 
     sessionbutton.grid_forget()
     sessionlabel.grid_forget()
-    guiavgstatus[1][0].grid_forget()
-    guiavgstatus[1][1].grid_forget()
-    guiavgstatus[0][0].grid_forget()
-    guiavgstatus[0][1].grid_forget()
-    guiavgstatus[2][0].grid_forget()
-    guiavgstatus[2][1].grid_forget()
+    for i in range(3):
+        for j in range(2):
+            guiavgstatus[i][j].grid_forget()
     '''
     ao5label.grid_forget()
     timelabel.grid_forget()
@@ -521,12 +554,17 @@ def stoptiming():
     timenumlabel.grid(row=2, column=1, padx=5, pady=0)
     ao12numlabel.grid(row=2, column=2, padx=5, pady=0)
     '''
-    guiavgstatus[1][0].grid(row=1, column=0, padx=5, pady=0)
+    arr = [1, 0, 2]
+    for i in range(3):
+        for j in range(2):
+            guiavgstatus[arr[i]][j].grid(row=j + 1, column=i, padx=5, pady=0)
+    '''
     guiavgstatus[1][1].grid(row=2, column=0, padx=5, pady=0)
     guiavgstatus[0][0].grid(row=1, column=1, padx=5, pady=0)
     guiavgstatus[0][1].grid(row=2, column=1, padx=5, pady=0)
     guiavgstatus[2][0].grid(row=1, column=2, padx=5, pady=0)
     guiavgstatus[2][1].grid(row=2, column=2, padx=5, pady=0)
+    '''
 
     scramblelabel1.grid(row=3, column=0, columnspan=3, padx=5, pady=0)
     scramblelabel2.grid(row=4, column=0, columnspan=3, padx=5, pady=0)
@@ -538,7 +576,7 @@ def stoptiming():
     startbutton.grid(row=8, column=1, padx=5, pady=10)
 
     stopbutton.grid_forget()
-    next()
+    nextscramble()
 
 def calctime():
     rows = numpy.asarray(pd.read_csv('data'+sessions[session] + '.csv', header=0))
@@ -582,6 +620,9 @@ def calctime():
 def viewtime(num):
     return 0
 
+def viewbtime(num):
+    return 0
+
 root= tk.Tk()
 root.geometry('320x240')
 
@@ -616,6 +657,15 @@ for i in range(len(avgnum)):
         guiavgstatus.append([tk.Label(root, text="Ao"+str(avgnum[i])), tk.Button(root, textvariable=timestatus[i], command=lambda: viewtime(i))])
     if i == 0:
         guiavgstatus.append([tk.Label(root, text="Single"), tk.Button(root, textvariable=timestatus[i], command=lambda: viewtime(i))])
+
+btimestatus = []
+guibavgstatus = []
+for i in range(len(avgnum)):
+    btimestatus.append(tk.StringVar(master=root,value="--.---"))
+    if i > 0:
+        guibavgstatus.append([tk.Label(root, text="Best Ao"+str(avgnum[i])), tk.Button(root, textvariable=btimestatus[i], command=lambda: viewbtime(i))])
+    if i == 0:
+        guibavgstatus.append([tk.Label(root, text="Best Single"), tk.Button(root, textvariable=btimestatus[i], command=lambda: viewbtime(i))])
 
 guiavgstatus[1][0].grid(row=1, column=0, padx=5, pady=0)
 guiavgstatus[1][1].grid(row=2, column=0, padx=5, pady=0)
@@ -722,7 +772,7 @@ statbutton.grid(row=7, column=1, padx=5, pady=10)
 
 statbackbutton = tk.Button(root, text='   Back   ', command=statback)
 
-nextbutton = tk.Button(root, text='   Next   ', command=next)
+nextbutton = tk.Button(root, text='   Next   ', command=nextscramble)
 nextbutton.grid(row=7, column=2, padx=5, pady=10)
 
 
@@ -732,6 +782,10 @@ startbutton.grid(row=8, column=1, padx=5, pady=10)
 stopbutton = tk.Button(root, text='  Stop  ', command=stoptiming)
 
 
+sessionbuttons = []
+for i in range(len(sessions)):
+    sessionbuttons.append(tk.Button(root, text=sessions[i], command=lambda :switchsession(i)))
+'''
 button3x3 = tk.Button(root, text='3x3', command=lambda :switchsession(0))
 button2x2 = tk.Button(root, text='2x2', command=lambda :switchsession(1))
 button4x4 = tk.Button(root, text='4x4', command=lambda :switchsession(2))
@@ -747,9 +801,9 @@ buttonSkewb = tk.Button(root, text='Skewb', command=lambda :switchsession(11))
 buttonSquare = tk.Button(root, text='Square-1', command=lambda :switchsession(12))
 button4BLD = tk.Button(root, text='4BLD', command=lambda :switchsession(13))
 button5BLD = tk.Button(root, text='5BLD', command=lambda :switchsession(14))
+'''
 
-
-next()
+nextscramble()
 #calctime()
 
 
