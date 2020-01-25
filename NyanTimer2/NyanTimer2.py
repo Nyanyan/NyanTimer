@@ -30,7 +30,7 @@ def changesession():
 
 
 def switchsession(num):
-    print(num)
+    #print(num)
     def x():
         global session
         session = num
@@ -65,7 +65,7 @@ def delete():
     #print(rows)
     with open('data'+sessions[session] + '.csv', mode='w') as f:
         writer = csv.writer(f, lineterminator='\n')
-        writer.writerow(['Number', 'Single', 'Best Single', 'Ao5', 'Best Ao5', 'Ao12', 'Best Ao12', 'Ao50', 'Best Ao50', 'Ao100', 'Best Ao100', 'Ao1000', 'Best'])
+        writer.writerow(['Number', 'Scramble', 'Single', 'Best Single', 'Best Single No', 'Ao5', 'Best Ao5', 'Best Ao5 No', 'Ao12', 'Best Ao12', 'Best Ao12 No', 'Ao50', 'Best Ao50', 'Best Ao50 No', 'Ao100', 'Best Ao100', 'Best Ao100 No', 'Ao1000', 'Best Ao1000', 'Best Ao1000 No'])
     with open('data'+sessions[session] + '.csv', mode='a') as f:
         writer = csv.writer(f, lineterminator='\n')
         for i in range(len(rows) - 1):
@@ -219,7 +219,7 @@ def stoptiming():
                 for j in range(avgnum[i + 1] - 1):
                     times.append(rowavg[i][j][2])
                 times.append(single)
-                print(times)
+                #print(times)
                 times.sort()
                 #print(times, avgnum[i + 1])
                 exceptnum = math.ceil(avgnum[i + 1] * exceptpercentage / 100)
@@ -232,22 +232,30 @@ def stoptiming():
         #print(avg)
         with open('data'+sessions[session] + '.csv', mode='a') as f:
             writer = csv.writer(f, lineterminator='\n')
-            newrow = [number + 1, scramble, single, min(single, row1[2])]
+            no = row1[4]
+            if single < row1[3]:
+                no = number + 1
+            newrow = [number + 1, scramble, single, min(single, row1[3]), no]
             for i in range(1, len(avgnum)):
                 newrow.append(avg[i - 1])
-                tmp = min(avg[i - 1], row1[2 * i + 2])
-                if tmp == 0:
-                    tmp = avg[i - 1]
-                tmp = round(tmp, 3)
-                newrow.append(tmp)
-            print(newrow)
+                formerpb = row1[3 * i + 3]
+                pb = min(avg[i - 1], formerpb)
+                if pb == 0:
+                    pb = avg[i - 1]
+                no = row1[3 * i + 4]
+                pb = round(pb, 3)
+                if pb == avg[i - 1] and pb != formerpb:
+                    no = number + 1
+                newrow.append(pb)
+                newrow.append(no)
+            #print(newrow)
             writer.writerow(newrow)
     else:
         with open('data'+sessions[session] + '.csv', mode='a') as f:
             writer = csv.writer(f, lineterminator='\n')
-            newrow = [number + 1, scramble, single, single]
+            newrow = [number + 1, scramble, single, single, number + 1]
             for i in range(1, len(avgnum)):
-                for j in range(2):
+                for j in range(3):
                     newrow.append(0)
             writer.writerow(newrow)
     sessionbutton.grid(row=0, column=0, padx=5, pady=0)
@@ -276,12 +284,24 @@ def calctime():
         for i in range(2, number):
             row[i] = round(row[i], 3)
         for i in range(len(avgnum)):
-            if row[2 * i + 2] > 0:
-                timestatus[i].set(row[2 * i + 2])
-                btimestatus[i].set(row[2 * i + 3])
+            if row[3 * i + 2] > 0:
+                timestatus[i].set(row[3 * i + 2])
+                btimestatus[i].set(row[3 * i + 3])
             else:
                 timestatus[i].set('--.---')
                 btimestatus[i].set('--.---')
+        for i in range(len(avgnum)):
+            start = number - avgnum[i] + 1
+            if start > 0:
+                for j in range(avgnum[i]):
+                    timesstatus[i][j][0].set(rows[start + j - 1][2])
+                    timesstatus[i][j][1].set(rows[start + j - 1][1])
+        for i in range(len(avgnum)):
+            start = row[3 * i + 4] -avgnum[i] + 1
+            if start > 0:
+                for j in range(avgnum[i]):
+                    btimesstatus[i][j][0].set(rows[start + j - 1][2])
+                    btimesstatus[i][j][1].set(rows[start + j - 1][1])
     else:
         for i in range(len(avgnum)):
             timestatus[i].set('--.---')
@@ -310,7 +330,7 @@ for s in sessions:
     if not os.path.isfile('data' + s + '.csv'):
         with open('data' + s + '.csv', mode='x') as f:
             writer = csv.writer(f, lineterminator='\n')
-            writer.writerow(['Number', 'Scramble', 'Single', 'Best Single', 'Ao5', 'Best Ao5', 'Ao12', 'Best Ao12', 'Ao50', 'Best Ao50', 'Ao100', 'Best Ao100', 'Ao1000', 'Best Ao1000'])
+            writer.writerow(['Number', 'Scramble', 'Single', 'Best Single', 'Best Single No', 'Ao5', 'Best Ao5', 'Best Ao5 No', 'Ao12', 'Best Ao12', 'Best Ao12 No', 'Ao50', 'Best Ao50', 'Best Ao50 No', 'Ao100', 'Best Ao100', 'Best Ao100 No', 'Ao1000', 'Best Ao1000', 'Best Ao1000 No'])
 
 
 scramble = ''
@@ -341,6 +361,18 @@ for i in range(len(avgnum)):
         guibavgstatus.append([tk.Label(root, text="Best Ao"+str(avgnum[i])), tk.Button(root, textvariable=btimestatus[i], command=viewbtime(i))])
     if i == 0:
         guibavgstatus.append([tk.Label(root, text="Best Single"), tk.Button(root, textvariable=btimestatus[i], command=viewbtime(i))])
+
+timesstatus = []
+for i in range(len(avgnum)):
+    timesstatus.append([])
+    for j in range(avgnum[i]):
+        timesstatus[i].append([tk.StringVar(master=root, value=""), tk.StringVar(master=root, value="")])
+
+btimesstatus = []
+for i in range(len(avgnum)):
+    btimesstatus.append([])
+    for j in range(avgnum[i]):
+        btimesstatus[i].append([tk.StringVar(master=root, value=""), tk.StringVar(master=root, value="")])
 
 guiavgstatus[1][0].grid(row=1, column=0, padx=5, pady=0)
 guiavgstatus[1][1].grid(row=2, column=0, padx=5, pady=0)
