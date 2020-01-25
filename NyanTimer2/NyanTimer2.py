@@ -311,7 +311,25 @@ def calctime():
 
 def viewtime(num):
     def x():
-        return 0
+        sessionbutton.grid_forget()
+        sessionlabel.grid_forget()
+        for i in range(3):
+            for j in range(2):
+                guiavgstatus[i][j].grid_forget()
+        scramblelabel1.grid_forget()
+        scramblelabel2.grid_forget()
+        scramblelabel3.grid_forget()
+        scramblelabel4.grid_forget()
+        deletebutton.grid_forget()
+        statbutton.grid_forget()
+        nextbutton.grid_forget()
+        startbutton.grid_forget()
+
+        stopbutton.grid(row=0, column=0, padx=5, pady=10)
+
+        for j in range(avgnum[num]):
+            timesstatuslabels[num][j][0].grid(row=i + 1, column=0, padx=5, pady=5)
+            timesstatuslabels[num][j][1].grid(row=i + 1, column=1, columnspan=2, padx=5, pady=5)
     return x
 
 def viewbtime(num):
@@ -373,6 +391,18 @@ for i in range(len(avgnum)):
     btimesstatus.append([])
     for j in range(avgnum[i]):
         btimesstatus[i].append([tk.StringVar(master=root, value=""), tk.StringVar(master=root, value="")])
+
+timesstatuslabels = []
+for i in range(len(avgnum)):
+    timesstatuslabels.append([])
+    for j in range(avgnum[i]):
+        timesstatuslabels[i].append([tk.Label(root, textvariable=timesstatus[i][j][0]), tk.Label(root, textvariable=timesstatus[i][j][1])])
+
+btimesstatuslabels = []
+for i in range(len(avgnum)):
+    btimesstatuslabels.append([])
+    for j in range(avgnum[i]):
+        btimesstatuslabels[i].append([tk.Label(root, textvariable=btimesstatus[i][j][0]), tk.Label(root, textvariable=btimesstatus[i][j][1])])
 
 guiavgstatus[1][0].grid(row=1, column=0, padx=5, pady=0)
 guiavgstatus[1][1].grid(row=2, column=0, padx=5, pady=0)
