@@ -54,6 +54,7 @@ def changesession():
 
 
 def switchsession(num):
+    print(num)
     global session
     session = num
     sessionvar.set(sessions[session])
@@ -72,6 +73,7 @@ def switchsession(num):
     for i in range(3):
         for j in range(2):
             guiavgstatus[arr[i]][j].grid(row=j + 1, column=i, padx=5, pady=0)
+    
     scramblelabel1.grid(row=3, column=0, columnspan=3, padx=5, pady=0)
     scramblelabel2.grid(row=4, column=0, columnspan=3, padx=5, pady=0)
     scramblelabel3.grid(row=5, column=0, columnspan=3, padx=5, pady=0)
@@ -801,7 +803,7 @@ stopbutton = tk.Button(root, text='  Stop  ', command=stoptiming)
 
 sessionbuttons = []
 for i in range(len(sessions)):
-    sessionbuttons.append(tk.Button(root, text=sessions[i], command=lambda :switchsession(i)))
+    sessionbuttons.append(tk.Button(root, text=sessions[i], command=lambda:switchsession(i)))
 '''
 button3x3 = tk.Button(root, text='3x3', command=lambda :switchsession(0))
 button2x2 = tk.Button(root, text='2x2', command=lambda :switchsession(1))
