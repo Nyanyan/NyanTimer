@@ -61,7 +61,12 @@ def delete():
     #print(rows)
     with open('data'+sessions[session] + '.csv', mode='w') as f:
         writer = csv.writer(f, lineterminator='\n')
-        writer.writerow(['Number', 'Scramble', 'Single', 'Best Single', 'Best Single No', 'Ao5', 'Best Ao5', 'Best Ao5 No', 'Ao12', 'Best Ao12', 'Best Ao12 No', 'Ao50', 'Best Ao50', 'Best Ao50 No', 'Ao100', 'Best Ao100', 'Best Ao100 No', 'Ao1000', 'Best Ao1000', 'Best Ao1000 No'])
+        row = ['Number', 'Scramble', 'Single', 'Best Single', 'Best Single No']
+        for i in avgnum[1:]:
+            row.append('Ao' + str(i))
+            row.append('Best Ao' + str(i))
+            row.append('Best Ao' + str(i) + ' No')
+        writer.writerow(row)
     with open('data'+sessions[session] + '.csv', mode='a') as f:
         writer = csv.writer(f, lineterminator='\n')
         for i in range(len(rows) - 1):
@@ -173,10 +178,8 @@ def timing():
     for i in range(3):
         for j in range(2):
             guiavgstatus[i][j].grid_forget()
-    scramblelabel1.grid_forget()
-    scramblelabel2.grid_forget()
-    scramblelabel3.grid_forget()
-    scramblelabel4.grid_forget()
+    for i in range(scramblerows):
+        scramblelabels[i].grid_forget()
     deletebutton.grid_forget()
     statbutton.grid_forget()
     nextbutton.grid_forget()
@@ -336,7 +339,12 @@ for s in sessions:
     if not os.path.isfile('data' + s + '.csv'):
         with open('data' + s + '.csv', mode='x') as f:
             writer = csv.writer(f, lineterminator='\n')
-            writer.writerow(['Number', 'Scramble', 'Single', 'Best Single', 'Best Single No', 'Ao5', 'Best Ao5', 'Best Ao5 No', 'Ao12', 'Best Ao12', 'Best Ao12 No', 'Ao50', 'Best Ao50', 'Best Ao50 No', 'Ao100', 'Best Ao100', 'Best Ao100 No', 'Ao1000', 'Best Ao1000', 'Best Ao1000 No'])
+            row = ['Number', 'Scramble', 'Single', 'Best Single', 'Best Single No']
+            for i in avgnum[1:]:
+                row.append('Ao' + str(i))
+                row.append('Best Ao' + str(i))
+                row.append('Best Ao' + str(i) + ' No')
+            writer.writerow(row)
 
 
 scramble = ''
