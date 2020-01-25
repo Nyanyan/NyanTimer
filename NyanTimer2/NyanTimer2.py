@@ -117,6 +117,7 @@ def delete():
     calctime()
 
 def stat():
+    calctime()
     sessionbutton.grid_forget()
     scramblelabel1.grid_forget()
     scramblelabel2.grid_forget()
@@ -201,6 +202,7 @@ def statback():
     '''
     
 def nextscramble():
+    global scramble
     '''
     global scramblevar1, scramblevar2
     scramble = ""
@@ -283,7 +285,7 @@ def timing():
     stopbutton.grid(row=6, column=1, padx=5, pady=10)
 
 def stoptiming():
-    global avgnum
+    global avgnum, scramble
     exceptpercentage = 5
     stoptime = time.time()
     #print(stoptime)
@@ -331,8 +333,9 @@ def stoptiming():
             if len(rowavg[i]) == avgnum[i + 1] - 1:
                 times = []
                 for j in range(avgnum[i + 1] - 1):
-                    times.append(rowavg[i][j][1])
+                    times.append(rowavg[i][j][2])
                 times.append(single)
+                print(times)
                 times.sort()
                 #print(times, avgnum[i + 1])
                 exceptnum = math.ceil(avgnum[i + 1] * exceptpercentage / 100)
@@ -345,7 +348,7 @@ def stoptiming():
         #print(avg)
         with open('data'+sessions[session] + '.csv', mode='a') as f:
             writer = csv.writer(f, lineterminator='\n')
-            newrow = [number + 1, single, min(single, row1[2])]
+            newrow = [number + 1, scramble, single, min(single, row1[2])]
             for i in range(1, len(avgnum)):
                 newrow.append(avg[i - 1])
                 tmp = min(avg[i - 1], row1[2 * i + 2])
@@ -358,7 +361,7 @@ def stoptiming():
     else:
         with open('data'+sessions[session] + '.csv', mode='a') as f:
             writer = csv.writer(f, lineterminator='\n')
-            newrow = [number + 1, single, single]
+            newrow = [number + 1, scramble, single, single]
             for i in range(1, len(avgnum)):
                 for j in range(2):
                     newrow.append(0)
@@ -583,8 +586,16 @@ def calctime():
     number = len(rows)
     if number > 0:
         row = rows[number - 1]
-        for i in range(number):
+        for i in range(2, number):
             row[i] = round(row[i], 3)
+        for i in range(len(avgnum)):
+            if row[2 * i + 2] > 0:
+                timestatus[i].set(row[2 * i + 2])
+                btimestatus[i].set(row[2 * i + 3])
+            else:
+                timestatus[i].set('--.---')
+                btimestatus[i].set('--.---')
+        '''
         timenum.set(row[1])
         besttimenum.set(row[2])
         if row[3] != 0:
@@ -602,7 +613,13 @@ def calctime():
         if row[11] != 0:
             ao1000num.set(row[11])
             bestao1000num.set(row[12])
+        '''
     else:
+        for i in range(len(avgnum)):
+            timestatus[i].set('--.---')
+        for i in range(len(avgnum)):
+            btimestatus[i].set('--.---')
+        '''
         timenum.set('--.---')
         besttimenum.set('--:---')
         ao5num.set('--.---')
@@ -615,6 +632,7 @@ def calctime():
         bestao100num.set('--.---')
         ao1000num.set('--.---')
         bestao1000num.set('--.---')
+        '''
 
 
 def viewtime(num):
@@ -634,11 +652,10 @@ for s in sessions:
     if not os.path.isfile('data' + s + '.csv'):
         with open('data' + s + '.csv', mode='x') as f:
             writer = csv.writer(f, lineterminator='\n')
-            writer.writerow(['Number', 'Single', 'Best Single', 'Ao5', 'Best Ao5', 'Ao12', 'Best Ao12', 'Ao50', 'Best Ao50', 'Ao100', 'Best Ao100', 'Ao1000', 'Best'])
+            writer.writerow(['Number', 'Scramble', 'Single', 'Best Single', 'Ao5', 'Best Ao5', 'Ao12', 'Best Ao12', 'Ao50', 'Best Ao50', 'Ao100', 'Best Ao100', 'Ao1000', 'Best Ao1000'])
 
 
-scramble1 = ""
-scramble2 = ""
+scramble = ''
 
 
 sessionbutton = tk.Button(root, text='Session', command=changesession)
@@ -804,7 +821,7 @@ button5BLD = tk.Button(root, text='5BLD', command=lambda :switchsession(14))
 '''
 
 nextscramble()
-#calctime()
+calctime()
 
 
 root.columnconfigure(0, weight=1, uniform='group1')
