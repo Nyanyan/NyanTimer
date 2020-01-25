@@ -8,6 +8,7 @@ import math
 import os
 import pandas as pd
 import subprocess
+import urllib
 
 def changesession():
     sessionbutton.grid_forget()
@@ -55,56 +56,58 @@ def changesession():
 
 def switchsession(num):
     print(num)
-    global session
-    session = num
-    sessionvar.set(sessions[session])
+    def x():
+        global session
+        session = num
+        sessionvar.set(sessions[session])
 
-    sessionbutton.grid(row=0, column=0, padx=5, pady=0)
-    sessionlabel.grid(row=0, column=1, padx=5, pady=0)
-    '''
-    ao5label.grid(row=1, column=0, padx=5, pady=0)
-    timelabel.grid(row=1, column=1, padx=5, pady=0)
-    ao12label.grid(row=1, column=2, padx=5, pady=0)
-    ao5numlabel.grid(row=2, column=0, padx=5, pady=0)
-    timenumlabel.grid(row=2, column=1, padx=5, pady=0)
-    ao12numlabel.grid(row=2, column=2, padx=5, pady=0)
-    '''
-    arr = [1, 0, 2]
-    for i in range(3):
-        for j in range(2):
-            guiavgstatus[arr[i]][j].grid(row=j + 1, column=i, padx=5, pady=0)
-    
-    scramblelabel1.grid(row=3, column=0, columnspan=3, padx=5, pady=0)
-    scramblelabel2.grid(row=4, column=0, columnspan=3, padx=5, pady=0)
-    scramblelabel3.grid(row=5, column=0, columnspan=3, padx=5, pady=0)
-    scramblelabel4.grid(row=6, column=0, columnspan=3, padx=5, pady=0)
-    deletebutton.grid(row=7, column=0, padx=5, pady=10)
-    statbutton.grid(row=7, column=1, padx=5, pady=10)
-    nextbutton.grid(row=7, column=2, padx=5, pady=10)
-    startbutton.grid(row=8, column=1, padx=5, pady=10)
+        sessionbutton.grid(row=0, column=0, padx=5, pady=0)
+        sessionlabel.grid(row=0, column=1, padx=5, pady=0)
+        '''
+        ao5label.grid(row=1, column=0, padx=5, pady=0)
+        timelabel.grid(row=1, column=1, padx=5, pady=0)
+        ao12label.grid(row=1, column=2, padx=5, pady=0)
+        ao5numlabel.grid(row=2, column=0, padx=5, pady=0)
+        timenumlabel.grid(row=2, column=1, padx=5, pady=0)
+        ao12numlabel.grid(row=2, column=2, padx=5, pady=0)
+        '''
+        arr = [1, 0, 2]
+        for i in range(3):
+            for j in range(2):
+                guiavgstatus[arr[i]][j].grid(row=j + 1, column=i, padx=5, pady=0)
+        
+        scramblelabel1.grid(row=3, column=0, columnspan=3, padx=5, pady=0)
+        scramblelabel2.grid(row=4, column=0, columnspan=3, padx=5, pady=0)
+        scramblelabel3.grid(row=5, column=0, columnspan=3, padx=5, pady=0)
+        scramblelabel4.grid(row=6, column=0, columnspan=3, padx=5, pady=0)
+        deletebutton.grid(row=7, column=0, padx=5, pady=10)
+        statbutton.grid(row=7, column=1, padx=5, pady=10)
+        nextbutton.grid(row=7, column=2, padx=5, pady=10)
+        startbutton.grid(row=8, column=1, padx=5, pady=10)
 
-    for i in range(len(sessions)):
-        sessionbuttons[i].grid_forget()
-    '''
-    button3x3.grid_forget()
-    button2x2.grid_forget()
-    button4x4.grid_forget()
-    button5x5.grid_forget()
-    button6x6.grid_forget()
-    button7x7.grid_forget()
-    button3BLD.grid_forget()
-    button3OH.grid_forget()
-    buttonClock.grid_forget()
-    buttonMega.grid_forget()
-    buttonPyra.grid_forget()
-    buttonSkewb.grid_forget()
-    buttonSquare.grid_forget()
-    button4BLD.grid_forget()
-    button5BLD.grid_forget()
-    '''
+        for i in range(len(sessions)):
+            sessionbuttons[i].grid_forget()
+        '''
+        button3x3.grid_forget()
+        button2x2.grid_forget()
+        button4x4.grid_forget()
+        button5x5.grid_forget()
+        button6x6.grid_forget()
+        button7x7.grid_forget()
+        button3BLD.grid_forget()
+        button3OH.grid_forget()
+        buttonClock.grid_forget()
+        buttonMega.grid_forget()
+        buttonPyra.grid_forget()
+        buttonSkewb.grid_forget()
+        buttonSquare.grid_forget()
+        button4BLD.grid_forget()
+        button5BLD.grid_forget()
+        '''
 
-    nextscramble()
-    calctime()
+        nextscramble()
+        calctime()
+    return x
 
 def delete():
     rows = numpy.asarray(pd.read_csv('data'+sessions[session] + '.csv',header=0))
@@ -238,7 +241,10 @@ def nextscramble():
     #res = subprocess.call('java -jar TNoodle-WCA-0.15.1.jar')
     #print(res)
     string = ['333', '222', '444', '555', '666', '777', '333ni', '333', 'clock', 'minx', 'pyram', 'skewb', 'sq1', '444ni', '555ni']
-    scramble = subprocess.check_output('curl "http://localhost:2014/scramble/.txt?e=' + string[session] + '"', shell=True).decode('utf8', 'ignore').rstrip(os.linesep)
+    response = urllib.request.urlopen('http://localhost:2014/scramble/.txt?e=' + string[session])
+    scramble = response.read().decode('utf8', 'ignore').rstrip(os.linesep)
+    response.close()
+    #scramble = subprocess.check_output('curl "http://localhost:2014/scramble/.txt?e=' + string[session] + '"', shell=False).decode('utf8', 'ignore').rstrip(os.linesep)
     print(scramble)
     l = 0
     j = 0
@@ -803,7 +809,7 @@ stopbutton = tk.Button(root, text='  Stop  ', command=stoptiming)
 
 sessionbuttons = []
 for i in range(len(sessions)):
-    sessionbuttons.append(tk.Button(root, text=sessions[i], command=lambda:switchsession(i)))
+    sessionbuttons.append(tk.Button(root, text=sessions[i], command=switchsession(i)))
 '''
 button3x3 = tk.Button(root, text='3x3', command=lambda :switchsession(0))
 button2x2 = tk.Button(root, text='2x2', command=lambda :switchsession(1))
