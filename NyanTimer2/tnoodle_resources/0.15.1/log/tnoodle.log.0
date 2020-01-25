@@ -46,3 +46,8 @@ WARNING 1 1579878015832 net.gnehzr.tnoodle.utils.Launcher:wrapMain C:\Program Fi
 INFO 1 1579878015833 net.gnehzr.tnoodle.utils.Launcher:wrapMain needsReExecing: false 
 INFO 1 1579878016183 net.gnehzr.tnoodle.server.TNoodleServer:<init> Could not find class org.h2.Driver, so we're not creating an entry in JNDI for a db. 
 INFO 1 1579878017187 net.gnehzr.tnoodle.server.TNoodleServer:openTabInBrowser Attempting to open http://localhost:2014 in browser. 
+INFO 1 1579953273726 net.gnehzr.tnoodle.utils.Launcher:wrapMain Detected os: Windows 10 
+WARNING 1 1579953273728 net.gnehzr.tnoodle.utils.Launcher:wrapMain C:\Program Files (x86)\Java\jdk13.0.2\temp-launcher is not a directory. 
+INFO 1 1579953273729 net.gnehzr.tnoodle.utils.Launcher:wrapMain needsReExecing: false 
+INFO 1 1579953274013 net.gnehzr.tnoodle.server.TNoodleServer:<init> Could not find class org.h2.Driver, so we're not creating an entry in JNDI for a db. 
+INFO 1 1579953274496 net.gnehzr.tnoodle.server.TNoodleServer:openTabInBrowser Attempting to open http://localhost:2014 in browser. 

@@ -287,14 +287,16 @@ def calctime():
             start = number - avgnum[i] + 1
             if start > 0:
                 for j in range(avgnum[i]):
-                    timesstatus[i][j][0].set(rows[start + j - 1][2])
-                    timesstatus[i][j][1].set(rows[start + j - 1][1])
+                    timesstatus[i][j] = str(round(rows[start + j - 1][2], 3)) + ': ' + rows[start + j - 1][1]
+                    #timesstatus[i][j][1].set(rows[start + j - 1][1])
+        '''
         for i in range(len(avgnum)):
             start = row[3 * i + 4] -avgnum[i] + 1
             if start > 0:
                 for j in range(avgnum[i]):
                     btimesstatus[i][j][0].set(rows[start + j - 1][2])
                     btimesstatus[i][j][1].set(rows[start + j - 1][1])
+        '''
     else:
         for i in range(len(avgnum)):
             timestatus[i].set('--.---')
@@ -316,12 +318,33 @@ def viewtime(num):
         nextbutton.grid_forget()
         startbutton.grid_forget()
 
-        stopbutton.grid(row=0, column=0, padx=5, pady=10)
+        endviewtimebutton.pack()
 
-        for j in range(avgnum[num]):
-            timesstatuslabels[num][j][0].grid(row=i + 1, column=0, padx=5, pady=5)
-            timesstatuslabels[num][j][1].grid(row=i + 1, column=1, columnspan=2, padx=5, pady=5)
+        scrollbar_frame.pack_propagate(0)
+        scrollbar_frame.grid(row=1, column=0, columnspan=2, rowspan=9, padx=0, pady=0)
+        scroll_bary.pack(side=tk.RIGHT,fill=tk.Y)
+        scroll_barx.pack(side=tk.TOP,fill=tk.X)
+        listbox2.delete(0, 'end')
+        for i in range(avgnum[num]):
+            listbox2.insert(tk.END, timesstatus[num][i])
+        listbox2.pack(fill=tk.BOTH)
     return x
+
+def endviewtime():
+    scrollbar_frame.grid_forget()
+
+    sessionbutton.grid(row=0, column=0, padx=5, pady=0)
+    sessionlabel.grid(row=0, column=1, padx=5, pady=0)
+    arr = [1, 0, 2]
+    for i in range(3):
+        for j in range(2):
+            guiavgstatus[arr[i]][j].grid(row=j + 1, column=i, padx=5, pady=0)
+    for i in range(scramblerows):
+        scramblelabels[i].grid(row=3+i, column=0, columnspan=3, padx=0, pady=0)
+    deletebutton.grid(row=9, column=0, padx=5, pady=10)
+    statbutton.grid(row=9, column=1, padx=5, pady=10)
+    nextbutton.grid(row=9, column=2, padx=5, pady=10)
+    startbutton.grid(row=10, column=1, padx=5, pady=10)
 
 def viewbtime(num):
     def x():
@@ -381,6 +404,13 @@ timesstatus = []
 for i in range(len(avgnum)):
     timesstatus.append([])
     for j in range(avgnum[i]):
+        timesstatus[i].append('')
+
+'''
+timesstatus = []
+for i in range(len(avgnum)):
+    timesstatus.append([])
+    for j in range(avgnum[i]):
         timesstatus[i].append([tk.StringVar(master=root, value=""), tk.StringVar(master=root, value="")])
 
 btimesstatus = []
@@ -389,17 +419,19 @@ for i in range(len(avgnum)):
     for j in range(avgnum[i]):
         btimesstatus[i].append([tk.StringVar(master=root, value=""), tk.StringVar(master=root, value="")])
 
+
 timesstatuslabels = []
 for i in range(len(avgnum)):
     timesstatuslabels.append([])
     for j in range(avgnum[i]):
-        timesstatuslabels[i].append([tk.Label(root, textvariable=timesstatus[i][j][0], font=("",7)), tk.Label(root, textvariable=timesstatus[i][j][1], font=("",7))])
+        timesstatuslabels[i].append([tk.Label(root, textvariable=timesstatus[i][j][0]), tk.Label(root, textvariable=timesstatus[i][j][1])])
 
 btimesstatuslabels = []
 for i in range(len(avgnum)):
     btimesstatuslabels.append([])
     for j in range(avgnum[i]):
         btimesstatuslabels[i].append([tk.Label(root, textvariable=btimesstatus[i][j][0], font=("",7)), tk.Label(root, textvariable=btimesstatus[i][j][1], font=("",7))])
+'''
 
 guiavgstatus[1][0].grid(row=1, column=0, padx=5, pady=0)
 guiavgstatus[1][1].grid(row=2, column=0, padx=5, pady=0)
@@ -437,10 +469,16 @@ startbutton.grid(row=10, column=1, padx=5, pady=10)
 
 stopbutton = tk.Button(root, text='  Stop  ', command=stoptiming)
 
-
 sessionbuttons = []
 for i in range(len(sessions)):
     sessionbuttons.append(tk.Button(root, text=sessions[i], command=switchsession(i)))
+
+scrollbar_frame = tk.Frame(root, width=320, height=200)
+scrollbar_frame.propagate(False)
+listbox2 = tk.Listbox(scrollbar_frame)
+scroll_bary =tk.Scrollbar(scrollbar_frame, command=listbox2.yview, orient=tk.VERTICAL)
+scroll_barx =tk.Scrollbar(scrollbar_frame, command=listbox2.xview, orient=tk.HORIZONTAL)
+endviewtimebutton = tk.Button(scrollbar_frame, text='   Quit   ', command=endviewtime)
 
 nextscramble()
 calctime()
