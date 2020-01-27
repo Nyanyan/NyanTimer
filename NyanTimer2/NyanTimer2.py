@@ -289,14 +289,12 @@ def calctime():
                 for j in range(avgnum[i]):
                     timesstatus[i][j] = str(round(rows[start + j - 1][2], 3)) + ': ' + rows[start + j - 1][1]
                     #timesstatus[i][j][1].set(rows[start + j - 1][1])
-        '''
         for i in range(len(avgnum)):
             start = row[3 * i + 4] -avgnum[i] + 1
             if start > 0:
                 for j in range(avgnum[i]):
-                    btimesstatus[i][j][0].set(rows[start + j - 1][2])
-                    btimesstatus[i][j][1].set(rows[start + j - 1][1])
-        '''
+                    btimesstatus[i][j] = str(round(rows[start + j - 1][2], 3)) + ': ' + rows[start + j - 1][1]
+                    #btimesstatus[i][j][1].set(rows[start + j - 1][1])
     else:
         for i in range(len(avgnum)):
             timestatus[i].set('--.---')
@@ -317,8 +315,20 @@ def viewtime(num):
         statbutton.grid_forget()
         nextbutton.grid_forget()
         startbutton.grid_forget()
+        statbackbutton.grid_forget()
+        for i in range(len(avgnum)):
+            for j in range(2):
+                guiavgstatus[i][j].grid_forget()
+        for i in range(len(avgnum)):
+            for j in range(2):
+                guibavgstatus[i][j].grid_forget()
 
         endviewtimebutton.pack()
+        if avgnum[num] == 1:
+            viewlabelvar.set("Single")
+        else:
+            viewlabelvar.set("Ao" + str(avgnum[num]))
+        viewlabel.pack()
 
         scrollbar_frame.pack_propagate(0)
         scrollbar_frame.grid(row=1, column=0, columnspan=2, rowspan=9, padx=0, pady=0)
@@ -327,6 +337,44 @@ def viewtime(num):
         listbox2.delete(0, 'end')
         for i in range(avgnum[num]):
             listbox2.insert(tk.END, timesstatus[num][i])
+        listbox2.pack(fill=tk.BOTH)
+    return x
+
+def viewbtime(num):
+    def x():
+        sessionbutton.grid_forget()
+        sessionlabel.grid_forget()
+        for i in range(3):
+            for j in range(2):
+                guiavgstatus[i][j].grid_forget()
+        for i in range(scramblerows):
+            scramblelabels[i].grid_forget()
+        deletebutton.grid_forget()
+        statbutton.grid_forget()
+        nextbutton.grid_forget()
+        startbutton.grid_forget()
+        statbackbutton.grid_forget()
+        for i in range(len(avgnum)):
+            for j in range(2):
+                guiavgstatus[i][j].grid_forget()
+        for i in range(len(avgnum)):
+            for j in range(2):
+                guibavgstatus[i][j].grid_forget()
+
+        endviewtimebutton.pack()
+        if avgnum[num] == 1:
+            viewlabelvar.set("Best Single")
+        else:
+            viewlabelvar.set("Best Ao" + str(avgnum[num]))
+        viewlabel.pack()
+
+        scrollbar_frame.pack_propagate(0)
+        scrollbar_frame.grid(row=1, column=0, columnspan=2, rowspan=9, padx=0, pady=0)
+        scroll_bary.pack(side=tk.RIGHT,fill=tk.Y)
+        scroll_barx.pack(side=tk.TOP,fill=tk.X)
+        listbox2.delete(0, 'end')
+        for i in range(avgnum[num]):
+            listbox2.insert(tk.END, btimesstatus[num][i])
         listbox2.pack(fill=tk.BOTH)
     return x
 
@@ -346,10 +394,6 @@ def endviewtime():
     nextbutton.grid(row=9, column=2, padx=5, pady=10)
     startbutton.grid(row=10, column=1, padx=5, pady=10)
 
-def viewbtime(num):
-    def x():
-        return 0
-    return x
 
 root= tk.Tk()
 root.geometry('320x240')
@@ -405,6 +449,12 @@ for i in range(len(avgnum)):
     timesstatus.append([])
     for j in range(avgnum[i]):
         timesstatus[i].append('')
+
+btimesstatus = []
+for i in range(len(avgnum)):
+    btimesstatus.append([])
+    for j in range(avgnum[i]):
+        btimesstatus[i].append('')
 
 '''
 timesstatus = []
@@ -479,6 +529,8 @@ listbox2 = tk.Listbox(scrollbar_frame)
 scroll_bary =tk.Scrollbar(scrollbar_frame, command=listbox2.yview, orient=tk.VERTICAL)
 scroll_barx =tk.Scrollbar(scrollbar_frame, command=listbox2.xview, orient=tk.HORIZONTAL)
 endviewtimebutton = tk.Button(scrollbar_frame, text='   Quit   ', command=endviewtime)
+viewlabelvar = tk.StringVar(master=scrollbar_frame,value='')
+viewlabel = tk.Label(scrollbar_frame, textvariable=viewlabelvar)
 
 nextscramble()
 calctime()
