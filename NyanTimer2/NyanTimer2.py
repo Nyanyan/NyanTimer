@@ -456,33 +456,6 @@ for i in range(len(avgnum)):
     for j in range(avgnum[i]):
         btimesstatus[i].append('')
 
-'''
-timesstatus = []
-for i in range(len(avgnum)):
-    timesstatus.append([])
-    for j in range(avgnum[i]):
-        timesstatus[i].append([tk.StringVar(master=root, value=""), tk.StringVar(master=root, value="")])
-
-btimesstatus = []
-for i in range(len(avgnum)):
-    btimesstatus.append([])
-    for j in range(avgnum[i]):
-        btimesstatus[i].append([tk.StringVar(master=root, value=""), tk.StringVar(master=root, value="")])
-
-
-timesstatuslabels = []
-for i in range(len(avgnum)):
-    timesstatuslabels.append([])
-    for j in range(avgnum[i]):
-        timesstatuslabels[i].append([tk.Label(root, textvariable=timesstatus[i][j][0]), tk.Label(root, textvariable=timesstatus[i][j][1])])
-
-btimesstatuslabels = []
-for i in range(len(avgnum)):
-    btimesstatuslabels.append([])
-    for j in range(avgnum[i]):
-        btimesstatuslabels[i].append([tk.Label(root, textvariable=btimesstatus[i][j][0], font=("",7)), tk.Label(root, textvariable=btimesstatus[i][j][1], font=("",7))])
-'''
-
 guiavgstatus[1][0].grid(row=1, column=0, padx=5, pady=0)
 guiavgstatus[1][1].grid(row=2, column=0, padx=5, pady=0)
 
