@@ -288,13 +288,11 @@ def calctime():
             if start > 0:
                 for j in range(avgnum[i]):
                     timesstatus[i][j] = str(round(rows[start + j - 1][2], 3)) + ': ' + rows[start + j - 1][1]
-                    #timesstatus[i][j][1].set(rows[start + j - 1][1])
         for i in range(len(avgnum)):
             start = row[3 * i + 4] -avgnum[i] + 1
             if start > 0:
                 for j in range(avgnum[i]):
                     btimesstatus[i][j] = str(round(rows[start + j - 1][2], 3)) + ': ' + rows[start + j - 1][1]
-                    #btimesstatus[i][j][1].set(rows[start + j - 1][1])
     else:
         for i in range(len(avgnum)):
             timestatus[i].set('--.---')
@@ -304,6 +302,7 @@ def calctime():
 
 def viewtime(num):
     def x():
+        calctime()
         sessionbutton.grid_forget()
         sessionlabel.grid_forget()
         for i in range(3):
@@ -325,9 +324,9 @@ def viewtime(num):
 
         endviewtimebutton.pack()
         if avgnum[num] == 1:
-            viewlabelvar.set("Single")
+            viewlabelvar.set("Single " + timestatus[num].get())
         else:
-            viewlabelvar.set("Ao" + str(avgnum[num]))
+            viewlabelvar.set("Ao" + str(avgnum[num]) + ' ' + timestatus[num].get())
         viewlabel.pack()
 
         scrollbar_frame.pack_propagate(0)
@@ -342,6 +341,7 @@ def viewtime(num):
 
 def viewbtime(num):
     def x():
+        calctime()
         sessionbutton.grid_forget()
         sessionlabel.grid_forget()
         for i in range(3):
@@ -363,9 +363,9 @@ def viewbtime(num):
 
         endviewtimebutton.pack()
         if avgnum[num] == 1:
-            viewlabelvar.set("Best Single")
+            viewlabelvar.set("Best Single " + btimestatus[num].get())
         else:
-            viewlabelvar.set("Best Ao" + str(avgnum[num]))
+            viewlabelvar.set("Best Ao" + str(avgnum[num]) + ' ' + btimestatus[num].get())
         viewlabel.pack()
 
         scrollbar_frame.pack_propagate(0)
