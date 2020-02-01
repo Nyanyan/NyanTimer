@@ -326,13 +326,12 @@ void timer() {
         if (i >= waitingthreshold)  //timer is able to start
           NyanTimer::stat = 'A';
       } else if ((inspmode == 1 && inspstat == 0) || (inspmode == 2 && inspstat == 0)) { //inspstatection mode
-        int i = 0;
-        int waitingthreshold = 15;
-        while (NyanTimer::touch() == 1 && i < waitingthreshold) { //wait about 0.55sec
-          i++;
-          delay(1);
+        unsigned long strt = millis();
+        unsigned long stp = strt;
+        while (NyanTimer::touch() == 1 && stp - strt <= 550){ //wait about 0.55sec
+          stp = millis();
         }
-        if (i >= waitingthreshold) { //timer is able to start
+        if (stp - strt < 550) { //timer is able to start
           inspstat = 1;
           ledr = 1;
           ledg = 0;
