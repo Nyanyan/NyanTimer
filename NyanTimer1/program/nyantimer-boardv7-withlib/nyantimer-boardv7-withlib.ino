@@ -297,11 +297,10 @@ void timer() {
         ledr = 1;
         ledg = 0;
         convertLED();
-        int waitingthreshold = 5;
-        int i = 0;
-        while (NyanTimer::touch() == 1 && i < waitingthreshold) { //wait about 0.55sec
-          i++;
-          delay(1);
+        unsigned long strt = millis();
+        unsigned long stp = strt;
+        while (NyanTimer::touch() == 1 && stp - strt <= 550) { //wait about 0.55sec
+          stp = millis();
           if (inspmode == 2) {
             if (inspstatcount > 0 && inspstatcount < 16) {
               String inspstatcountstr = String(int(inspstatcount / 10)) + String(inspstatcount - 10 * int(inspstatcount / 10));
@@ -323,15 +322,14 @@ void timer() {
             digitalWrite(BUZZER, buz);
           }
         }
-        if (i >= waitingthreshold)  //timer is able to start
+        if (strt - stp >= 550)  //timer is able to start
           NyanTimer::stat = 'A';
       } else if ((inspmode == 1 && inspstat == 0) || (inspmode == 2 && inspstat == 0)) { //inspstatection mode
         unsigned long strt = millis();
         unsigned long stp = strt;
-        while (NyanTimer::touch() == 1 && stp - strt <= 550){ //wait about 0.55sec
+        while (NyanTimer::touch() == 1 && stp - strt <= 550) //wait about 0.55sec
           stp = millis();
-        }
-        if (stp - strt < 550) { //timer is able to start
+        if (stp - strt >= 550) { //timer is able to start
           inspstat = 1;
           ledr = 1;
           ledg = 0;
