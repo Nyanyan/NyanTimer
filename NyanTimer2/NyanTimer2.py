@@ -270,7 +270,9 @@ def stoptiming(tim):
     nextbutton.grid(row=9, column=2, padx=5, pady=10)
     startbutton.grid(row=10, column=1, padx=5, pady=10)
 
-    stopbutton.grid_forget()
+    for i in range(30):
+        ser.write('y'.encode())
+    #stopbutton.grid_forget()
     nextscramble()
 
 def calctime():
@@ -414,7 +416,15 @@ def mainprocessing():
             for i in range(1, 7):
                 checksum += int(line[i])
             if chr(checksum) == line[7]:
-                if 
+                status = line[0]
+                tim = int(line[1:7])
+                print(status, tim)
+                if status == ' ':
+                    timing(tim)
+                    stopflag = True
+                elif status == 'S' and stopflag:
+                    stoptiming(tim)
+                    stopflag = False
     root.after(1,mainprocessing)
 
 ser=serial.Serial('/dev/serial0', 1200, timeout=10)
@@ -440,6 +450,9 @@ for s in sessions:
 
 
 scramble = ''
+
+
+stopflag = False
 
 
 sessionbutton = tk.Button(root, text='Session', command=changesession)
