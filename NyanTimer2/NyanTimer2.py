@@ -9,6 +9,7 @@ import os
 import pandas as pd
 import subprocess
 import urllib
+import serial
 
 def changesession():
     sessionbutton.grid_forget()
@@ -168,9 +169,9 @@ def nextscramble():
         scramblevars[i].set(scrambles[i])
 
 
-def timing():
-    global starttime
-    starttime = time.time()
+def timing(tim):
+    #global starttime
+    #starttime = time.time()
     #print(starttime)
 
     sessionbutton.grid_forget()
@@ -185,14 +186,17 @@ def timing():
     nextbutton.grid_forget()
     startbutton.grid_forget()
 
-    stopbutton.grid(row=6, column=1, padx=5, pady=10)
+    timingvar.set(str(tim))
+    timinglabel.grid(row=0, column=1, padx=5, pady=10)
+    #stopbutton.grid(row=6, column=1, padx=5, pady=10)
 
-def stoptiming():
+def stoptiming(tim):
     global avgnum, scramble
     exceptpercentage = 5
-    stoptime = time.time()
+    #stoptime = time.time()
     #print(stoptime)
-    single = math.floor((stoptime - starttime) * pow(10,3)) / pow(10, 3)
+    #single = math.floor((stoptime - starttime) * pow(10,3)) / pow(10, 3)
+    single = math.floor((tim) * pow(10,3)) / pow(10, 3)
     print(single)
     #timenum.set(str(tmp))
     timestatus[0].set(str(single))
@@ -395,6 +399,26 @@ def endviewtime():
     startbutton.grid(row=10, column=1, padx=5, pady=10)
 
 
+def mainprocessing():
+    line = ser.readline().decode('utf8', 'ignore').rstrip(os.linesep)
+    if len(line) == 8:
+        flag = True:
+        for i in range(1, 7):
+            tmp = False
+            for j in range(10):
+                if line[i] == str(j):
+                    tmp = True
+            flag = tmp
+        if flag:
+            checksum = 0
+            for i in range(1, 7):
+                checksum += int(line[i])
+            if chr(checksum) == line[7]:
+                if 
+    root.after(1,mainprocessing)
+
+ser=serial.Serial('/dev/serial0', 1200, timeout=10)
+
 root= tk.Tk()
 root.geometry('320x240')
 #root.attributes("-fullscreen", True)
@@ -487,10 +511,10 @@ nextbutton = tk.Button(root, text='   Next   ', command=nextscramble)
 nextbutton.grid(row=9, column=2, padx=5, pady=10)
 
 
-startbutton = tk.Button(root, text='  Start  ', command=timing)
-startbutton.grid(row=10, column=1, padx=5, pady=10)
+#startbutton = tk.Button(root, text='  Start  ', command=timing)
+#startbutton.grid(row=10, column=1, padx=5, pady=10)
 
-stopbutton = tk.Button(root, text='  Stop  ', command=stoptiming)
+#stopbutton = tk.Button(root, text='  Stop  ', command=stoptiming)
 
 sessionbuttons = []
 for i in range(len(sessions)):
@@ -505,6 +529,10 @@ endviewtimebutton = tk.Button(scrollbar_frame, text='   Quit   ', command=endvie
 viewlabelvar = tk.StringVar(master=scrollbar_frame,value='')
 viewlabel = tk.Label(scrollbar_frame, textvariable=viewlabelvar)
 
+timingvar = tk.StringVar(master=root,value='')
+timinglabel = tk.Label(root, textvariable=timinglabel)
+
+
 nextscramble()
 calctime()
 
@@ -513,5 +541,5 @@ root.columnconfigure(0, weight=1, uniform='group1')
 root.columnconfigure(1, weight=1, uniform='group1')
 root.columnconfigure(2, weight=1, uniform='group1')
 
-
+root.after(1,mainprocessing)
 root.mainloop()
