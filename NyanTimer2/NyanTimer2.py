@@ -185,7 +185,7 @@ def timing(tim):
     statbutton.grid_forget()
     nextbutton.grid_forget()
     #startbutton.grid_forget()
-    labelvar = tim[0] + ':' + tim[1:2] + '.' + tim[3:]
+    labelvar = tim[0] + ':' + tim[1:3] + '.' + tim[3:6]
     timingvar.set(labelvar)
     timinglabel.grid(row=0, column=1, padx=5, pady=10)
     #stopbutton.grid(row=6, column=1, padx=5, pady=10)
@@ -196,7 +196,7 @@ def stoptiming(tim):
     #stoptime = time.time()
     #print(stoptime)
     #single = math.floor((stoptime - starttime) * pow(10,3)) / pow(10, 3)
-    single = tim[0] + ':' + tim[1:2] + '.' + tim[3:]
+    single = tim[0] + ':' + tim[1:3] + '.' + tim[3:6]
     print(single)
     #timenum.set(str(tmp))
     timestatus[0].set(single)
@@ -210,6 +210,9 @@ def stoptiming(tim):
         rowavg = []
         for i in avgnum[1:]:
             rowavg.append(rows[max(0, number - i + 1):])
+        for i in range(2, len(row1)):
+            if i % 3 != 1:
+                row1[i] = float(int(row1[0]) * 60 + int(row1[2:4]) + int(row1[5:8]) / 1000)
         avg = []
         for i in range(len(avgnum) - 1):
             aox = 0
@@ -218,7 +221,7 @@ def stoptiming(tim):
                 for j in range(avgnum[i + 1] - 1):
                     timtmp = float(int(rowavg[i][j][2][0]) * 60 + int(rowavg[i][j][2][2:4]) + int(rowavg[i][j][2][5:8]) / 1000)
                     times.append(timtmp)
-                times.append(single)
+                times.append(float(int(single[0]) * 60 + int(single[2:4]) + int(single[5:8]) / 1000))
                 #print(times)
                 times.sort()
                 #print(times, avgnum[i + 1])
@@ -227,7 +230,8 @@ def stoptiming(tim):
                     aox += times[j]
                 aox /= avgnum[i + 1] - 2 * exceptnum
                 aox = math.floor(aox * 1000) / 1000
-                timestatus[i + 1].set(str(round(aox, 3)))
+                aoxstr = str(aox // 60) + ':' + str(aox - aox // 60)
+                timestatus[i + 1].set(str(round(aoxstr, 3)))
             avg.append(aox)
         #print(avg)
         with open('data'+sessions[session] + '.csv', mode='a') as f:
@@ -246,7 +250,8 @@ def stoptiming(tim):
                 pb = round(pb, 3)
                 if pb == avg[i - 1] and pb != formerpb:
                     no = number + 1
-                newrow.append(pb)
+                pbstr = str(pb // 60) + ':' + str(pb - pb // 60)
+                newrow.append(pbstr)
                 newrow.append(no)
             #print(newrow)
             writer.writerow(newrow)
@@ -258,6 +263,7 @@ def stoptiming(tim):
                 for j in range(3):
                     newrow.append(0)
             writer.writerow(newrow)
+    timinglabel.grid_forget()
     sessionbutton.grid(row=0, column=0, padx=5, pady=0)
     sessionlabel.grid(row=0, column=1, padx=5, pady=0)
     arr = [1, 0, 2]
@@ -274,7 +280,6 @@ def stoptiming(tim):
     for i in range(30):
         ser.write('y'.encode())
     #stopbutton.grid_forget()
-    timinglabel.grid_forget()
     nextscramble()
 
 def calctime():
