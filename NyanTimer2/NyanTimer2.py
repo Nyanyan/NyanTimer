@@ -403,8 +403,9 @@ def endviewtime():
 
 def mainprocessing():
     line = ser.readline().decode('utf8', 'ignore').rstrip(os.linesep)
+    print(line, len(line))
     if len(line) == 8:
-        flag = True:
+        flag = True
         for i in range(1, 7):
             tmp = False
             for j in range(10):
@@ -543,7 +544,7 @@ viewlabelvar = tk.StringVar(master=scrollbar_frame,value='')
 viewlabel = tk.Label(scrollbar_frame, textvariable=viewlabelvar)
 
 timingvar = tk.StringVar(master=root,value='')
-timinglabel = tk.Label(root, textvariable=timinglabel)
+timinglabel = tk.Label(root, textvariable=timingvar)
 
 
 nextscramble()
