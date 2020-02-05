@@ -184,9 +184,9 @@ def timing(tim):
     deletebutton.grid_forget()
     statbutton.grid_forget()
     nextbutton.grid_forget()
-    startbutton.grid_forget()
-
-    timingvar.set(str(tim))
+    #startbutton.grid_forget()
+    labelvar = tim[0] + ':' + tim[1:2] + '.' + tim[3:]
+    timingvar.set(labelvar)
     timinglabel.grid(row=0, column=1, padx=5, pady=10)
     #stopbutton.grid(row=6, column=1, padx=5, pady=10)
 
@@ -196,10 +196,10 @@ def stoptiming(tim):
     #stoptime = time.time()
     #print(stoptime)
     #single = math.floor((stoptime - starttime) * pow(10,3)) / pow(10, 3)
-    single = math.floor((tim) * pow(10,3)) / pow(10, 3)
+    single = tim[0] + ':' + tim[1:2] + '.' + tim[3:]
     print(single)
     #timenum.set(str(tmp))
-    timestatus[0].set(str(single))
+    timestatus[0].set(single)
     rows = numpy.asarray(pd.read_csv('data'+sessions[session] + '.csv', header=0))
     number = len(rows)
     #print(number)
@@ -216,7 +216,8 @@ def stoptiming(tim):
             if len(rowavg[i]) == avgnum[i + 1] - 1:
                 times = []
                 for j in range(avgnum[i + 1] - 1):
-                    times.append(rowavg[i][j][2])
+                    timtmp = float(int(rowavg[i][j][2][0]) * 60 + int(rowavg[i][j][2][2:4]) + int(rowavg[i][j][2][5:8]) / 1000)
+                    times.append(timtmp)
                 times.append(single)
                 #print(times)
                 times.sort()
@@ -273,6 +274,7 @@ def stoptiming(tim):
     for i in range(30):
         ser.write('y'.encode())
     #stopbutton.grid_forget()
+    timinglabel.grid_forget()
     nextscramble()
 
 def calctime():
@@ -402,8 +404,8 @@ def endviewtime():
 
 
 def mainprocessing():
-    line = ser.readline().decode('utf8', 'ignore').rstrip(os.linesep)
-    print(line, len(line))
+    global stopflag
+    line = ser.readline().decode('utf8', 'ignore').rstrip(os.linesep)[1:]
     if len(line) == 8:
         flag = True
         for i in range(1, 7):
@@ -413,12 +415,13 @@ def mainprocessing():
                     tmp = True
             flag = tmp
         if flag:
-            checksum = 0
+            checksum = 64
             for i in range(1, 7):
                 checksum += int(line[i])
             if chr(checksum) == line[7]:
                 status = line[0]
-                tim = int(line[1:7])
+                tim = line[1:7]
+                print(status, tim)
                 print(status, tim)
                 if status == ' ':
                     timing(tim)
