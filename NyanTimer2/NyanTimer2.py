@@ -11,6 +11,21 @@ import subprocess
 import urllib
 import serial
 
+def float2str(num):
+    vals = []
+    num = round(num, 3)
+    vals.append(int(num // 60))
+    vals.append(int(num - vals[0] * 60) // 10)
+    vals.append(int(num - vals[0] * 60) - vals[1] * 10)
+    vals.append(int((num - int(num)) * 10))
+    vals.append(int((num - int(num)) * 100) - vals[3] * 10)
+    vals.append(int((num - int(num)) * 1000) - vals[3] * 100 - vals[4] * 10)
+    #print(num, vals)
+    for i in range(len(vals)):
+        vals[i] = str(vals[i])
+    ans = vals[0] + ':' + vals[1] + vals[2] + '.' + vals[3] + vals[4] + vals[5]
+    return ans
+
 def changesession():
     sessionbutton.grid_forget()
     sessionlabel.grid_forget()
@@ -207,7 +222,9 @@ def stoptiming(tim):
     if number >= 1:
         #f = open('data'+sessions[session] + '.csv', 'r')
         #f.close()
-        row1 = rows[number - 1]
+        row1 = []
+        for i in range(len(rows[number - 1])):
+            row1.append(rows[number - 1][i])
         rowavg = []
         for i in avgnum[1:]:
             rowavg.append(rows[max(0, number - i + 1):])
@@ -231,8 +248,9 @@ def stoptiming(tim):
                     aox += times[j]
                 aox /= avgnum[i + 1] - 2 * exceptnum
                 aox = math.floor(aox * 1000) / 1000
-                aoxstr = str(aox // 60) + ':' + str(aox - aox // 60)
-                timestatus[i + 1].set(str(round(aoxstr, 3)))
+                aox = round(aox, 3)
+                aoxstr = float2str(aox)
+                timestatus[i + 1].set(aoxstr)
             avg.append(aox)
         #print(avg)
         with open('data'+sessions[session] + '.csv', mode='a') as f:
@@ -242,12 +260,13 @@ def stoptiming(tim):
             if singletime < row1[3]:
                 no = number + 1
             if singletime < row1[3]:
-                bsingle = str(singletime // 60) + ':' + str((singletime - singletime // 60) // 10) + str(singletime - singletime // 60 - ((singletime - singletime // 60) // 10) * 10) +  '.' + str((singletime - int(singletime)) * 1000 // 100) + str((singletime - int(singletime)) * 1000 // 10 - ((singletime - int(singletime)) * 1000 // 100) * 10) + str((singletime - int(singletime)) * 1000 - ((singletime - int(singletime)) * 1000 // 10) * 10)
+                bsingle = single
             else:
-                bsingle = rows[number - 1][3]
+                bsingle = str(rows[number - 1][3])
+            #print('bsingle', bsingle)
             newrow = [number + 1, scramble, single, bsingle, no]
             for i in range(1, len(avgnum)):
-                avgstr = str(avg[i - 1] // 60) + ':' + str((avg[i - 1] - avg[i - 1] // 60) // 10) + str(avg[i - 1] - avg[i - 1] // 60 - ((avg[i - 1] - avg[i - 1] // 60) // 10) * 10) +  '.' + str((avg[i - 1] - int(avg[i - 1])) * 1000 // 100) + str((avg[i - 1] - int(avg[i - 1])) * 1000 // 10 - ((avg[i - 1] - int(avg[i - 1])) * 1000 // 100) * 10) + str((avg[i - 1] - int(avg[i - 1])) * 1000 - ((avg[i - 1] - int(avg[i - 1])) * 1000 // 10) * 10)
+                avgstr = float2str(avg[i - 1])
                 newrow.append(avgstr)
                 if row1[3 * i + 3] == '0:00.000':
                     formerpb = 0
@@ -260,10 +279,10 @@ def stoptiming(tim):
                 pb = round(pb, 3)
                 if pb == avg[i - 1] and pb != formerpb:
                     no = number + 1
-                pbstr = str(pb // 60) + ':' + str((pb - pb // 60) // 10) + str(pb - pb // 60 - ((pb - pb // 60) // 10) * 10) +  '.' + str((pb - int(pb)) * 1000 // 100) + str((pb - int(pb)) * 1000 // 10 - ((pb - int(pb)) * 1000 // 100) * 10) + str((pb - int(pb)) * 1000 - ((pb - int(pb)) * 1000 // 10) * 10)
+                pbstr = float2str(pb)
                 newrow.append(pbstr)
                 newrow.append(no)
-            print(newrow)
+            #print(newrow)
             writer.writerow(newrow)
     else:
         with open('data'+sessions[session] + '.csv', mode='a') as f:
@@ -290,6 +309,7 @@ def stoptiming(tim):
 
     for i in range(30):
         ser.write('y'.encode())
+        #print('y')
     #stopbutton.grid_forget()
     nextscramble()
 
@@ -298,6 +318,7 @@ def calctime():
     number = len(rows)
     if number > 0:
         row = rows[number - 1]
+        #print(row)
         for i in range(2, len(row)):
             if i % 3 != 1:
                 row[i] = float(int(row[i][0]) * 60 + int(row[i][2]) * 10 + int(row[i][3]) + int(row[i][5]) / 10 + int(row[i][6]) / 100 + int(row[i][7]) / 1000)
@@ -314,12 +335,12 @@ def calctime():
             start = number - avgnum[i] + 1
             if start > 0:
                 for j in range(avgnum[i]):
-                    timesstatus[i][j] = str(round(rows[start + j - 1][2], 3)) + ': ' + rows[start + j - 1][1]
+                    timesstatus[i][j] = str(rows[start + j - 1][2]) + ': ' + rows[start + j - 1][1]
         for i in range(len(avgnum)):
             start = row[3 * i + 4] -avgnum[i] + 1
             if start > 0:
                 for j in range(avgnum[i]):
-                    btimesstatus[i][j] = str(round(rows[start + j - 1][2], 3)) + ': ' + rows[start + j - 1][1]
+                    btimesstatus[i][j] = str(rows[start + j - 1][2]) + ': ' + rows[start + j - 1][1]
     else:
         for i in range(len(avgnum)):
             timestatus[i].set('--.---')
