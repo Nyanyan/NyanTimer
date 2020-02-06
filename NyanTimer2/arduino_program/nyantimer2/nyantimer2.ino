@@ -41,11 +41,6 @@ void resettime() {
   NyanTimer::msecond = 0;
   for (int i = 0; i < 7; i++)
     NyanTimer::output[i] = 0;
-  for (int i = 0; i < maxlap; i++) {
-    for (int j = 0; j < 3; j++)
-      lap[i][j] = 0;
-  }
-  lapcount = 0;
 }
 
 
@@ -62,8 +57,6 @@ void timer() {
         //String lcdoutb = NyanTimer::strTime(NyanTimer::output);
         flag = true;
       }
-
-
     } else if (NyanTimer::stat == 'I' && touchnow == 1) { //timer ready to start
       if (inspmode == 0 || (inspmode == 1 && inspstat == 2) || (inspmode == 2 && inspstat == 2)) { //not inspstatection mode
         ledr = 1;
@@ -78,8 +71,6 @@ void timer() {
       }
     }
   }
-
-
 
 
   if (NyanTimer::touch() != 1) { //when pads are open
@@ -103,4 +94,9 @@ void loop() {
 
   //timer unit
   timer();
+
+  if (NyanTimer::stat == 'S' && Serial.available() > 0 && Serial.read() == 'y') {
+    resettime();
+    NyanTimer::stat = 'I';
+  }
 }

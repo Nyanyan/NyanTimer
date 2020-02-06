@@ -22,7 +22,7 @@ def changesession():
     deletebutton.grid_forget()
     statbutton.grid_forget()
     nextbutton.grid_forget()
-    startbutton.grid_forget()
+    #startbutton.grid_forget()
 
     for i in range(len(sessions)):
         sessionbuttons[i].grid(row=i // 3 + 1, column=i % 3, padx=5, pady=5)
@@ -48,7 +48,7 @@ def switchsession(num):
         deletebutton.grid(row=9, column=0, padx=5, pady=10)
         statbutton.grid(row=9, column=1, padx=5, pady=10)
         nextbutton.grid(row=9, column=2, padx=5, pady=10)
-        startbutton.grid(row=10, column=1, padx=5, pady=10)
+        #startbutton.grid(row=10, column=1, padx=5, pady=10)
 
         for i in range(len(sessions)):
             sessionbuttons[i].grid_forget()
@@ -82,7 +82,7 @@ def stat():
     deletebutton.grid_forget()
     statbutton.grid_forget()
     nextbutton.grid_forget()
-    startbutton.grid_forget()
+    #startbutton.grid_forget()
 
     statbackbutton.grid(row=0, column=0, padx=5, pady=0)
 
@@ -103,7 +103,7 @@ def statback():
     deletebutton.grid(row=9, column=0, padx=5, pady=10)
     statbutton.grid(row=9, column=1, padx=5, pady=10)
     nextbutton.grid(row=9, column=2, padx=5, pady=10)
-    startbutton.grid(row=10, column=1, padx=5, pady=10)
+    #startbutton.grid(row=10, column=1, padx=5, pady=10)
 
     for i in range(3, len(avgnum)):
         for j in range(2):
@@ -149,6 +149,7 @@ def nextscramble():
     string = ['333', '222', '444', '555', '666', '777', '333ni', '333', 'clock', 'minx', 'pyram', 'skewb', 'sq1', '444ni', '555ni']
     response = urllib.request.urlopen('http://localhost:2014/scramble/.txt?e=' + string[session])
     scramble = response.read().decode('utf8', 'ignore').rstrip(os.linesep)
+    scramble = ''.join(scramble.splitlines())
     response.close()
     #scramble = subprocess.check_output('curl "http://localhost:2014/scramble/.txt?e=' + string[session] + '"', shell=False).decode('utf8', 'ignore').rstrip(os.linesep)
     print(scramble)
@@ -212,14 +213,14 @@ def stoptiming(tim):
             rowavg.append(rows[max(0, number - i + 1):])
         for i in range(2, len(row1)):
             if i % 3 != 1:
-                row1[i] = float(int(row1[0]) * 60 + int(row1[2:4]) + int(row1[5:8]) / 1000)
+                row1[i] = float(int(row1[i][0]) * 60 + int(row1[i][2]) * 10 + int(row1[i][3]) + int(row1[i][5]) / 10 + int(row1[i][6]) / 100 + int(row1[i][7]) / 1000)
         avg = []
         for i in range(len(avgnum) - 1):
             aox = 0
             if len(rowavg[i]) == avgnum[i + 1] - 1:
                 times = []
                 for j in range(avgnum[i + 1] - 1):
-                    timtmp = float(int(rowavg[i][j][2][0]) * 60 + int(rowavg[i][j][2][2:4]) + int(rowavg[i][j][2][5:8]) / 1000)
+                    timtmp = round(float(int(rowavg[i][j][2][0]) * 60 + int(rowavg[i][j][2][2:4]) + int(rowavg[i][j][2][5:8]) / 1000), 3)
                     times.append(timtmp)
                 times.append(float(int(single[0]) * 60 + int(single[2:4]) + int(single[5:8]) / 1000))
                 #print(times)
@@ -237,12 +238,21 @@ def stoptiming(tim):
         with open('data'+sessions[session] + '.csv', mode='a') as f:
             writer = csv.writer(f, lineterminator='\n')
             no = row1[4]
-            if single < row1[3]:
+            singletime = round(float(int(tim[0]) * 60 + int(tim[1]) * 10 + int(tim[2]) + int(tim[3]) / 10 + int(tim[4]) / 100 + int(tim[5]) / 1000), 3)
+            if singletime < row1[3]:
                 no = number + 1
-            newrow = [number + 1, scramble, single, min(single, row1[3]), no]
+            if singletime < row1[3]:
+                bsingle = str(singletime // 60) + ':' + str((singletime - singletime // 60) // 10) + str(singletime - singletime // 60 - ((singletime - singletime // 60) // 10) * 10) +  '.' + str((singletime - int(singletime)) * 1000 // 100) + str((singletime - int(singletime)) * 1000 // 10 - ((singletime - int(singletime)) * 1000 // 100) * 10) + str((singletime - int(singletime)) * 1000 - ((singletime - int(singletime)) * 1000 // 10) * 10)
+            else:
+                bsingle = rows[number - 1][3]
+            newrow = [number + 1, scramble, single, bsingle, no]
             for i in range(1, len(avgnum)):
-                newrow.append(avg[i - 1])
-                formerpb = row1[3 * i + 3]
+                avgstr = str(avg[i - 1] // 60) + ':' + str((avg[i - 1] - avg[i - 1] // 60) // 10) + str(avg[i - 1] - avg[i - 1] // 60 - ((avg[i - 1] - avg[i - 1] // 60) // 10) * 10) +  '.' + str((avg[i - 1] - int(avg[i - 1])) * 1000 // 100) + str((avg[i - 1] - int(avg[i - 1])) * 1000 // 10 - ((avg[i - 1] - int(avg[i - 1])) * 1000 // 100) * 10) + str((avg[i - 1] - int(avg[i - 1])) * 1000 - ((avg[i - 1] - int(avg[i - 1])) * 1000 // 10) * 10)
+                newrow.append(avgstr)
+                if row1[3 * i + 3] == '0:00.000':
+                    formerpb = 0
+                else:
+                    formerpb = row1[3 * i + 3]
                 pb = min(avg[i - 1], formerpb)
                 if pb == 0:
                     pb = avg[i - 1]
@@ -250,18 +260,19 @@ def stoptiming(tim):
                 pb = round(pb, 3)
                 if pb == avg[i - 1] and pb != formerpb:
                     no = number + 1
-                pbstr = str(pb // 60) + ':' + str(pb - pb // 60)
+                pbstr = str(pb // 60) + ':' + str((pb - pb // 60) // 10) + str(pb - pb // 60 - ((pb - pb // 60) // 10) * 10) +  '.' + str((pb - int(pb)) * 1000 // 100) + str((pb - int(pb)) * 1000 // 10 - ((pb - int(pb)) * 1000 // 100) * 10) + str((pb - int(pb)) * 1000 - ((pb - int(pb)) * 1000 // 10) * 10)
                 newrow.append(pbstr)
                 newrow.append(no)
-            #print(newrow)
+            print(newrow)
             writer.writerow(newrow)
     else:
         with open('data'+sessions[session] + '.csv', mode='a') as f:
             writer = csv.writer(f, lineterminator='\n')
             newrow = [number + 1, scramble, single, single, number + 1]
             for i in range(1, len(avgnum)):
-                for j in range(3):
-                    newrow.append(0)
+                for j in range(2):
+                    newrow.append('0:00.000')
+                newrow.append(0)
             writer.writerow(newrow)
     timinglabel.grid_forget()
     sessionbutton.grid(row=0, column=0, padx=5, pady=0)
@@ -275,7 +286,7 @@ def stoptiming(tim):
     deletebutton.grid(row=9, column=0, padx=5, pady=10)
     statbutton.grid(row=9, column=1, padx=5, pady=10)
     nextbutton.grid(row=9, column=2, padx=5, pady=10)
-    startbutton.grid(row=10, column=1, padx=5, pady=10)
+    #startbutton.grid(row=10, column=1, padx=5, pady=10)
 
     for i in range(30):
         ser.write('y'.encode())
@@ -287,6 +298,9 @@ def calctime():
     number = len(rows)
     if number > 0:
         row = rows[number - 1]
+        for i in range(2, len(row)):
+            if i % 3 != 1:
+                row[i] = float(int(row[i][0]) * 60 + int(row[i][2]) * 10 + int(row[i][3]) + int(row[i][5]) / 10 + int(row[i][6]) / 100 + int(row[i][7]) / 1000)
         for i in range(2, number):
             row[i] = round(row[i], 3)
         for i in range(len(avgnum)):
@@ -326,7 +340,7 @@ def viewtime(num):
         deletebutton.grid_forget()
         statbutton.grid_forget()
         nextbutton.grid_forget()
-        startbutton.grid_forget()
+        #startbutton.grid_forget()
         statbackbutton.grid_forget()
         for i in range(len(avgnum)):
             for j in range(2):
@@ -365,7 +379,7 @@ def viewbtime(num):
         deletebutton.grid_forget()
         statbutton.grid_forget()
         nextbutton.grid_forget()
-        startbutton.grid_forget()
+        #startbutton.grid_forget()
         statbackbutton.grid_forget()
         for i in range(len(avgnum)):
             for j in range(2):
@@ -405,7 +419,7 @@ def endviewtime():
     deletebutton.grid(row=9, column=0, padx=5, pady=10)
     statbutton.grid(row=9, column=1, padx=5, pady=10)
     nextbutton.grid(row=9, column=2, padx=5, pady=10)
-    startbutton.grid(row=10, column=1, padx=5, pady=10)
+    #startbutton.grid(row=10, column=1, padx=5, pady=10)
 
 
 def mainprocessing():
@@ -426,8 +440,7 @@ def mainprocessing():
             if chr(checksum) == line[7]:
                 status = line[0]
                 tim = line[1:7]
-                print(status, tim)
-                print(status, tim)
+                #print(status, tim)
                 if status == ' ':
                     timing(tim)
                     stopflag = True
