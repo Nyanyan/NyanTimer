@@ -129,11 +129,10 @@ def statback():
     
 def nextscramble():
     global scramble
+
     '''
     global scramblevar1, scramblevar2
     scramble = ""
-    scramble1 = ""
-    scramble2 = ""
     pre = ""
     scramblenums = [25, 10, 40]
     rotationnum = [0,0,1]
