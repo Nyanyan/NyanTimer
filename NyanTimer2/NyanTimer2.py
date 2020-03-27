@@ -129,43 +129,11 @@ def statback():
     
 def nextscramble():
     global scramble
-
-    '''
-    global scramblevar1, scramblevar2
-    scramble = ""
-    pre = ""
-    scramblenums = [25, 10, 40]
-    rotationnum = [0,0,1]
-    rotation = rotationnum[session]
-    rotations = [['R', 'L', 'U', 'D', 'F', 'B'], ['R', 'L', 'U', 'D', 'F', 'B', 'Rw', 'Lw', 'Uw', 'Dw', 'Fw', 'Bw']]
-    adds = ['', '\'', '2']
-    for i in range(scramblenums[session]):
-        rot = rotations[rotation][random.randint(0, len(rotations[rotation]) - 1)]
-        while pre == rot:
-            rot = rotations[rotation][random.randint(0, len(rotations[rotation]) - 1)]
-        add = adds[random.randint(0, 2)]
-        scramble += rot + add + ' '
-        pre = rot
-    if len(scramble) > 40:
-        i = 40
-        while scramble[i] in adds:
-            i += 1
-        scramble1 = scramble[:i]
-        scramble2 = scramble[i:]
-    else:
-        scramble1 = scramble
-        scramble2 = ""
-    scramblevar1.set(scramble1)
-    scramblevar2.set(scramble2)
-    '''
-    #res = subprocess.call('java -jar TNoodle-WCA-0.15.1.jar')
-    #print(res)
     string = ['333', '222', '444', '555', '666', '777', '333ni', '333', 'clock', 'minx', 'pyram', 'skewb', 'sq1', '444ni', '555ni']
     response = urllib.request.urlopen('http://localhost:2014/scramble/.txt?e=' + string[session])
     scramble = response.read().decode('utf8', 'ignore').rstrip(os.linesep)
     scramble = ''.join(scramble.splitlines())
     response.close()
-    #scramble = subprocess.check_output('curl "http://localhost:2014/scramble/.txt?e=' + string[session] + '"', shell=False).decode('utf8', 'ignore').rstrip(os.linesep)
     print(scramble)
     l = 0
     j = 0
@@ -473,7 +441,7 @@ ser=serial.Serial('/dev/serial0', 1200, timeout=10)
 
 root= tk.Tk()
 root.geometry('320x240')
-#root.attributes("-fullscreen", True)
+root.attributes("-fullscreen", True)
 
 sessions = ['3x3', '2x2', '4x4', '5x5', '6x6', '7x7', '3BLD', '3OH', 'Clock', 'Megaminx', 'Pyraminx', 'Skewb', 'Square-1', '4BLD', '5BLD']
 session = 0
