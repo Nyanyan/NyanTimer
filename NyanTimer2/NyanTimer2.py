@@ -10,6 +10,7 @@ import pandas as pd
 import subprocess
 import urllib
 import serial
+import psutil
 
 def float2str(num):
     vals = []
@@ -29,6 +30,8 @@ def float2str(num):
 def changesession():
     sessionbutton.grid_forget()
     sessionlabel.grid_forget()
+    inspbutton.grid_forget()
+    insplabel.grid_forget()
     for i in range(3):
         for j in range(2):
             guiavgstatus[i][j].grid_forget()
@@ -62,6 +65,8 @@ def switchsession(num):
             scramblelabels[i].grid(row=3+i, column=0, columnspan=3, padx=0, pady=0)
         deletebutton.grid(row=9, column=0, padx=5, pady=10)
         statbutton.grid(row=9, column=1, padx=5, pady=10)
+        stopinspection()
+        inspbutton.grid(row=0, column=2, padx=5, pady=0)
         nextbutton.grid(row=9, column=2, padx=5, pady=10)
         #startbutton.grid(row=10, column=1, padx=5, pady=10)
 
@@ -92,6 +97,8 @@ def delete():
 def stat():
     calctime()
     sessionbutton.grid_forget()
+    inspbutton.grid_forget()
+    insplabel.grid_forget()
     for i in range(scramblerows):
         scramblelabels[i].grid_forget()
     deletebutton.grid_forget()
@@ -113,6 +120,8 @@ def stat():
 def statback():
     statbackbutton.grid_forget()
     sessionbutton.grid(row=0, column=0, padx=5, pady=0)
+    stopinspection()
+    inspbutton.grid(row=0, column=2, padx=5, pady=0)
     for i in range(scramblerows):
         scramblelabels[i].grid(row=3+i, column=0, columnspan=3, padx=0, pady=0)
     deletebutton.grid(row=9, column=0, padx=5, pady=10)
@@ -159,6 +168,8 @@ def timing(tim):
 
     sessionbutton.grid_forget()
     sessionlabel.grid_forget()
+    insplabel.grid_forget()
+    inspbutton.grid_forget()
     for i in range(3):
         for j in range(2):
             guiavgstatus[i][j].grid_forget()
@@ -263,6 +274,7 @@ def stoptiming(tim):
     timinglabel.grid_forget()
     sessionbutton.grid(row=0, column=0, padx=5, pady=0)
     sessionlabel.grid(row=0, column=1, padx=5, pady=0)
+    inspbutton.grid(row=0, column=2, padx=5, pady=0)
     arr = [1, 0, 2]
     for i in range(3):
         for j in range(2):
@@ -283,8 +295,10 @@ def stoptiming(tim):
 def calctime():
     rows = numpy.asarray(pd.read_csv('data'+sessions[session] + '.csv', header=0))
     number = len(rows)
+    mem = psutil.virtual_memory() 
+    print(mem.percent)
     if number > 0:
-        row = rows[number - 1]
+        row = rows[-1]
         #print(row)
         for i in range(2, len(row)):
             if i % 3 != 1:
@@ -409,6 +423,32 @@ def endviewtime():
     nextbutton.grid(row=9, column=2, padx=5, pady=10)
     #startbutton.grid(row=10, column=1, padx=5, pady=10)
 
+def startinspection():
+    global inspectiontime, inspflag
+    inspectiontime = 15
+    inspvar.set('15')
+    inspbutton.grid_forget()
+    insplabel.grid(row=0, column=2, padx=5, pady=0)
+    inspflag = True
+    root.after(1000, inspection)
+
+def stopinspection():
+    global inspflag
+    inspflag = False
+
+def inspection():
+    global inspectiontime, inspflag
+    if inspectiontime > -2:
+        inspectiontime -= 1
+    if inspectiontime > 0:
+        inspvar.set(str(inspectiontime))
+    elif -2 < inspectiontime <= 0:
+        inspvar.set('+2')
+    else:
+        inspvar.set('DNF')
+    if inspflag:
+        root.after(1000, inspection)
+
 
 def mainprocessing():
     global stopflag
@@ -416,11 +456,12 @@ def mainprocessing():
     if len(line) == 8:
         flag = True
         for i in range(1, 7):
-            tmp = False
+            flag = False
             for j in range(10):
                 if line[i] == str(j):
-                    tmp = True
-            flag = tmp
+                    flag = True
+            if not flag:
+                break
         if flag:
             checksum = 64
             for i in range(1, 7):
@@ -430,18 +471,19 @@ def mainprocessing():
                 tim = line[1:7]
                 #print(status, tim)
                 if status == ' ':
+                    stopinspection()
                     timing(tim)
                     stopflag = True
                 elif status == 'S' and stopflag:
                     stoptiming(tim)
                     stopflag = False
-    root.after(1,mainprocessing)
+    root.after(100,mainprocessing)
 
 ser=serial.Serial('/dev/serial0', 1200, timeout=10)
 
 root= tk.Tk()
 root.geometry('320x240')
-root.attributes("-fullscreen", True)
+#root.attributes("-fullscreen", True)
 
 sessions = ['3x3', '2x2', '4x4', '5x5', '6x6', '7x7', '3BLD', '3OH', 'Clock', 'Megaminx', 'Pyraminx', 'Skewb', 'Square-1', '4BLD', '5BLD']
 session = 0
@@ -464,6 +506,9 @@ scramble = ''
 
 stopflag = False
 
+inspectiontime = 15
+inspflag = False
+
 
 sessionbutton = tk.Button(root, text='Session', command=changesession)
 sessionbutton.grid(row=0, column=0, padx=5, pady=0)
@@ -473,35 +518,31 @@ sessionvar = tk.StringVar(master=root,value=sessions[session])
 sessionlabel = tk.Label(root, textvariable=sessionvar)
 sessionlabel.grid(row=0, column=1, padx=5, pady=0)
 
-timestatus = []
+inspbutton = tk.Button(root, text='Inspection', command=startinspection)
+inspbutton.grid(row=0, column=2, padx=5, pady=0)
+
+inspvar = tk.StringVar(master=root,value='15')
+insplabel = tk.Label(root, textvariable=inspvar)
+
+timestatus = [tk.StringVar(master=root,value="--.---") for _ in range(len(avgnum))]
 guiavgstatus = []
 for i in range(len(avgnum)):
-    timestatus.append(tk.StringVar(master=root,value="--.---"))
     if i > 0:
         guiavgstatus.append([tk.Label(root, text="Ao"+str(avgnum[i]), font=("",7)), tk.Button(root, textvariable=timestatus[i], command=viewtime(i), font=("",7))])
     if i == 0:
         guiavgstatus.append([tk.Label(root, text="Single", font=("",7)), tk.Button(root, textvariable=timestatus[i], command=viewtime(i), font=("",7))])
 
-btimestatus = []
+btimestatus = [tk.StringVar(master=root,value="--.---") for _ in range(len(avgnum))]
 guibavgstatus = []
 for i in range(len(avgnum)):
-    btimestatus.append(tk.StringVar(master=root,value="--.---"))
     if i > 0:
         guibavgstatus.append([tk.Label(root, text="Best Ao"+str(avgnum[i]), font=("",7)), tk.Button(root, textvariable=btimestatus[i], command=viewbtime(i), font=("",7))])
     if i == 0:
         guibavgstatus.append([tk.Label(root, text="Best Single", font=("",7)), tk.Button(root, textvariable=btimestatus[i], command=viewbtime(i), font=("",7))])
 
-timesstatus = []
-for i in range(len(avgnum)):
-    timesstatus.append([])
-    for j in range(avgnum[i]):
-        timesstatus[i].append('')
+timesstatus = [['' for _ in range(avgnum[i])] for i in range(len(avgnum))]
 
-btimesstatus = []
-for i in range(len(avgnum)):
-    btimesstatus.append([])
-    for j in range(avgnum[i]):
-        btimesstatus[i].append('')
+btimesstatus = [['' for _ in range(avgnum[i])] for i in range(len(avgnum))]
 
 guiavgstatus[1][0].grid(row=1, column=0, padx=5, pady=0)
 guiavgstatus[1][1].grid(row=2, column=0, padx=5, pady=0)
@@ -513,13 +554,10 @@ guiavgstatus[2][0].grid(row=1, column=2, padx=5, pady=0)
 guiavgstatus[2][1].grid(row=2, column=2, padx=5, pady=0)
 
 scramblerows = 6
-scramblevars = []
-for i in range(scramblerows):
-    scramblevars.append(tk.StringVar(master=root, value=''))
+scramblevars = [tk.StringVar(master=root, value='') for i in range(scramblerows)]
 
-scramblelabels = []
+scramblelabels = [tk.Label(root, textvariable=scramblevars[i], font=("",7)) for i in range(scramblerows)]
 for i in range(scramblerows):
-    scramblelabels.append(tk.Label(root, textvariable=scramblevars[i], font=("",7)))
     scramblelabels[i].grid(row=3+i, column=0, columnspan=3, padx=0, pady=0)
 
 deletebutton = tk.Button(root, text='  Delete  ', command=delete)
@@ -539,9 +577,7 @@ nextbutton.grid(row=9, column=2, padx=5, pady=10)
 
 #stopbutton = tk.Button(root, text='  Stop  ', command=stoptiming)
 
-sessionbuttons = []
-for i in range(len(sessions)):
-    sessionbuttons.append(tk.Button(root, text=sessions[i], command=switchsession(i)))
+sessionbuttons = [tk.Button(root, text=sessions[i], command=switchsession(i)) for i in range(len(sessions))]
 
 scrollbar_frame = tk.Frame(root, width=320, height=200)
 scrollbar_frame.propagate(False)
@@ -564,5 +600,5 @@ root.columnconfigure(0, weight=1, uniform='group1')
 root.columnconfigure(1, weight=1, uniform='group1')
 root.columnconfigure(2, weight=1, uniform='group1')
 
-root.after(1,mainprocessing)
+root.after(100,mainprocessing)
 root.mainloop()
