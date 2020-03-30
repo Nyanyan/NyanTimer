@@ -297,14 +297,14 @@ def calctime():
     rows = numpy.asarray(pd.read_csv('data'+sessions[session] + '.csv', header=0))
     number = len(rows)
     mem = psutil.virtual_memory() 
-    print(mem.percent)
+    print('memory used', mem.percent, '%')
     if number > 0:
         row = rows[-1]
         #print(row)
         for i in range(3, len(row)):
             if i % 3 != 1:
                 row[i] = float(int(row[i][0]) * 60 + int(row[i][2]) * 10 + int(row[i][3]) + int(row[i][5]) / 10 + int(row[i][6]) / 100 + int(row[i][7]) / 1000)
-        for i in range(2, number):
+        for i in range(3, number):
             row[i] = round(row[i], 3)
         for i in range(len(avgnum)):
             if row[3 * i + 3] > 0:
@@ -317,12 +317,12 @@ def calctime():
             start = number - avgnum[i] + 1
             if start > 0:
                 for j in range(avgnum[i]):
-                    timesstatus[i][j] = str(rows[start + j - 1][3]) + ': ' + rows[start + j - 1][1]
+                    timesstatus[i][j] = str(rows[start + j - 1][3]) + ': ' + rows[start + j - 1][0]
         for i in range(len(avgnum)):
             start = row[3 * i + 4] -avgnum[i] + 1
             if start > 0:
                 for j in range(avgnum[i]):
-                    btimesstatus[i][j] = str(rows[start + j - 1][3]) + ': ' + rows[start + j - 1][1]
+                    btimesstatus[i][j] = str(rows[start + j - 1][3]) + ': ' + rows[start + j - 1][0]
     else:
         for i in range(len(avgnum)):
             timestatus[i].set('--.---')
