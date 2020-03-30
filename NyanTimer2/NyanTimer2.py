@@ -185,7 +185,7 @@ def timing(tim):
     #stopbutton.grid(row=6, column=1, padx=5, pady=10)
 
 def stoptiming(tim):
-    global avgnum, scramble
+    global avgnum, scramble, inspectiontime
     exceptpercentage = 5
     #stoptime = time.time()
     #print(stoptime)
@@ -196,6 +196,7 @@ def stoptiming(tim):
     timestatus[0].set(single)
     rows = numpy.asarray(pd.read_csv('data'+sessions[session] + '.csv', header=0))
     number = len(rows)
+    usedinsp = 15 - inspectiontime
     #print(number)
     if number >= 1:
         #f = open('data'+sessions[session] + '.csv', 'r')
@@ -242,7 +243,7 @@ def stoptiming(tim):
             else:
                 bsingle = str(rows[number - 1][3])
             #print('bsingle', bsingle)
-            newrow = [number + 1, scramble, single, bsingle, no]
+            newrow = [number + 1, scramble, usedinsp, single, bsingle, no]
             for i in range(1, len(avgnum)):
                 avgstr = float2str(avg[i - 1])
                 newrow.append(avgstr)
@@ -265,7 +266,7 @@ def stoptiming(tim):
     else:
         with open('data'+sessions[session] + '.csv', mode='a') as f:
             writer = csv.writer(f, lineterminator='\n')
-            newrow = [number + 1, scramble, single, single, number + 1]
+            newrow = [number + 1, scramble, usedinsp, single, single, number + 1]
             for i in range(1, len(avgnum)):
                 for j in range(2):
                     newrow.append('0:00.000')
@@ -300,15 +301,15 @@ def calctime():
     if number > 0:
         row = rows[-1]
         #print(row)
-        for i in range(2, len(row)):
+        for i in range(3, len(row)):
             if i % 3 != 1:
                 row[i] = float(int(row[i][0]) * 60 + int(row[i][2]) * 10 + int(row[i][3]) + int(row[i][5]) / 10 + int(row[i][6]) / 100 + int(row[i][7]) / 1000)
         for i in range(2, number):
             row[i] = round(row[i], 3)
         for i in range(len(avgnum)):
-            if row[3 * i + 2] > 0:
-                timestatus[i].set(row[3 * i + 2])
-                btimestatus[i].set(row[3 * i + 3])
+            if row[3 * i + 3] > 0:
+                timestatus[i].set(row[3 * i + 3])
+                btimestatus[i].set(row[3 * i + 4])
             else:
                 timestatus[i].set('--.---')
                 btimestatus[i].set('--.---')
@@ -316,12 +317,12 @@ def calctime():
             start = number - avgnum[i] + 1
             if start > 0:
                 for j in range(avgnum[i]):
-                    timesstatus[i][j] = str(rows[start + j - 1][2]) + ': ' + rows[start + j - 1][1]
+                    timesstatus[i][j] = str(rows[start + j - 1][3]) + ': ' + rows[start + j - 1][1]
         for i in range(len(avgnum)):
             start = row[3 * i + 4] -avgnum[i] + 1
             if start > 0:
                 for j in range(avgnum[i]):
-                    btimesstatus[i][j] = str(rows[start + j - 1][2]) + ': ' + rows[start + j - 1][1]
+                    btimesstatus[i][j] = str(rows[start + j - 1][3]) + ': ' + rows[start + j - 1][1]
     else:
         for i in range(len(avgnum)):
             timestatus[i].set('--.---')
