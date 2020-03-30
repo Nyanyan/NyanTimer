@@ -334,6 +334,8 @@ def viewtime(num):
         calctime()
         sessionbutton.grid_forget()
         sessionlabel.grid_forget()
+        inspbutton.grid_forget()
+        insplabel.grid_forget()
         for i in range(3):
             for j in range(2):
                 guiavgstatus[i][j].grid_forget()
@@ -373,6 +375,8 @@ def viewbtime(num):
         calctime()
         sessionbutton.grid_forget()
         sessionlabel.grid_forget()
+        inspbutton.grid_forget()
+        insplabel.grid_forget()
         for i in range(3):
             for j in range(2):
                 guiavgstatus[i][j].grid_forget()
@@ -412,6 +416,8 @@ def endviewtime():
 
     sessionbutton.grid(row=0, column=0, padx=5, pady=0)
     sessionlabel.grid(row=0, column=1, padx=5, pady=0)
+    stopinspection()
+    inspbutton.grid(row=0, column=2, padx=5, pady=0)
     arr = [1, 0, 2]
     for i in range(3):
         for j in range(2):
