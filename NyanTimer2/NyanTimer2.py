@@ -454,7 +454,6 @@ def inspection():
     else:
         inspvar.set('DNF')
     if inspectiontime == 7:
-        print('8sec')
         os.system("aplay --quiet '8sec.wav' &")
     elif inspectiontime == 3:
         os.system("aplay --quiet '12sec.wav' &")
