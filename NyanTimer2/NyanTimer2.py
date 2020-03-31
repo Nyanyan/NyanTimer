@@ -684,7 +684,5 @@ root.columnconfigure(0, weight=1, uniform='group1')
 root.columnconfigure(1, weight=1, uniform='group1')
 root.columnconfigure(2, weight=1, uniform='group1')
 
-stat()
-
 root.after(100,mainprocessing)
 root.mainloop()
