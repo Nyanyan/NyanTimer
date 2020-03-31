@@ -432,7 +432,7 @@ def endviewtime():
 
 def startinspection():
     global inspectiontime, inspflag
-    inspectiontime = 15
+    inspectiontime = 14
     inspvar.set('15')
     inspbutton.grid_forget()
     insplabel.grid(row=0, column=2, padx=5, pady=0)
@@ -454,13 +454,14 @@ def inspection():
     else:
         inspvar.set('DNF')
     if inspectiontime == 7:
-        os.system("aplay --quiet '8sec.wav' ")
+        print('8sec')
+        os.system("aplay --quiet '8sec.wav' &")
     elif inspectiontime == 3:
-        os.system("aplay --quiet '12sec.wav' ")
+        os.system("aplay --quiet '12sec.wav' &")
     elif inspectiontime == 0:
-        os.system("aplay --quiet 'p2.wav' ")
+        os.system("aplay --quiet 'p2.wav' &")
     elif inspectiontime == -2:
-        os.system("aplay --quiet 'dnf.wav' ")
+        os.system("aplay --quiet 'dnf.wav' &")
     if inspflag:
         root.after(1000, inspection)
 
