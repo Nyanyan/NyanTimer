@@ -433,7 +433,7 @@ def endviewtime():
 def startinspection():
     global inspectiontime, inspflag
     inspectiontime = 14
-    inspvar.set('15')
+    inspvar.set('14')
     inspbutton.grid_forget()
     insplabel.grid(row=0, column=2, padx=5, pady=0)
     inspflag = True
