@@ -27,6 +27,12 @@ def float2str(num):
     ans = vals[0] + ':' + vals[1] + vals[2] + '.' + vals[3] + vals[4] + vals[5]
     return ans
 
+def deg(num, n):
+    res = str(num)
+    for i in range(n - len(res)):
+        res = '0' + res
+    return res
+
 def changesession():
     sessionbutton.grid_forget()
     sessionlabel.grid_forget()
@@ -161,7 +167,7 @@ def nextscramble():
         scramblevars[i].set(scrambles[i])
 
 
-def timing(tim):
+def timing():
     #global starttime
     #starttime = time.time()
     #print(starttime)
@@ -184,19 +190,20 @@ def timing(tim):
     timinglabel.grid(row=0, column=1, padx=5, pady=10)
     #stopbutton.grid(row=6, column=1, padx=5, pady=10)
 
-def stoptiming(tim):
-    global avgnum, scramble, inspectiontime
+def stoptiming():
+    global avgnum, scramble, inspectiontime, plus2flag, dnfflag
     exceptpercentage = 5
     #stoptime = time.time()
     #print(stoptime)
     #single = math.floor((stoptime - starttime) * pow(10,3)) / pow(10, 3)
-    tmp = [int(tim[0]), int(tim[1:3]), int(tin[3:6])]
+    tmp = [int(tim[0]), int(tim[1:3]), int(tim[3:6])]
+    print(tmp)
     if plus2flag:
         tmp[1] += 2
         if tmp[1] >= 60:
             tmp[1] -= 60
             tmp[0] += 1
-    single = str(tmp[0]) + ':' + str(tmp[1]) + '.' + str(tmp[2])
+    single = str(tmp[0]) + ':' + deg(tmp[1], 2) + '.' + deg(tmp[2], 3)
     if dnfflag:
         single = 'DNF'
     print(single)
@@ -216,7 +223,7 @@ def stoptiming(tim):
         for i in avgnum[1:]:
             rowavg.append(rows[max(0, number - i + 1):])
         for i in range(2, len(row1)):
-            if i % 3 != 1:
+            if i % 3 != 1 and row1[i] != 'DNF':
                 row1[i] = float(int(row1[i][0]) * 60 + int(row1[i][2]) * 10 + int(row1[i][3]) + int(row1[i][5]) / 10 + int(row1[i][6]) / 100 + int(row1[i][7]) / 1000)
         avg = []
         for i in range(len(avgnum) - 1):
@@ -224,19 +231,24 @@ def stoptiming(tim):
             if len(rowavg[i]) == avgnum[i + 1] - 1:
                 times = []
                 for j in range(avgnum[i + 1] - 1):
-                    timtmp = round(float(int(rowavg[i][j][2][0]) * 60 + int(rowavg[i][j][2][2:4]) + int(rowavg[i][j][2][5:8]) / 1000), 3)
-                    times.append(timtmp)
-                times.append(float(int(single[0]) * 60 + int(single[2:4]) + int(single[5:8]) / 1000))
+                    if rowavg[i][j][2] != 'DNF':
+                        timtmp = round(float(int(rowavg[i][j][2][0]) * 60 + int(rowavg[i][j][2][2:4]) + int(rowavg[i][j][2][5:8]) / 1000), 3)
+                        times.append(timtmp)
+                if single != 'DNF':
+                    times.append(float(int(single[0]) * 60 + int(single[2:4]) + int(single[5:8]) / 1000))
                 #print(times)
-                times.sort()
-                #print(times, avgnum[i + 1])
                 exceptnum = math.ceil(avgnum[i + 1] * exceptpercentage / 100)
-                for j in range(exceptnum, avgnum[i + 1] - exceptnum):
-                    aox += times[j]
-                aox /= avgnum[i + 1] - 2 * exceptnum
-                aox = math.floor(aox * 1000) / 1000
-                aox = round(aox, 3)
-                aoxstr = float2str(aox)
+                if len(times) >= avgnum[i + 1] - exceptnum:
+                    times.sort()
+                    #print(times, avgnum[i + 1])
+                    for j in range(exceptnum, avgnum[i + 1] - exceptnum):
+                        aox += times[j]
+                    aox /= avgnum[i + 1] - 2 * exceptnum
+                    aox = math.floor(aox * 1000) / 1000
+                    aox = round(aox, 3)
+                    aoxstr = float2str(aox)
+                else:
+                    aoxstr = 'DNF'
                 timestatus[i + 1].set(aoxstr)
             avg.append(aox)
         #print(avg)
@@ -284,24 +296,23 @@ def stoptiming(tim):
     sessionbutton.grid(row=0, column=0, padx=5, pady=0)
     sessionlabel.grid(row=0, column=1, padx=5, pady=0)
     inspbutton.grid(row=0, column=2, padx=5, pady=0)
-    arr = [1, 0, 2]
-    for i in range(3):
-        for j in range(2):
-            guiavgstatus[arr[i]][j].grid(row=j + 1, column=i, padx=5, pady=0)
+    guiavgstatus[0][0].grid(row=1, column=1, padx=5, pady=0)
+    guiavgstatus[0][1].grid(row=2, column=1, padx=5, pady=0)
     for i in range(scramblerows):
         scramblelabels[i].grid(row=3+i, column=0, columnspan=3, padx=0, pady=0)
     deletebutton.grid(row=9, column=0, padx=5, pady=10)
     statbutton.grid(row=9, column=1, padx=5, pady=10)
     nextbutton.grid(row=9, column=2, padx=5, pady=10)
     #startbutton.grid(row=10, column=1, padx=5, pady=10)
-    plus2flag = False
-    dnfflag = False
 
     for i in range(30):
         ser.write('y'.encode())
         #print('y')
     #stopbutton.grid_forget()
-    nextscramble()
+    if not plus2flag and not dnfflag:
+        nextscramble()
+    plus2flag = False
+    dnfflag = False
 
 def calctime():
     rows = numpy.asarray(pd.read_csv('data'+sessions[session] + '.csv', header=0))
@@ -312,10 +323,11 @@ def calctime():
         row = rows[-1]
         #print(row)
         for i in range(3, len(row)):
-            if i % 3 != 1:
+            if i % 3 != 1 and row[i] != 'DNF':
                 row[i] = float(int(row[i][0]) * 60 + int(row[i][2]) * 10 + int(row[i][3]) + int(row[i][5]) / 10 + int(row[i][6]) / 100 + int(row[i][7]) / 1000)
         for i in range(3, number):
-            row[i] = round(row[i], 3)
+            if row[i] != 'DNF':
+                row[i] = round(row[i], 3)
         for i in range(len(avgnum)):
             if row[3 * i + 3] > 0:
                 timestatus[i].set(row[3 * i + 3])
@@ -481,7 +493,7 @@ def dnf():
     stoptiming()
 
 def mainprocessing():
-    global stopflag
+    global stopflag, tim
     line = ser.readline().decode('utf8', 'ignore').rstrip(os.linesep)[1:]
     if len(line) == 8:
         flag = True
@@ -498,14 +510,15 @@ def mainprocessing():
                 checksum += int(line[i])
             if chr(checksum) == line[7]:
                 status = line[0]
-                tim = line[1:7]
+                if line[1:7] != '000000':
+                    tim = line[1:7] 
                 #print(status, tim)
                 if status == ' ':
                     stopinspection()
-                    timing(tim)
+                    timing()
                     stopflag = True
                 elif status == 'S' and stopflag:
-                    stoptiming(tim)
+                    stoptiming()
                     stopflag = False
     root.after(100,mainprocessing)
 
@@ -540,6 +553,7 @@ inspectiontime = 15
 inspflag = False
 dnfflag = False
 plus2flag = False
+tim = '000000'
 
 
 sessionbutton = tk.Button(root, text='Session', command=changesession)
@@ -551,7 +565,7 @@ sessionlabel = tk.Label(root, textvariable=sessionvar)
 sessionlabel.grid(row=0, column=1, padx=5, pady=0)
 
 inspvar = tk.StringVar(master=root,value='15')
-inspbutton = tk.Button(root, textvarialbe=inspvar, command=startinspection)
+inspbutton = tk.Button(root, textvariable=inspvar, command=startinspection)
 inspbutton.grid(row=0, column=2, padx=5, pady=0)
 #insplabel = tk.Label(root, textvariable=inspvar)
 
