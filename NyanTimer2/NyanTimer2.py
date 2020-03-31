@@ -348,8 +348,8 @@ def calctime():
     if number > 0:
         row = rows[-1]
         #print(row)
-        for i in range(3, len(row)):
-            if i % 3 != 2 and row[i] != 'DNF':
+        for i in range(2, len(row)):
+            if i % 3 != 1 and row[i] != 'DNF':
                 row[i] = float(int(row[i][0]) * 60 + int(row[i][2]) * 10 + int(row[i][3]) + int(row[i][5]) / 10 + int(row[i][6]) / 100 + int(row[i][7]) / 1000)
         for i in range(3, number):
             if row[i] != 'DNF':
@@ -368,12 +368,12 @@ def calctime():
             start = number - avgnum[i] + 1
             if start > 0:
                 for j in range(avgnum[i]):
-                    timesstatus[i][j] = str(rows[start + j - 1][3]) + ': ' + str(rows[start + j - 1][1])
+                    timesstatus[i][j] = str(rows[start + j - 1][3]) + ': ' + str(rows[start + j - 1][0])
         for i in range(len(avgnum)):
-            start = int(row[3 * i + 5]) - avgnum[i] + 1
+            start = row[3 * i + 4] - avgnum[i] + 1
             if start > 0:
                 for j in range(avgnum[i]):
-                    btimesstatus[i][j] = str(rows[start + j - 1][3]) + ': ' + str(rows[start + j - 1][1])
+                    btimesstatus[i][j] = str(rows[start + j - 1][3]) + ': ' + str(rows[start + j - 1][0])
     else:
         for i in range(len(avgnum)):
             timestatus[i].set('--.---')
@@ -679,6 +679,7 @@ timinglabel = tk.Label(root, textvariable=timingvar)
 nextscramble()
 calctime()
 
+stat()
 
 root.columnconfigure(0, weight=1, uniform='group1')
 root.columnconfigure(1, weight=1, uniform='group1')
