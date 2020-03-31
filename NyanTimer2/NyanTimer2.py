@@ -231,7 +231,7 @@ def stoptiming():
         for i in avgnum[1:]:
             rowavg.append(rows[max(0, number - i + 1):])
         for i in range(2, len(row1)):
-            if i % 3 != 1 and row1[i] != 'DNF':
+            if i % 3 != 2 and row1[i] != 'DNF':
                 row1[i] = float(int(row1[i][0]) * 60 + int(row1[i][2]) * 10 + int(row1[i][3]) + int(row1[i][5]) / 10 + int(row1[i][6]) / 100 + int(row1[i][7]) / 1000)
         avg = []
         for i in range(len(avgnum) - 1):
@@ -239,8 +239,8 @@ def stoptiming():
             if len(rowavg[i]) == avgnum[i + 1] - 1:
                 times = []
                 for j in range(avgnum[i + 1] - 1):
-                    if rowavg[i][j][2] != 'DNF':
-                        timtmp = round(float(int(rowavg[i][j][2][0]) * 60 + int(rowavg[i][j][2][2:4]) + int(rowavg[i][j][2][5:8]) / 1000), 3)
+                    if rowavg[i][j][3] != 'DNF':
+                        timtmp = round(float(int(rowavg[i][j][3][0]) * 60 + int(rowavg[i][j][3][2:4]) + int(rowavg[i][j][3][5:8]) / 1000), 3)
                         times.append(timtmp)
                 if single != 'DNF':
                     times.append(float(int(single[0]) * 60 + int(single[2:4]) + int(single[5:8]) / 1000))
@@ -256,13 +256,14 @@ def stoptiming():
                     aox = round(aox, 3)
                     aoxstr = float2str(aox)
                 else:
+                    aox = 'DNF'
                     aoxstr = 'DNF'
                 timestatus[i + 1].set(aoxstr)
             avg.append(aox)
         #print(avg)
         with open('data'+sessions[session] + '.csv', mode='a') as f:
             writer = csv.writer(f, lineterminator='\n')
-            no = row1[4]
+            no = row1[5]
             singletime = round(float(int(tim[0]) * 60 + int(tim[1]) * 10 + int(tim[2]) + int(tim[3]) / 10 + int(tim[4]) / 100 + int(tim[5]) / 1000), 3)
             if row1[3] == 'DNF' or singletime < row1[3]:
                 no = number if plus2flag or dnfflag else number + 1
@@ -272,20 +273,30 @@ def stoptiming():
             #print('bsingle', bsingle)
             newrow = [number + 1, scramble, usedinsp, single, bsingle, no]
             for i in range(1, len(avgnum)):
-                avgstr = float2str(avg[i - 1])
+                if avg[i - 1] != 'DNF':
+                    avgstr = float2str(avg[i - 1])
+                else:
+                    avgstr = avg[i - 1]
                 newrow.append(avgstr)
                 if row1[3 * i + 3] == '0:00.000' or row1[3 * i + 3] == 'DNF':
                     formerpb = 0
                 else:
                     formerpb = row1[3 * i + 3]
-                pb = min(avg[i - 1], formerpb)
+                if avg[i - 1] == 'DNF':
+                    pb = formerpb
+                else:
+                    pb = min(avg[i - 1], formerpb)
                 if pb == 0:
                     pb = avg[i - 1]
                 no = row1[3 * i + 4]
-                pb = round(pb, 3)
+                if pb != 'DNF':
+                    pb = round(pb, 3)
                 if pb == avg[i - 1] and pb != formerpb:
                     no = number + 1
-                pbstr = float2str(pb)
+                if pb != 'DNF':
+                    pbstr = float2str(pb)
+                else:
+                    pbstr = 'DNF'
                 newrow.append(pbstr)
                 newrow.append(no)
             #print(newrow)
@@ -349,12 +360,12 @@ def calctime():
             start = number - avgnum[i] + 1
             if start > 0:
                 for j in range(avgnum[i]):
-                    timesstatus[i][j] = str(rows[start + j - 1][3]) + ': ' + rows[start + j - 1][0]
+                    timesstatus[i][j] = str(rows[start + j - 1][3]) + ': ' + str(rows[start + j - 1][0])
         for i in range(len(avgnum)):
-            start = row[3 * i + 4] -avgnum[i] + 1
+            start = row[3 * i + 5] -avgnum[i] + 1
             if start > 0:
                 for j in range(avgnum[i]):
-                    btimesstatus[i][j] = str(rows[start + j - 1][3]) + ': ' + rows[start + j - 1][0]
+                    btimesstatus[i][j] = str(rows[start + j - 1][3]) + ': ' + str(rows[start + j - 1][0])
     else:
         for i in range(len(avgnum)):
             timestatus[i].set('--.---')
