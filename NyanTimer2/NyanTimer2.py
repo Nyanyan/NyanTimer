@@ -84,17 +84,13 @@ def switchsession(num):
     return x
 
 def delete():
-    rows = numpy.asarray(pd.read_csv('data'+sessions[session] + '.csv',header=0))
+    with open('data'+sessions[session] + '.csv', mode='r') as f:
+        rows = f.readlines()
+    for i in range(len(rows)):
+        rows[i] = list(rows[i].split(','))
+        rows[i][-1] = rows[i][-1].rstrip('\n')
     #print(rows)
     with open('data'+sessions[session] + '.csv', mode='w') as f:
-        writer = csv.writer(f, lineterminator='\n')
-        row = ['Number', 'Scramble', 'Single', 'Best Single', 'Best Single No']
-        for i in avgnum[1:]:
-            row.append('Ao' + str(i))
-            row.append('Best Ao' + str(i))
-            row.append('Best Ao' + str(i) + ' No')
-        writer.writerow(row)
-    with open('data'+sessions[session] + '.csv', mode='a') as f:
         writer = csv.writer(f, lineterminator='\n')
         for i in range(len(rows) - 1):
             writer.writerow(rows[i])
@@ -570,7 +566,7 @@ ser=serial.Serial('/dev/serial0', 1200, timeout=10)
 
 root= tk.Tk()
 root.geometry('320x240')
-#root.attributes("-fullscreen", True)
+root.attributes("-fullscreen", True)
 
 sessions = ['3x3', '2x2', '4x4', '5x5', '6x6', '7x7', '3BLD', '3OH', 'Clock', 'Megaminx', 'Pyraminx', 'Skewb', 'Square-1', '4BLD', '5BLD']
 session = 0
@@ -688,8 +684,6 @@ timinglabel = tk.Label(root, textvariable=timingvar)
 
 nextscramble()
 calctime()
-
-stat()
 
 root.columnconfigure(0, weight=1, uniform='group1')
 root.columnconfigure(1, weight=1, uniform='group1')
