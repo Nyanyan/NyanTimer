@@ -231,6 +231,7 @@ def stoptiming():
         rows = f.readlines()[1:]
     for i in range(len(rows)):
         rows[i] = list(rows[i].split(','))
+        rows[i][-1] = rows[i][-1].rstrip('\n')
     number = len(rows)
     usedinsp = 15 - inspectiontime
     #print(number)
@@ -301,7 +302,7 @@ def stoptiming():
                     pb = min(avg[i - 1], formerpb)
                 if pb == 0:
                     pb = avg[i - 1]
-                no = row1[3 * i + 4]
+                no = row1[3 * i + 5]
                 if pb != 'DNF':
                     pb = round(pb, 3)
                 if pb == avg[i - 1] and pb != formerpb:
@@ -348,18 +349,21 @@ def stoptiming():
     dnfflag = False
 
 def calctime():
-    rows = numpy.asarray(pd.read_csv('data'+sessions[session] + '.csv', header=0))
+    with open('data'+sessions[session] + '.csv', mode='r') as f:
+        rows = f.readlines()[1:]
+    for i in range(len(rows)):
+        rows[i] = list(rows[i].split(','))
+        rows[i][-1] = rows[i][-1].rstrip('\n')
     number = len(rows)
     mem = psutil.virtual_memory() 
     print('memory used', mem.percent, '%')
     if number > 0:
         row = rows[-1]
-        #print(row)
         for i in range(3, len(row)):
             if i % 3 != 2 and row[i] != 'DNF':
                 row[i] = float(int(row[i][0]) * 60 + int(row[i][2]) * 10 + int(row[i][3]) + int(row[i][5]) / 10 + int(row[i][6]) / 100 + int(row[i][7]) / 1000)
         for i in range(3, number):
-            if row[i] != 'DNF':
+            if i % 3 != 2 and row[i] != 'DNF':
                 row[i] = round(row[i], 3)
         for i in range(len(avgnum)):
             if row[3 * i + 3] != 'DNF':
@@ -377,7 +381,7 @@ def calctime():
                 for j in range(avgnum[i]):
                     timesstatus[i][j] = str(rows[start + j - 1][3]) + ': ' + str(rows[start + j - 1][1])
         for i in range(len(avgnum)):
-            start = row[3 * i + 5] - avgnum[i] + 1
+            start = int(row[3 * i + 5]) - avgnum[i] + 1
             if start > 0:
                 for j in range(avgnum[i]):
                     btimesstatus[i][j] = str(rows[start + j - 1][3]) + ': ' + str(rows[start + j - 1][1])
@@ -681,7 +685,6 @@ viewlabel = tk.Label(scrollbar_frame, textvariable=viewlabelvar)
 
 timingvar = tk.StringVar(master=root,value='')
 timinglabel = tk.Label(root, textvariable=timingvar)
-
 
 nextscramble()
 calctime()
