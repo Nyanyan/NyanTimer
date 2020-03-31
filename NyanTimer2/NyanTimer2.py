@@ -31,7 +31,7 @@ def changesession():
     sessionbutton.grid_forget()
     sessionlabel.grid_forget()
     inspbutton.grid_forget()
-    insplabel.grid_forget()
+    #insplabel.grid_forget()
     for i in range(3):
         for j in range(2):
             guiavgstatus[i][j].grid_forget()
@@ -98,7 +98,7 @@ def stat():
     calctime()
     sessionbutton.grid_forget()
     inspbutton.grid_forget()
-    insplabel.grid_forget()
+    #insplabel.grid_forget()
     for i in range(scramblerows):
         scramblelabels[i].grid_forget()
     deletebutton.grid_forget()
@@ -168,7 +168,7 @@ def timing(tim):
 
     sessionbutton.grid_forget()
     sessionlabel.grid_forget()
-    insplabel.grid_forget()
+    #insplabel.grid_forget()
     inspbutton.grid_forget()
     for i in range(3):
         for j in range(2):
@@ -190,7 +190,15 @@ def stoptiming(tim):
     #stoptime = time.time()
     #print(stoptime)
     #single = math.floor((stoptime - starttime) * pow(10,3)) / pow(10, 3)
-    single = tim[0] + ':' + tim[1:3] + '.' + tim[3:6]
+    tmp = [int(tim[0]), int(tim[1:3]), int(tin[3:6])]
+    if plus2flag:
+        tmp[1] += 2
+        if tmp[1] >= 60:
+            tmp[1] -= 60
+            tmp[0] += 1
+    single = str(tmp[0]) + ':' + str(tmp[1]) + '.' + str(tmp[2])
+    if dnfflag:
+        single = 'DNF'
     print(single)
     #timenum.set(str(tmp))
     timestatus[0].set(single)
@@ -286,6 +294,8 @@ def stoptiming(tim):
     statbutton.grid(row=9, column=1, padx=5, pady=10)
     nextbutton.grid(row=9, column=2, padx=5, pady=10)
     #startbutton.grid(row=10, column=1, padx=5, pady=10)
+    plus2flag = False
+    dnfflag = False
 
     for i in range(30):
         ser.write('y'.encode())
@@ -336,7 +346,7 @@ def viewtime(num):
         sessionbutton.grid_forget()
         sessionlabel.grid_forget()
         inspbutton.grid_forget()
-        insplabel.grid_forget()
+        #insplabel.grid_forget()
         for i in range(3):
             for j in range(2):
                 guiavgstatus[i][j].grid_forget()
@@ -377,7 +387,7 @@ def viewbtime(num):
         sessionbutton.grid_forget()
         sessionlabel.grid_forget()
         inspbutton.grid_forget()
-        insplabel.grid_forget()
+        #insplabel.grid_forget()
         for i in range(3):
             for j in range(2):
                 guiavgstatus[i][j].grid_forget()
@@ -434,8 +444,8 @@ def startinspection():
     global inspectiontime, inspflag
     inspectiontime = 15
     inspvar.set('15')
-    inspbutton.grid_forget()
-    insplabel.grid(row=0, column=2, padx=5, pady=0)
+    #inspbutton.grid_forget()
+    #insplabel.grid(row=0, column=2, padx=5, pady=0)
     inspflag = True
     root.after(1000, inspection)
 
@@ -457,13 +467,18 @@ def inspection():
         os.system("aplay --quiet '8sec.wav' &")
     elif inspectiontime == 3:
         os.system("aplay --quiet '12sec.wav' &")
-    elif inspectiontime == 0:
-        os.system("aplay --quiet 'p2.wav' &")
-    elif inspectiontime == -2:
-        os.system("aplay --quiet 'dnf.wav' &")
     if inspflag:
         root.after(1000, inspection)
 
+def plus2():
+    global plus2flag
+    plus2flag = True
+    stoptiming()
+
+def dnf():
+    global dnfflag
+    dnfflag = True
+    stoptiming()
 
 def mainprocessing():
     global stopflag
@@ -523,6 +538,8 @@ stopflag = False
 
 inspectiontime = 15
 inspflag = False
+dnfflag = False
+plus2flag = False
 
 
 sessionbutton = tk.Button(root, text='Session', command=changesession)
@@ -533,11 +550,10 @@ sessionvar = tk.StringVar(master=root,value=sessions[session])
 sessionlabel = tk.Label(root, textvariable=sessionvar)
 sessionlabel.grid(row=0, column=1, padx=5, pady=0)
 
-inspbutton = tk.Button(root, text='Inspection', command=startinspection)
-inspbutton.grid(row=0, column=2, padx=5, pady=0)
-
 inspvar = tk.StringVar(master=root,value='15')
-insplabel = tk.Label(root, textvariable=inspvar)
+inspbutton = tk.Button(root, textvarialbe=inspvar, command=startinspection)
+inspbutton.grid(row=0, column=2, padx=5, pady=0)
+#insplabel = tk.Label(root, textvariable=inspvar)
 
 timestatus = [tk.StringVar(master=root,value="--.---") for _ in range(len(avgnum))]
 guiavgstatus = []
@@ -559,14 +575,20 @@ timesstatus = [['' for _ in range(avgnum[i])] for i in range(len(avgnum))]
 
 btimesstatus = [['' for _ in range(avgnum[i])] for i in range(len(avgnum))]
 
-guiavgstatus[1][0].grid(row=1, column=0, padx=5, pady=0)
-guiavgstatus[1][1].grid(row=2, column=0, padx=5, pady=0)
+plus2button = tk.Button(root, text='+2', command=plus2)
+plus2button.grid(row=2, column=0, padx=5, pady=0)
+
+#guiavgstatus[1][0].grid(row=1, column=0, padx=5, pady=0)
+#guiavgstatus[1][1].grid(row=2, column=0, padx=5, pady=0)
 
 guiavgstatus[0][0].grid(row=1, column=1, padx=5, pady=0)
 guiavgstatus[0][1].grid(row=2, column=1, padx=5, pady=0)
 
-guiavgstatus[2][0].grid(row=1, column=2, padx=5, pady=0)
-guiavgstatus[2][1].grid(row=2, column=2, padx=5, pady=0)
+dnfbutton = tk.Button(root, text='DNF', command=plus2)
+dnfbutton.grid(row=2, column=2, padx=5, pady=0)
+
+#guiavgstatus[2][0].grid(row=1, column=2, padx=5, pady=0)
+#guiavgstatus[2][1].grid(row=2, column=2, padx=5, pady=0)
 
 scramblerows = 6
 scramblevars = [tk.StringVar(master=root, value='') for i in range(scramblerows)]
