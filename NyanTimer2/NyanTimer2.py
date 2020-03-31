@@ -522,7 +522,7 @@ scramble = ''
 
 stopflag = False
 
-inspectiontime = 15
+inspectiontime = 14
 inspflag = False
 
 
