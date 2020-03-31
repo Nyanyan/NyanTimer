@@ -432,8 +432,8 @@ def endviewtime():
 
 def startinspection():
     global inspectiontime, inspflag
-    inspectiontime = 14
-    inspvar.set('14')
+    inspectiontime = 15
+    inspvar.set('15')
     inspbutton.grid_forget()
     insplabel.grid(row=0, column=2, padx=5, pady=0)
     inspflag = True
@@ -522,7 +522,7 @@ scramble = ''
 
 stopflag = False
 
-inspectiontime = 14
+inspectiontime = 15
 inspflag = False
 
 
@@ -537,7 +537,7 @@ sessionlabel.grid(row=0, column=1, padx=5, pady=0)
 inspbutton = tk.Button(root, text='Inspection', command=startinspection)
 inspbutton.grid(row=0, column=2, padx=5, pady=0)
 
-inspvar = tk.StringVar(master=root,value='14')
+inspvar = tk.StringVar(master=root,value='15')
 insplabel = tk.Label(root, textvariable=inspvar)
 
 timestatus = [tk.StringVar(master=root,value="--.---") for _ in range(len(avgnum))]
