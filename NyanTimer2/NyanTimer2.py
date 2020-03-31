@@ -252,12 +252,20 @@ def stoptiming():
                 timestatus[i + 1].set(aoxstr)
             avg.append(aox)
         #print(avg)
+        if plus2flag or dnfflag:
+            with open('data'+sessions[session] + '.csv', mode='r') as f:
+                reads = f.read()
+            reads = reads[:-1]
+            while reads[-1] != '\n':
+                reads = reads[:-1]
+            with open('data'+sessions[session] + '.csv', mode='w') as f:
+                f.write(reads)
         with open('data'+sessions[session] + '.csv', mode='a') as f:
             writer = csv.writer(f, lineterminator='\n')
             no = row1[4]
             singletime = round(float(int(tim[0]) * 60 + int(tim[1]) * 10 + int(tim[2]) + int(tim[3]) / 10 + int(tim[4]) / 100 + int(tim[5]) / 1000), 3)
             if row1[3] == 'DNF' or singletime < row1[3]:
-                no = number + 1
+                no = number if plus2flag or dnfflag else number + 1
                 bsingle = single
             else:
                 bsingle = str(rows[number - 1][3])
