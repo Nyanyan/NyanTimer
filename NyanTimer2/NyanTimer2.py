@@ -445,7 +445,7 @@ def stopinspection():
 
 def inspection():
     global inspectiontime, inspflag
-    if inspectiontime > -2:
+    if inspectiontime > -3:
         inspectiontime -= 1
     if inspectiontime > 0:
         inspvar.set(str(inspectiontime))
@@ -453,6 +453,14 @@ def inspection():
         inspvar.set('+2')
     else:
         inspvar.set('DNF')
+    if inspectiontime == 7:
+        os.system("aplay --quiet '8sec.wav' ")
+    elif inspectiontime == 3:
+        os.system("aplay --quiet '12sec.wav' ")
+    elif inspectiontime == 0:
+        os.system("aplay --quiet 'p2.wav' ")
+    elif inspectiontime == -2:
+        os.system("aplay --quiet 'dnf.wav' ")
     if inspflag:
         root.after(1000, inspection)
 
