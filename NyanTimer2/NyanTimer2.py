@@ -176,6 +176,8 @@ def timing():
     sessionlabel.grid_forget()
     #insplabel.grid_forget()
     inspbutton.grid_forget()
+    plus2button.grid_forget()
+    dnfbutton.grid_forget()
     for i in range(3):
         for j in range(2):
             guiavgstatus[i][j].grid_forget()
@@ -197,7 +199,6 @@ def stoptiming():
     #print(stoptime)
     #single = math.floor((stoptime - starttime) * pow(10,3)) / pow(10, 3)
     tmp = [int(tim[0]), int(tim[1:3]), int(tim[3:6])]
-    print(tmp)
     if plus2flag:
         tmp[1] += 2
         if tmp[1] >= 60:
@@ -316,6 +317,8 @@ def stoptiming():
     inspbutton.grid(row=0, column=2, padx=5, pady=0)
     guiavgstatus[0][0].grid(row=1, column=1, padx=5, pady=0)
     guiavgstatus[0][1].grid(row=2, column=1, padx=5, pady=0)
+    plus2button.grid(row=2, column=0, padx=5, pady=0)
+    dnfbutton.grid(row=2, column=2, padx=5, pady=0)
     for i in range(scramblerows):
         scramblelabels[i].grid(row=3+i, column=0, columnspan=3, padx=0, pady=0)
     deletebutton.grid(row=9, column=0, padx=5, pady=10)
@@ -360,12 +363,12 @@ def calctime():
             start = number - avgnum[i] + 1
             if start > 0:
                 for j in range(avgnum[i]):
-                    timesstatus[i][j] = str(rows[start + j - 1][3]) + ': ' + str(rows[start + j - 1][0])
+                    timesstatus[i][j] = str(rows[start + j - 1][3]) + ': ' + str(rows[start + j - 1][1])
         for i in range(len(avgnum)):
-            start = row[3 * i + 5] -avgnum[i] + 1
+            start = int(row[3 * i + 5]) - avgnum[i] + 1
             if start > 0:
                 for j in range(avgnum[i]):
-                    btimesstatus[i][j] = str(rows[start + j - 1][3]) + ': ' + str(rows[start + j - 1][0])
+                    btimesstatus[i][j] = str(rows[start + j - 1][3]) + ': ' + str(rows[start + j - 1][1])
     else:
         for i in range(len(avgnum)):
             timestatus[i].set('--.---')
@@ -379,6 +382,8 @@ def viewtime(num):
         sessionbutton.grid_forget()
         sessionlabel.grid_forget()
         inspbutton.grid_forget()
+        plus2button.grid_forget()
+        dnfbutton.grid_forget()
         #insplabel.grid_forget()
         for i in range(3):
             for j in range(2):
@@ -420,6 +425,8 @@ def viewbtime(num):
         sessionbutton.grid_forget()
         sessionlabel.grid_forget()
         inspbutton.grid_forget()
+        plus2button.grid_forget()
+        dnfbutton.grid_forget()
         #insplabel.grid_forget()
         for i in range(3):
             for j in range(2):
@@ -462,10 +469,10 @@ def endviewtime():
     sessionlabel.grid(row=0, column=1, padx=5, pady=0)
     stopinspection()
     inspbutton.grid(row=0, column=2, padx=5, pady=0)
-    arr = [1, 0, 2]
-    for i in range(3):
-        for j in range(2):
-            guiavgstatus[arr[i]][j].grid(row=j + 1, column=i, padx=5, pady=0)
+    plus2button.grid(row=2, column=0, padx=5, pady=0)
+    dnfbutton.grid(row=2, column=2, padx=5, pady=0)
+    guiavgstatus[0][0].grid(row=1, column=1, padx=5, pady=0)
+    guiavgstatus[0][1].grid(row=2, column=1, padx=5, pady=0)
     for i in range(scramblerows):
         scramblelabels[i].grid(row=3+i, column=0, columnspan=3, padx=0, pady=0)
     deletebutton.grid(row=9, column=0, padx=5, pady=10)
