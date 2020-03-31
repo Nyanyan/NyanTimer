@@ -105,6 +105,8 @@ def stat():
     sessionbutton.grid_forget()
     inspbutton.grid_forget()
     #insplabel.grid_forget()
+    plus2button.grid_forget()
+    dnfbutton.grid_forget()
     for i in range(scramblerows):
         scramblelabels[i].grid_forget()
     deletebutton.grid_forget()
@@ -112,13 +114,16 @@ def stat():
     nextbutton.grid_forget()
     #startbutton.grid_forget()
 
+    guiavgstatus[0][0].grid_forget()
+    guiavgstatus[0][1].grid_forget()
+
     statbackbutton.grid(row=0, column=0, padx=5, pady=0)
 
-    for i in range(3, len(avgnum)):
-        for j in range(2):
-            guiavgstatus[i][j].grid(row=j + 3, column=i - 3, padx=5, pady=0)
-
     arr = [1, 0, 2, 3, 4, 5]
+    for i in range(len(avgnum)):
+        for j in range(2):
+            guiavgstatus[arr[i]][j].grid(row=j + 1 + 2 * (i // 3), column=i % 3, padx=5, pady=0)
+
     for i in range(len(avgnum)):
         for j in range(2):
             guibavgstatus[arr[i]][j].grid(row=j + 5 + 2 * (i // 3), column=i % 3, padx=5, pady=0)
@@ -678,6 +683,8 @@ calctime()
 root.columnconfigure(0, weight=1, uniform='group1')
 root.columnconfigure(1, weight=1, uniform='group1')
 root.columnconfigure(2, weight=1, uniform='group1')
+
+stat()
 
 root.after(100,mainprocessing)
 root.mainloop()
