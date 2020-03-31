@@ -537,7 +537,7 @@ sessionlabel.grid(row=0, column=1, padx=5, pady=0)
 inspbutton = tk.Button(root, text='Inspection', command=startinspection)
 inspbutton.grid(row=0, column=2, padx=5, pady=0)
 
-inspvar = tk.StringVar(master=root,value='15')
+inspvar = tk.StringVar(master=root,value='14')
 insplabel = tk.Label(root, textvariable=inspvar)
 
 timestatus = [tk.StringVar(master=root,value="--.---") for _ in range(len(avgnum))]
