@@ -140,13 +140,17 @@ def statback():
     nextbutton.grid(row=9, column=2, padx=5, pady=10)
     #startbutton.grid(row=10, column=1, padx=5, pady=10)
 
-    for i in range(3, len(avgnum)):
+    for i in range(len(avgnum)):
         for j in range(2):
             guiavgstatus[i][j].grid_forget()
     for i in range(len(avgnum)):
         for j in range(2):
             guibavgstatus[i][j].grid_forget()
-    
+    guiavgstatus[0][0].grid(row=1, column=1, padx=5, pady=0)
+    guiavgstatus[0][1].grid(row=2, column=1, padx=5, pady=0)
+    plus2button.grid(row=2, column=0, padx=5, pady=0)
+    dnfbutton.grid(row=2, column=2, padx=5, pady=0)
+
 def nextscramble():
     global scramble
     string = ['333', '222', '444', '555', '666', '777', '333ni', '333', 'clock', 'minx', 'pyram', 'skewb', 'sq1', '444ni', '555ni']
@@ -216,14 +220,17 @@ def stoptiming():
     #timenum.set(str(tmp))
     timestatus[0].set(single)
     if plus2flag or dnfflag:
-            with open('data'+sessions[session] + '.csv', mode='r') as f:
-                reads = f.read()
+        with open('data'+sessions[session] + '.csv', mode='r') as f:
+            reads = f.read()
+        reads = reads[:-1]
+        while reads[-1] != '\n':
             reads = reads[:-1]
-            while reads[-1] != '\n':
-                reads = reads[:-1]
-            with open('data'+sessions[session] + '.csv', mode='w') as f:
-                f.write(reads)
-    rows = numpy.asarray(pd.read_csv('data'+sessions[session] + '.csv', header=0))
+        with open('data'+sessions[session] + '.csv', mode='w') as f:
+            f.write(reads)
+    with open('data'+sessions[session] + '.csv', mode='r') as f:
+        rows = f.readlines()[1:]
+    for i in range(len(rows)):
+        rows[i] = list(rows[i].split(','))
     number = len(rows)
     usedinsp = 15 - inspectiontime
     #print(number)
@@ -236,7 +243,7 @@ def stoptiming():
         rowavg = []
         for i in avgnum[1:]:
             rowavg.append(rows[max(0, number - i + 1):])
-        for i in range(2, len(row1)):
+        for i in range(3, len(row1)):
             if i % 3 != 2 and row1[i] != 'DNF':
                 row1[i] = float(int(row1[i][0]) * 60 + int(row1[i][2]) * 10 + int(row1[i][3]) + int(row1[i][5]) / 10 + int(row1[i][6]) / 100 + int(row1[i][7]) / 1000)
         avg = []
@@ -348,8 +355,8 @@ def calctime():
     if number > 0:
         row = rows[-1]
         #print(row)
-        for i in range(2, len(row)):
-            if i % 3 != 1 and row[i] != 'DNF':
+        for i in range(3, len(row)):
+            if i % 3 != 2 and row[i] != 'DNF':
                 row[i] = float(int(row[i][0]) * 60 + int(row[i][2]) * 10 + int(row[i][3]) + int(row[i][5]) / 10 + int(row[i][6]) / 100 + int(row[i][7]) / 1000)
         for i in range(3, number):
             if row[i] != 'DNF':
@@ -368,12 +375,12 @@ def calctime():
             start = number - avgnum[i] + 1
             if start > 0:
                 for j in range(avgnum[i]):
-                    timesstatus[i][j] = str(rows[start + j - 1][3]) + ': ' + str(rows[start + j - 1][0])
+                    timesstatus[i][j] = str(rows[start + j - 1][3]) + ': ' + str(rows[start + j - 1][1])
         for i in range(len(avgnum)):
-            start = row[3 * i + 4] - avgnum[i] + 1
+            start = row[3 * i + 5] - avgnum[i] + 1
             if start > 0:
                 for j in range(avgnum[i]):
-                    btimesstatus[i][j] = str(rows[start + j - 1][3]) + ': ' + str(rows[start + j - 1][0])
+                    btimesstatus[i][j] = str(rows[start + j - 1][3]) + ': ' + str(rows[start + j - 1][1])
     else:
         for i in range(len(avgnum)):
             timestatus[i].set('--.---')
