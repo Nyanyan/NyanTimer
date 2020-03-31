@@ -256,9 +256,8 @@ def stoptiming():
             writer = csv.writer(f, lineterminator='\n')
             no = row1[4]
             singletime = round(float(int(tim[0]) * 60 + int(tim[1]) * 10 + int(tim[2]) + int(tim[3]) / 10 + int(tim[4]) / 100 + int(tim[5]) / 1000), 3)
-            if singletime < row1[3]:
+            if row1[3] == 'DNF' or singletime < row1[3]:
                 no = number + 1
-            if singletime < row1[3]:
                 bsingle = single
             else:
                 bsingle = str(rows[number - 1][3])
@@ -329,9 +328,13 @@ def calctime():
             if row[i] != 'DNF':
                 row[i] = round(row[i], 3)
         for i in range(len(avgnum)):
-            if row[3 * i + 3] > 0:
-                timestatus[i].set(row[3 * i + 3])
-                btimestatus[i].set(row[3 * i + 4])
+            if row[3 * i + 3] != 'DNF':
+                if row[3 * i + 3] > 0:
+                    timestatus[i].set(row[3 * i + 3])
+                    btimestatus[i].set(row[3 * i + 4])
+                else:
+                    timestatus[i].set('DNF')
+                    btimestatus[i].set(row[3 * i + 4])
             else:
                 timestatus[i].set('--.---')
                 btimestatus[i].set('--.---')
@@ -598,7 +601,7 @@ plus2button.grid(row=2, column=0, padx=5, pady=0)
 guiavgstatus[0][0].grid(row=1, column=1, padx=5, pady=0)
 guiavgstatus[0][1].grid(row=2, column=1, padx=5, pady=0)
 
-dnfbutton = tk.Button(root, text='DNF', command=plus2)
+dnfbutton = tk.Button(root, text='DNF', command=dnf)
 dnfbutton.grid(row=2, column=2, padx=5, pady=0)
 
 #guiavgstatus[2][0].grid(row=1, column=2, padx=5, pady=0)
