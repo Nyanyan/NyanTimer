@@ -209,6 +209,14 @@ def stoptiming():
     print(single)
     #timenum.set(str(tmp))
     timestatus[0].set(single)
+    if plus2flag or dnfflag:
+            with open('data'+sessions[session] + '.csv', mode='r') as f:
+                reads = f.read()
+            reads = reads[:-1]
+            while reads[-1] != '\n':
+                reads = reads[:-1]
+            with open('data'+sessions[session] + '.csv', mode='w') as f:
+                f.write(reads)
     rows = numpy.asarray(pd.read_csv('data'+sessions[session] + '.csv', header=0))
     number = len(rows)
     usedinsp = 15 - inspectiontime
@@ -252,14 +260,6 @@ def stoptiming():
                 timestatus[i + 1].set(aoxstr)
             avg.append(aox)
         #print(avg)
-        if plus2flag or dnfflag:
-            with open('data'+sessions[session] + '.csv', mode='r') as f:
-                reads = f.read()
-            reads = reads[:-1]
-            while reads[-1] != '\n':
-                reads = reads[:-1]
-            with open('data'+sessions[session] + '.csv', mode='w') as f:
-                f.write(reads)
         with open('data'+sessions[session] + '.csv', mode='a') as f:
             writer = csv.writer(f, lineterminator='\n')
             no = row1[4]
@@ -274,7 +274,7 @@ def stoptiming():
             for i in range(1, len(avgnum)):
                 avgstr = float2str(avg[i - 1])
                 newrow.append(avgstr)
-                if row1[3 * i + 3] == '0:00.000':
+                if row1[3 * i + 3] == '0:00.000' or row1[3 * i + 3] == 'DNF':
                     formerpb = 0
                 else:
                     formerpb = row1[3 * i + 3]
@@ -330,7 +330,7 @@ def calctime():
         row = rows[-1]
         #print(row)
         for i in range(3, len(row)):
-            if i % 3 != 1 and row[i] != 'DNF':
+            if i % 3 != 2 and row[i] != 'DNF':
                 row[i] = float(int(row[i][0]) * 60 + int(row[i][2]) * 10 + int(row[i][3]) + int(row[i][5]) / 10 + int(row[i][6]) / 100 + int(row[i][7]) / 1000)
         for i in range(3, number):
             if row[i] != 'DNF':
@@ -339,12 +339,11 @@ def calctime():
             if row[3 * i + 3] != 'DNF':
                 if row[3 * i + 3] > 0:
                     timestatus[i].set(row[3 * i + 3])
-                    btimestatus[i].set(row[3 * i + 4])
                 else:
-                    timestatus[i].set('DNF')
-                    btimestatus[i].set(row[3 * i + 4])
+                    timestatus[i].set('--.---')
+                btimestatus[i].set(row[3 * i + 4])
             else:
-                timestatus[i].set('--.---')
+                timestatus[i].set('DNF')
                 btimestatus[i].set('--.---')
         for i in range(len(avgnum)):
             start = number - avgnum[i] + 1
@@ -547,7 +546,7 @@ for s in sessions:
     if not os.path.isfile('data' + s + '.csv'):
         with open('data' + s + '.csv', mode='x') as f:
             writer = csv.writer(f, lineterminator='\n')
-            row = ['Number', 'Scramble', 'Single', 'Best Single', 'Best Single No']
+            row = ['Number', 'Scramble', 'Used Inspection Time', 'Single', 'Best Single', 'Best Single No']
             for i in avgnum[1:]:
                 row.append('Ao' + str(i))
                 row.append('Best Ao' + str(i))
