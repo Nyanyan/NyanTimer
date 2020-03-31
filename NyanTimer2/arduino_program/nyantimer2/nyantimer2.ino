@@ -41,6 +41,7 @@ void resettime() {
   NyanTimer::msecond = 0;
   for (int i = 0; i < 7; i++)
     NyanTimer::output[i] = 0;
+  digitalWrite(A4, LOW);
 }
 
 
@@ -99,4 +100,6 @@ void loop() {
     resettime();
     NyanTimer::stat = 'I';
   }
+  if (analogRead(A5) < 200)
+    digitalWrite(A4, HIGH);
 }
