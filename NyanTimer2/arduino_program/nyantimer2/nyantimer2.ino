@@ -99,7 +99,8 @@ void loop() {
   if (NyanTimer::stat == 'S' && Serial.available() > 0 && Serial.read() == 'y') {
     resettime();
     NyanTimer::stat = 'I';
+    delay(1000);
   }
   if (analogRead(A5) < 200)
-    digitalWrite(A4, HIGH);
+    digitalWrite(2, HIGH);
 }

@@ -8,7 +8,7 @@ import math
 import os
 import pandas as pd
 import subprocess
-import urllib
+import urllib.request
 import serial
 import psutil
 import smbus
@@ -537,6 +537,16 @@ def mainprocessing():
     global stopflag, tim
     line = ser.readline().decode('utf8', 'ignore').rstrip(os.linesep)[1:]
     if len(line) == 8:
+        if line[0] == 'I':
+            root.configure(bg='LightGray')
+        elif line[0] == 'A':
+            root.configure(bg='green')
+        elif line[0] == ' ':
+            root.configure(bg='LightGray')
+        elif line[0] == 'L':
+            root.configure(bg='yellow')
+        elif line[0] == 'R':
+            root.configure(bg='orange')
         flag = True
         for i in range(1, 7):
             flag = False
@@ -561,14 +571,16 @@ def mainprocessing():
                 elif status == 'S' and stopflag:
                     stoptiming()
                     stopflag = False
-    if GPIO.input(8) == GPIO.HIGH:
+    if GPIO.input(23) == GPIO.HIGH:
+        print('shut down')
         os.system("sudo shutdown -h now")
     root.after(100,mainprocessing)
 
+#os.environ['DISPLAY']=':0.0'
 ser=serial.Serial('/dev/serial0', 1200, timeout=10)
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(8,GPIO.IN)
+GPIO.setup(23,GPIO.IN)
 
 root= tk.Tk()
 root.geometry('320x240')
@@ -694,6 +706,10 @@ calctime()
 root.columnconfigure(0, weight=1, uniform='group1')
 root.columnconfigure(1, weight=1, uniform='group1')
 root.columnconfigure(2, weight=1, uniform='group1')
+
+
+for i in range(30):
+    ser.write('y'.encode())
 
 root.after(100,mainprocessing)
 root.mainloop()
