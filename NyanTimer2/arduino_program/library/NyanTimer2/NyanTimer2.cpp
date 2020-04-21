@@ -102,8 +102,8 @@ void NyanTimer::stopTimer() {
 }
 
 int NyanTimer::touch() {
-  float touchthreshold = 500;
-  const int t = 20;
+  float touchthreshold = 300;
+  const int t = 50;
   double VAL1[t];
   double VAL2[t];
   float breakthreshold = 50;

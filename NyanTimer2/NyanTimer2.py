@@ -495,12 +495,12 @@ def endviewtime():
 
 def startinspection():
     global inspectiontime, inspflag
-    inspectiontime = 15
+    inspectiontime = 150
     inspvar.set('15')
     #inspbutton.grid_forget()
     #insplabel.grid(row=0, column=2, padx=5, pady=0)
     inspflag = True
-    root.after(1000, inspection)
+    root.after(100, inspection)
 
 def stopinspection():
     global inspflag
@@ -508,20 +508,20 @@ def stopinspection():
 
 def inspection():
     global inspectiontime, inspflag
-    if inspectiontime > -3:
+    if inspectiontime > -30:
         inspectiontime -= 1
     if inspectiontime > 0:
-        inspvar.set(str(inspectiontime))
-    elif -2 < inspectiontime <= 0:
+        inspvar.set(str((inspectiontime + 9) // 10))
+    elif -20 < inspectiontime <= 0:
         inspvar.set('+2')
     else:
         inspvar.set('DNF')
-    if inspectiontime == 7:
+    if inspectiontime == 70:
         os.system("aplay --quiet '8sec.wav' &")
-    elif inspectiontime == 3:
+    elif inspectiontime == 30:
         os.system("aplay --quiet '12sec.wav' &")
     if inspflag:
-        root.after(1000, inspection)
+        root.after(100, inspection)
 
 def plus2():
     global plus2flag
@@ -607,7 +607,7 @@ scramble = ''
 
 stopflag = False
 
-inspectiontime = 15
+inspectiontime = 150
 inspflag = False
 dnfflag = False
 plus2flag = False
