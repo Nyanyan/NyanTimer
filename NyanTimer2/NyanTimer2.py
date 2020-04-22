@@ -12,6 +12,7 @@ import urllib.request
 import serial
 import psutil
 import smbus
+from PIL import Image
 
 def float2str(num):
     vals = []
@@ -177,6 +178,7 @@ def timing():
     #global starttime
     #starttime = time.time()
     #print(starttime)
+    stopinspection()
 
     sessionbutton.grid_forget()
     sessionlabel.grid_forget()
@@ -200,6 +202,7 @@ def timing():
 
 def stoptiming():
     global avgnum, scramble, inspectiontime, plus2flag, dnfflag
+
     exceptpercentage = 5
     #stoptime = time.time()
     #print(stoptime)
@@ -230,7 +233,7 @@ def stoptiming():
         rows[i] = list(rows[i].split(','))
         rows[i][-1] = rows[i][-1].rstrip('\n')
     number = len(rows)
-    usedinsp = 15 - inspectiontime
+    usedinsp = 15 - inspectiontime / 10
     #print(number)
     if number >= 1:
         #f = open('data'+sessions[session] + '.csv', 'r')
@@ -508,19 +511,19 @@ def stopinspection():
 
 def inspection():
     global inspectiontime, inspflag
-    if inspectiontime > -30:
-        inspectiontime -= 1
-    if inspectiontime > 0:
-        inspvar.set(str((inspectiontime + 9) // 10))
-    elif -20 < inspectiontime <= 0:
-        inspvar.set('+2')
-    else:
-        inspvar.set('DNF')
-    if inspectiontime == 70:
-        os.system("aplay --quiet '8sec.wav' &")
-    elif inspectiontime == 30:
-        os.system("aplay --quiet '12sec.wav' &")
     if inspflag:
+        if inspectiontime > -30:
+            inspectiontime -= 1
+        if inspectiontime > 0:
+            inspvar.set(str((inspectiontime + 9) // 10))
+        elif -20 < inspectiontime <= 0:
+            inspvar.set('+2')
+        else:
+            inspvar.set('DNF')
+        if inspectiontime == 70:
+            os.system("aplay --quiet '8sec.wav' &")
+        elif inspectiontime == 30:
+            os.system("aplay --quiet '12sec.wav' &")
         root.after(100, inspection)
 
 def plus2():
@@ -536,17 +539,16 @@ def dnf():
 def mainprocessing():
     global stopflag, tim
     line = ser.readline().decode('utf8', 'ignore').rstrip(os.linesep)[1:]
+    ser.reset_input_buffer()
     if len(line) == 8:
-        if line[0] == 'I':
-            root.configure(bg='LightGray')
-        elif line[0] == 'A':
-            root.configure(bg='green')
-        elif line[0] == ' ':
-            root.configure(bg='LightGray')
+        if line[0] == 'A':
+            c['bg'] = '#00FF00'
         elif line[0] == 'L':
-            root.configure(bg='yellow')
+            c['bg'] = '#FF0000'
         elif line[0] == 'R':
-            root.configure(bg='orange')
+            c['bg'] = '#0000FF'
+        else:
+            c['bg'] = '#000000'
         flag = True
         for i in range(1, 7):
             flag = False
@@ -585,6 +587,8 @@ GPIO.setup(23,GPIO.IN)
 root= tk.Tk()
 root.geometry('320x240')
 root.attributes("-fullscreen", True)
+c = tk.Canvas(root, width=200, height=15)
+c.place(x=60, y=230)
 
 sessions = ['3x3', '2x2', '4x4', '5x5', '6x6', '7x7', '3BLD', '3OH', 'Clock', 'Megaminx', 'Pyraminx', 'Skewb', 'Square-1', '4BLD', '5BLD']
 session = 0
@@ -710,6 +714,8 @@ root.columnconfigure(2, weight=1, uniform='group1')
 
 for i in range(30):
     ser.write('y'.encode())
+
+time.sleep(1)
 
 root.after(100,mainprocessing)
 root.mainloop()
