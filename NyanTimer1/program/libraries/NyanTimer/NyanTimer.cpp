@@ -17,12 +17,23 @@ volatile extern int NyanTimer::batterycount = 0;
 volatile int NyanTimer::msecond;
 static String serout = "I000000@";
 static char statout;
+static int count = 0;
+static bool buttons[4][2];
 
 static void signalOut() {
-  Serial.print(serout);
-  Serial.print(char(10));
-  Serial.print(char(13));
-  NyanTimer::batterycount++;
+  count++;
+  if(count % 10 == 0){
+    count = 0;
+    Serial.print(serout);
+    Serial.print(char(10));
+    Serial.print(char(13));
+    NyanTimer::batterycount++;
+  }
+  for(int i = 0;i < 4;i++) buttons[i][0] = buttons[i][1];
+  buttons[0][1] = (digitalRead(BUTTON1) == LOW);
+  buttons[1][1] = (digitalRead(BUTTON2) == LOW);
+  buttons[2][1] = (digitalRead(BUTTON3) == LOW);
+  buttons[3][1] = (digitalRead(BUTTON4) == LOW);
 }
 
 static void swap(double* a, double* b) {
@@ -41,10 +52,10 @@ static void sort(double* array) {
 
 void NyanTimer::begin() {
   Serial.begin(1200);
-  pinMode(BUTTON1, INPUT);
-  pinMode(BUTTON2, INPUT);
-  pinMode(BUTTON3, INPUT);
-  pinMode(BUTTON4, INPUT);
+  pinMode(BUTTON1, INPUT_PULLUP);
+  pinMode(BUTTON2, INPUT_PULLUP);
+  pinMode(BUTTON3, INPUT_PULLUP);
+  pinMode(BUTTON4, INPUT_PULLUP);
   pinMode(BUZZER, OUTPUT);
   pinMode(LEDR, OUTPUT);
   pinMode(LEDG, OUTPUT);
@@ -64,9 +75,10 @@ void NyanTimer::begin() {
   lcd.setContrast(40);
   NyanTimer::printLCD(0, 0, "NyanTimer       ");
   NyanTimer::printLCD(0, 1, "      by Nyanyan");
+  for(int i = 0;i < 4;i++) for(int j = 0;j < 2;j++) buttons[i][j] = false;
   digitalWrite(PAD1OUT, HIGH);
   digitalWrite(PAD2OUT, HIGH);
-  Timer1.initialize(111111);
+  Timer1.initialize(11111);
   Timer1.attachInterrupt(signalOut);
   Timer1.start();
   for (int i=0;i<10;i++) {
@@ -137,7 +149,7 @@ void NyanTimer::stopTimer() {
 }
 
 int NyanTimer::touch() {
-  float touchthreshold = 400;
+  float touchthreshold = 600;
   const int t = 20;
   double VAL1[t];
   double VAL2[t];
@@ -228,10 +240,13 @@ String NyanTimer::strTime(int input[]) {
 }
 
 bool NyanTimer::inputButton(int n) {
-  if (digitalRead(n) == HIGH)
-    return true;
-  else
-    return false;
+  int num = -1;
+  if(n == BUTTON1) num = 0;
+  if(n == BUTTON2) num = 1;
+  if(n == BUTTON3) num = 2;
+  if(n == BUTTON4) num = 3;
+  if(num == -1) return false;
+  return buttons[num][0] && buttons[num][1];
 }
 
 void NyanTimer::setLCDclear(int mode) {
