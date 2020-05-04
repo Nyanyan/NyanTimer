@@ -1,3 +1,8 @@
+/*
+ * NyanTImer Program v0.1
+ * by Nyanyan
+ */
+
 #include <NyanTimer.h>
 #include <EEPROM.h>
 
