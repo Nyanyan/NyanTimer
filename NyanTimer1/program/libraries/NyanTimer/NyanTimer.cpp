@@ -52,6 +52,7 @@ static void sort(double* array) {
 
 void NyanTimer::begin() {
   Serial.begin(1200);
+  analogReference(DEFAULT);
   pinMode(BUTTON1, INPUT_PULLUP);
   pinMode(BUTTON2, INPUT_PULLUP);
   pinMode(BUTTON3, INPUT_PULLUP);
@@ -63,7 +64,7 @@ void NyanTimer::begin() {
   pinMode(PAD2OUT, OUTPUT);
   pinMode(PAD1IN, INPUT);
   pinMode(PAD2IN, INPUT);
-  int arr[9] = {0,1,2,3,9,10,11,18,19};
+  int arr[9] = {0,1,3,6,9,10,11,18,19};
   for (int i = 0; i < 9; i++)
     pinMode(arr[i], OUTPUT);
   NyanTimer::stat = 'I';

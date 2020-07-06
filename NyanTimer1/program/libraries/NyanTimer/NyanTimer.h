@@ -1,6 +1,6 @@
 #include "Arduino.h"
 
-#define BUTTON1 6 //reset
+#define BUTTON1 2 //reset
 #define BUTTON2 8 //inspection mode
 #define BUTTON3 7 //lap up
 #define BUTTON4 4 //lap down
