@@ -1,7 +1,7 @@
 /*
- * NyanTImer Program v0.1
- * by Nyanyan
- */
+   NyanTImer Program v0.1
+   by Nyanyan
+*/
 
 #include <NyanTimer.h>
 #include <EEPROM.h>
@@ -158,7 +158,7 @@ void button() {
       NyanTimer::stat = 'I';
       inspresult = "";
       for (int i = 0; i < 4; i++)
-        EEPROM.write (i, 0);
+        EEPROM.write(i, 0);
       resettime();
       NyanTimer::printLCD(3, 0, "    ");
     }
@@ -220,21 +220,21 @@ void button() {
 
 void timer() {
   /*
-  const int num = 3;
-  int tmp1[num];
-  for (int i = 0; i < num; i++)
+    const int num = 3;
+    int tmp1[num];
+    for (int i = 0; i < num; i++)
     tmp1[i] = NyanTimer::touch();
-  int tmp2[4] = {0, 0, 0, 0};
-  for (int i = 0; i < num; i++)
+    int tmp2[4] = {0, 0, 0, 0};
+    for (int i = 0; i < num; i++)
     tmp2[tmp1[i]]++;
-  int m = 0;
-  int touchnow = 0;
-  for (int i = 0; i < 4; i++) {
+    int m = 0;
+    int touchnow = 0;
+    for (int i = 0; i < 4; i++) {
     if (tmp2[i] > m) {
       m = tmp2[i];
       touchnow = i;
     }
-  }
+    }
   */
   int touchnow = NyanTimer::touch();
   if (touchnow != 0 && touchnow != formertouch) {
@@ -250,7 +250,7 @@ void timer() {
         EEPROM.write (3, NyanTimer::minute);
         String lcdoutb = NyanTimer::strTime(NyanTimer::output);
         NyanTimer::printLCD(7, 0
-        , lcdoutb);
+                            , lcdoutb);
         if (soundmode) {
           digitalWrite(BUZZER, HIGH);
           delay(1000);
