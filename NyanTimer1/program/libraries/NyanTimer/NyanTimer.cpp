@@ -64,9 +64,11 @@ void NyanTimer::begin() {
   pinMode(PAD2OUT, OUTPUT);
   pinMode(PAD1IN, INPUT);
   pinMode(PAD2IN, INPUT);
+  /*
   int arr[9] = {0,1,3,6,9,10,11,18,19};
   for (int i = 0; i < 9; i++)
     pinMode(arr[i], OUTPUT);
+  */
   NyanTimer::stat = 'I';
   NyanTimer::minute = 0;
   NyanTimer::second = 0;
