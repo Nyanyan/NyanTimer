@@ -1,2 +1,0 @@
-本ライブラリはhttps://ore-kb.net/archives/195(GitHub: https://github.com/tomozh/arduino_ST7032/)にて公開されているライブラリをNyanyan(https://github.com/Nyanyan)が改変し再配布しているものです。
-This library was published here, https://ore-kb.net/archives/195(GitHub: https://github.com/tomozh/arduino_ST7032/), then I, Nyanyan (https://github.com/Nyanyan) edited, and publish here.
